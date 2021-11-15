@@ -11,7 +11,7 @@
       </div>
       <div class="buttons">
         <b-button tag="router-link"
-          to="/step" type="is-primary">
+          :to="{ name: 'step' }" type="is-primary">
           {{ $t('general.START') }}
         </b-button>
       </div>
