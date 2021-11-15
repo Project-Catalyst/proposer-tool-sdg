@@ -1,18 +1,30 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <section class="box">
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          <div class="title">{{$t('general.TITLE')}}</div>
+        </div>
+        <div class="column is-12">
+          {{ $t('general.EXPLANATION') }}
+        </div>
+      </div>
+      <div class="buttons">
+        <b-button tag="router-link"
+          to="/step" type="is-primary">
+          {{ $t('general.START') }}
+        </b-button>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
   }
 }
 </script>

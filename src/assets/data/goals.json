@@ -1,0 +1,303 @@
+[
+  {
+    "id": 1,
+    "title": "Goal 1. End poverty in all its forms everywhere",
+    "keywords": ["poverty"],
+    "image": "",
+    "subgoals": [
+      {
+        "id": "1.1",
+        "title": "1.1 By 2030, eradicate extreme poverty for all people everywhere, currently measured as people living on less than $1.25 a day",
+        "keywords": [],
+        "image": "",
+        "metrics": [
+          {
+            "id": "1.1.1",
+            "title": "1.1.1 Proportion of the population living below the international poverty line by sex, age, employment status and geographic location (urban/rural)"
+          }
+        ]
+      },
+      {
+        "id": "1.2",
+        "title": "1.2 By 2030, reduce at least by half the proportion of men, women and children of all ages living in poverty in all its dimensions according to national definitions",
+        "keywords": [],
+        "image": "",
+        "metrics": [
+          {
+            "id": "1.2.1",
+            "title": "1.2.1 Proportion of population living below the national poverty line, by sex and age"
+          }
+        ]
+      },
+      {
+        "id": "1.3",
+        "title": "1.3 Implement nationally appropriate social protection systems and measures for all, including floors, and by 2030 achieve substantial coverage of the poor and the vulnerable",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "1.4",
+        "title": "1.4 By 2030, ensure that all men and women, in particular the poor and the vulnerable, have equal rights to economic resources, as well as access to basic services, ownership and control over land and other forms of property, inheritance, natural resources, appropriate new technology and financial services, including microfinance",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "1.5",
+        "title": "1.5 By 2030, build the resilience of the poor and those in vulnerable situations and reduce their exposure and vulnerability to climate-related extreme events and other economic, social and environmental shocks and disasters",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "1.a",
+        "title": "1.a Ensure significant mobilization of resources from a variety of sources, including through enhanced development cooperation, in order to provide adequate and predictable means for developing countries, in particular least developed countries, to implement programmes and policies to end poverty in all its dimensions",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "1.b",
+        "title": "1.b Create sound policy frameworks at the national, regional and international levels, based on pro-poor and gender-sensitive development strategies, to support accelerated investment in poverty eradication actions",
+        "keywords": [],
+        "image": ""
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Goal 2. End hunger, achieve food security and improved nutrition and promote sustainable agriculture",
+    "keywords": ["hunger", "food", "food security", "improved nutrition", "sustainable agricolture"],
+    "image": "",
+    "subgoals": [
+      {
+        "id": "2.1",
+        "title": "2.1 By 2030, end hunger and ensure access by all people, in particular the poor and people in vulnerable situations, including infants, to safe, nutritious and sufficient food all year round",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.2",
+        "title": "2.2 By 2030, end all forms of malnutrition, including achieving, by 2025, the internationally agreed targets on stunting and wasting in children under 5 years of age, and address the nutritional needs of adolescent girls, pregnant and lactating women and older persons",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.3",
+        "title": "2.3 By 2030, double the agricultural productivity and incomes of small-scale food producers, in particular women, indigenous peoples, family farmers, pastoralists and fishers, including through secure and equal access to land, other productive resources and inputs, knowledge, financial services, markets and opportunities for value addition and non-farm employment",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.4",
+        "title": "2.4 By 2030, ensure sustainable food production systems and implement resilient agricultural practices that increase productivity and production, that help maintain ecosystems, that strengthen capacity for adaptation to climate change, extreme weather, drought, flooding and other disasters and that progressively improve land and soil quality",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.5",
+        "title": "2.5 By 2020, maintain the genetic diversity of seeds, cultivated plants and farmed and domesticated animals and their related wild species, including through soundly managed and diversified seed and plant banks at the national, regional and international levels, and promote access to and fair and equitable sharing of benefits arising from the utilization of genetic resources and associated traditional knowledge, as internationally agreed",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.a",
+        "title": "2.a Increase investment, including through enhanced international cooperation, in rural infrastructure, agricultural research and extension services, technology development and plant and livestock gene banks in order to enhance agricultural productive capacity in developing countries, in particular least developed countries",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.b",
+        "title": "2.b Correct and prevent trade restrictions and distortions in world agricultural markets, including through the parallel elimination of all forms of agricultural export subsidies and all export measures with equivalent effect, in accordance with the mandate of the Doha Development Round",
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "2.c",
+        "title": "2.c Adopt measures to ensure the proper functioning of food commodity markets and their derivatives and facilitate timely access to market information, including on food reserves, in order to help limit extreme food price volatility",
+        "keywords": [],
+        "image": ""
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Goal 3. Ensure healthy lives and promote well-being for all at all ages",
+    "keywords": ["health", "healthy lives", "weel-being"],
+    "image": "",
+    "subgoals": [
+      {
+        "id": "3.1",
+        "title": "3.1 By 2030, reduce the global maternal mortality ratio to less than 70 per 100,000 live births",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.2",
+        "title": "3.2 By 2030, end preventable deaths of newborns and children under 5 years of age, with all countries aiming to reduce neonatal mortality to at least as low as 12 per 1,000 live births and under‑5 mortality to at least as low as 25 per 1,000 live births",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.3",
+        "title": "3.3 By 2030, end the epidemics of AIDS, tuberculosis, malaria and neglected tropical diseases and combat hepatitis, water-borne diseases and other communicable diseases",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.4",
+        "title": "3.4 By 2030, reduce by one third premature mortality from non-communicable diseases through prevention and treatment and promote mental health and well-being",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.5",
+        "title": "3.5 Strengthen the prevention and treatment of substance abuse, including narcotic drug abuse and harmful use of alcohol",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.6",
+        "title": "3.6 By 2020, halve the number of global deaths and injuries from road traffic accidents",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.7",
+        "title": "3.7 By 2030, ensure universal access to sexual and reproductive health-care services, including for family planning, information and education, and the integration of reproductive health into national strategies and programmes",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.8",
+        "title": "3.8 Achieve universal health coverage, including financial risk protection, access to quality essential health-care services and access to safe, effective, quality and affordable essential medicines and vaccines for all",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.9",
+        "title": "3.9 By 2030, substantially reduce the number of deaths and illnesses from hazardous chemicals and air, water and soil pollution and contamination",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.a",
+        "title": "3.a Strengthen the implementation of the World Health Organization Framework Convention on Tobacco Control in all countries, as appropriate",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.b",
+        "title": "3.b Support the research and development of vaccines and medicines for the communicable and non‑communicable diseases that primarily affect developing countries, provide access to affordable essential medicines and vaccines, in accordance with the Doha Declaration on the TRIPS Agreement and Public Health, which affirms the right of developing countries to use to the full the provisions in the Agreement on Trade-Related Aspects of Intellectual Property Rights regarding flexibilities to protect public health, and, in particular, provide access to medicines for all",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.c",
+        "title": "3.c Substantially increase health financing and the recruitment, development, training and retention of the health workforce in developing countries, especially in least developed countries and small island developing States",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      },
+      {
+        "id": "3.d",
+        "title": "3.d Strengthen the capacity of all countries, in particular developing countries, for early warning, risk reduction and management of national and global health risks",
+        "goals": [3],
+        "keywords": [],
+        "image": ""
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Goal 4. Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 5,
+    "title": "Goal 5. Achieve gender equality and empower all women and girls",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 6,
+    "title": "Goal 6. Ensure availability and sustainable management of water and sanitation for all",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 7,
+    "title": "Goal 7. Ensure access to affordable, reliable, sustainable and modern energy for all",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 8,
+    "title": "Goal 8. Promote sustained, inclusive and sustainable economic growth, full and productive employment and decent work for all",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 9,
+    "title": "Goal 9. Build resilient infrastructure, promote inclusive and sustainable industrialization and foster innovation",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 10,
+    "title": "Goal 10. Reduce inequality within and among countries",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 11,
+    "title": "Goal 11. Make cities and human settlements inclusive, safe, resilient and sustainable",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 12,
+    "title": "Goal 12. Ensure sustainable consumption and production patterns",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 13,
+    "title": "Goal 13. Take urgent action to combat climate change and its impacts",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 14,
+    "title": "Goal 14. Conserve and sustainably use the oceans, seas and marine resources for sustainable development",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 15,
+    "title": "Goal 15. Protect, restore and promote sustainable use of terrestrial ecosystems, sustainably manage forests, combat desertification, and halt and reverse land degradation and halt biodiversity loss",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 16,
+    "title": "Goal 16. Promote peaceful and inclusive societies for sustainable development, provide access to justice for all and build effective, accountable and inclusive institutions at all levels",
+    "keywords": [],
+    "image": ""
+  },
+  {
+    "id": 17,
+    "title": "Goal 17. Strengthen the means of implementation and revitalize the Global Partnership for Sustainable Development",
+    "keywords": [],
+    "image": ""
+  }
+]
