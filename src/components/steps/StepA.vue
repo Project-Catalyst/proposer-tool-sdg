@@ -1,18 +1,27 @@
 <template>
   <div class="step-a">
-    <section class="box tags">
-      <div class="columns is-multiline">
+    <section class="box">
+      <div class="columns is-multiline is-12">
         <div class="column is-12">
           <div class="subtitle">{{$t('step.SELECT_TAG')}}</div>
         </div>
         <div class="column is-12">
-          <b-taglist>
-            <b-tag
-              :type="(selectedTags.includes(tag)) ? 'is-primary is-light' : 'is-primary'"
-              :key="`tag-${index}`"
-              @click="selectTag(tag)"
-              v-for="tag, index in tags">{{tag}}</b-tag>
-          </b-taglist>
+            <b-taginput
+                v-model="selectedTags"
+                :data="filteredTags"
+                autocomplete
+                field="tag"
+                icon="label"
+                placeholder="Select a tag"
+                @add="selectTag"
+                @typing="getFilteredTags">
+                <template v-slot="props">
+                    {{props.option}}
+                </template>
+                <template #empty>
+                    There are no items
+                </template>
+            </b-taginput>
         </div>
         <div class="column is-12">
           <div class="subtitle">{{$t('step.SELECT_GOAL')}}</div>
@@ -63,7 +72,9 @@ export default {
   props: ['goals', 'selectedGoals', 'subgoals', 'selectedSubgoals'],
   data() {
     return {
-      search: ''
+      search: '',
+      filteredTags: [],
+      selectedTags: []
     }
   },
   computed: {
@@ -73,12 +84,14 @@ export default {
       }).flat()
       return goalsTags
     },
+    /*
     selectedTags() {
       let goalsTags = this.selectedGoals.map((goal) => {
         return goal.keywords
       }).flat()
       return goalsTags
     }
+    */
   },
   methods: {
     selectTag(tag) {
@@ -107,6 +120,14 @@ export default {
       }
       return values
     },
+    getFilteredTags(text) {
+      this.filteredTags = this.tags.filter((option) => {
+        return option
+            .toString()
+            .toLowerCase()
+            .indexOf(text.toLowerCase()) >= 0
+      })
+    }
   }
 }
 </script>
