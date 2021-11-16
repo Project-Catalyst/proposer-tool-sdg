@@ -26,6 +26,10 @@
           {
             "id": "1.2.1",
             "title": "1.2.1 Proportion of population living below the national poverty line, by sex and age"
+          },
+          {
+            "id": "1.2.2",
+            "title": "1.2.2 Proportion of men, women and children of all ages living in poverty in all its dimensions according to national definitions"
           }
         ]
       },
@@ -220,19 +224,214 @@
     "id": 4,
     "title": "Goal 4. Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all",
     "keywords": [],
-    "image": ""
+    "image": "",
+    "subgoals": [
+      {
+        "id": "4.1",
+        "title": "4.1 By 2030, ensure that all girls and boys complete free, equitable and quality primary and secondary education leading to relevant and effective learning outcomes",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.2",
+        "title": "4.2 By 2030, ensure that all girls and boys have access to quality early childhood development, care and pre\u2011primary education so that they are ready for primary education",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.3",
+        "title": "4.3 By 2030, ensure equal access for all women and men to affordable and quality technical, vocational and tertiary education, including university",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.4",
+        "title": "4.4 By 2030, substantially increase the number of youth and adults who have relevant skills, including technical and vocational skills, for employment, decent jobs and entrepreneurship",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.5",
+        "title": "4.5 By 2030, eliminate gender disparities in education and ensure equal access to all levels of education and vocational training for the vulnerable, including persons with disabilities, indigenous peoples and children in vulnerable situations",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.6",
+        "title": "4.6 By 2030, ensure that all youth and a substantial proportion of adults, both men and women, achieve literacy and numeracy",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.7",
+        "title": "4.7 By 2030, ensure that all learners acquire the knowledge and skills needed to promote sustainable development, including, among others, through education for sustainable development and sustainable lifestyles, human rights, gender equality, promotion of a culture of peace and non-violence, global citizenship and appreciation of cultural diversity and of culture\u2019s contribution to sustainable development",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.a",
+        "title": "4.a Build and upgrade education facilities that are child, disability and gender sensitive and provide safe, non-violent, inclusive and effective learning environments for all",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.b",
+        "title": "4.b By 2020, substantially expand globally the number of scholarships available to developing countries, in particular least developed countries, small island developing States and African countries, for enrolment in higher education, including vocational training and information and communications technology, technical, engineering and scientific programmes, in developed countries and other developing countries",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "4.c",
+        "title": "4.c By 2030, substantially increase the supply of qualified teachers, including through international cooperation for teacher training in developing countries, especially least developed countries and small island developing States",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      }
+    ]
   },
   {
     "id": 5,
     "title": "Goal 5. Achieve gender equality and empower all women and girls",
     "keywords": [],
-    "image": ""
+    "image": "",
+    "subgoals": [
+      {
+        "id": "5.1",
+        "title": "5.1 End all forms of discrimination against all women and girls everywhere",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.2",
+        "title": "5.2 Eliminate all forms of violence against all women and girls in the public and private spheres, including trafficking and sexual and other types of exploitation",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.3",
+        "title": "5.3 Eliminate all harmful practices, such as child, early and forced marriage and female genital mutilation",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.4",
+        "title": "5.4 Recognize and value unpaid care and domestic work through the provision of public services, infrastructure and social protection policies and the promotion of shared responsibility within the household and the family as nationally appropriate",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.5",
+        "title": "5.5 Ensure women\u2019s full and effective participation and equal opportunities for leadership at all levels of decision-making in political, economic and public life",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.6",
+        "title": "5.6 Ensure universal access to sexual and reproductive health and reproductive rights as agreed in accordance with the Programme of Action of the International Conference on Population and Development and the Beijing Platform for Action and the outcome documents of their review conferences",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.a",
+        "title": "5.a Undertake reforms to give women equal rights to economic resources, as well as access to ownership and control over land and other forms of property, financial services, inheritance and natural resources, in accordance with national laws",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.b",
+        "title": "5.b Enhance the use of enabling technology, in particular information and communications technology, to promote the empowerment of women",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "5.c",
+        "title": "5.c Adopt and strengthen sound policies and enforceable legislation for the promotion of gender equality and the empowerment of all women and girls at all levels",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      }
+    ]
   },
   {
     "id": 6,
     "title": "Goal 6. Ensure availability and sustainable management of water and sanitation for all",
     "keywords": [],
-    "image": ""
+    "image": "",
+    "subgoals": [
+      {
+        "id": "6.1",
+        "title": "6.1 By 2030, achieve universal and equitable access to safe and affordable drinking water for all",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.2",
+        "title": "6.2 By 2030, achieve access to adequate and equitable sanitation and hygiene for all and end open defecation, paying special attention to the needs of women and girls and those in vulnerable situations",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.3",
+        "title": "6.3 By 2030, improve water quality by reducing pollution, eliminating dumping and minimizing release of hazardous chemicals and materials, halving the proportion of untreated wastewater and substantially increasing recycling and safe reuse globally",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.4",
+        "title": "6.4 By 2030, substantially increase water-use efficiency across all sectors and ensure sustainable withdrawals and supply of freshwater to address water scarcity and substantially reduce the number of people suffering from water scarcity",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.5",
+        "title": "6.5 By 2030, implement integrated water resources management at all levels, including through transboundary cooperation as appropriate",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.6",
+        "title": "6.6 By 2020, protect and restore water-related ecosystems, including mountains, forests, wetlands, rivers, aquifers and lakes",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.a",
+        "title": "6.a By 2030, expand international cooperation and capacity-building support to developing countries in water- and sanitation-related activities and programmes, including water harvesting, desalination, water efficiency, wastewater treatment, recycling and reuse technologies",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      },
+      {
+        "id": "6.b",
+        "title": "6.b Support and strengthen the participation of local communities in improving water and sanitation management",
+        "keywords": [],
+        "image": "",
+        "metrics": []
+      }
+    ]
   },
   {
     "id": 7,
