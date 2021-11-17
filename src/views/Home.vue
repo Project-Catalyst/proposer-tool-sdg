@@ -6,12 +6,15 @@
           <div class="title">{{$t('general.TITLE')}}</div>
         </div>
         <div class="column is-12">
-          {{ $t('general.EXPLANATION') }}
+          <div class="content" v-html="$t('general.EXPLANATION')"></div>
+        </div>
+        <div class="column is-8 is-offset-2">
+          <b-image :src="require('@/assets/images/sdgs.png')" />
         </div>
       </div>
-      <div class="buttons">
+      <div class="buttons is-flex is-justify-content-center">
         <b-button tag="router-link"
-          :to="{ name: 'step' }" type="is-primary">
+          :to="{ name: 'step' }" type="is-primary is-large">
           {{ $t('general.START') }}
         </b-button>
       </div>

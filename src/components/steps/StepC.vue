@@ -34,7 +34,7 @@
               :key="`subgoal-${subgoal.id}`">
               {{subgoal.title}}
             </p>
-            <h5>KPI</h5>
+            <h5>Key Performance Indicator (KPI)</h5>
             <p v-for="metric in selectedMetrics"
               :key="`metric-${metric.id}`">
               {{metric.title}}
@@ -76,10 +76,11 @@ export default {
     textToCopy() {
       let text = 'SDG goals:\n'
       this.selectedGoals.forEach((g) => text += `${g.title}\n`)
-      text += 'SDG subgoals:\n'
+      text += '\nSDG subgoals:\n'
       this.selectedSubgoals.forEach((s) => text += `${s.title}\n`)
-      text += 'KPI:\n'
+      text += '\nKey Performance Indicator (KPI):\n'
       this.selectedMetrics.forEach((m) => text += `${m.title}\n`)
+      text += '\n\n#proposertoolsdg'
       return text
     }
   },
@@ -92,7 +93,7 @@ export default {
     copy() {
       this.$clipboard(this.textToCopy)
       this.$buefy.notification.open({
-        message: this.$t('general.ADDRESS_COPIED'),
+        message: this.$t('general.TEXT_COPIED'),
         type: 'is-primary',
         position: 'is-bottom-right'
       })

@@ -7,11 +7,13 @@
         </div>
         <div class="column is-12">
             <b-taginput
+                ref="tagInput"
                 v-model="selectedTags"
                 :data="filteredTags"
                 autocomplete
                 field="tag"
                 icon="label"
+                :open-on-focus="true"
                 placeholder="Select a tag"
                 @add="selectTag"
                 @typing="getFilteredTags">
@@ -36,6 +38,16 @@
               :open-on-focus="true"
               :field="'title'"
               @select="option => selectGoal(option)">
+              <template slot-scope="props">
+                  <div class="media">
+                    <div class="media-left">
+                      <img width="80" :src="`assets/images/sdgs/${props.option.image}`">
+                    </div>
+                    <div class="media-content is-text is-size-4">
+                      {{ props.option.title }}
+                    </div>
+                  </div>
+                </template>
               <template #empty>No results found</template>
           </b-autocomplete>
         </div>
@@ -98,6 +110,7 @@ export default {
       var relatedGoals = this.goals.filter((goal) => {
         return goal.keywords.includes(tag)
       })
+      this.$refs.tagInput.$refs.autocomplete.isActive = false
       this.$emit('select-goal', relatedGoals)
     },
     selectGoal(goal) {
@@ -121,13 +134,21 @@ export default {
       return values
     },
     getFilteredTags(text) {
-      this.filteredTags = this.tags.filter((option) => {
-        return option
-            .toString()
-            .toLowerCase()
-            .indexOf(text.toLowerCase()) >= 0
-      })
+      if (text) {
+        this.filteredTags = this.tags.filter((option) => {
+          return option
+              .toString()
+              .toLowerCase()
+              .indexOf(text.toLowerCase()) >= 0
+        })
+      } else {
+        this.filteredTags = this.tags
+      }
+
     }
+  },
+  mounted() {
+    this.getFilteredTags()
   }
 }
 </script>

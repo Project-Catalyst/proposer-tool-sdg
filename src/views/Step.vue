@@ -24,11 +24,12 @@
         <b-button
           @click="goBack"
           :disabled="!backAvailable"
-          type="is-primary">Back</b-button>
+          type="is-primary is-large">Back</b-button>
         <b-button
           @click="goNext"
           :disabled="!nextAvailable"
-          type="is-primary">Next</b-button>
+          v-if="step !== 3"
+          type="is-primary is-large">Next</b-button>
       </div>
   </div>
 </template>
