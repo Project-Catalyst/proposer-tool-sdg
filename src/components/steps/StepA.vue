@@ -15,6 +15,7 @@
                 icon="label"
                 :open-on-focus="true"
                 placeholder="Select a tag"
+                max-height="450px"
                 @add="selectTag"
                 @typing="getFilteredTags">
                 <template v-slot="props">
@@ -35,6 +36,7 @@
               :data="filteredDataArray(this.goals)"
               placeholder="Search Goal"
               icon="magnify"
+              max-height="450px"
               :open-on-focus="true"
               :field="'title'"
               @select="option => selectGoal(option)">

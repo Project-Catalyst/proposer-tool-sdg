@@ -12,6 +12,7 @@
               :data="filteredDataArray(this.subgoals)"
               placeholder="Search Subgoal"
               icon="magnify"
+              max-height="450px"
               :open-on-focus="true"
               :field="'title'"
               @select="option => selectSubgoal(option)">
