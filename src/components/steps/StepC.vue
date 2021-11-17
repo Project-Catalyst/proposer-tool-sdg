@@ -6,7 +6,7 @@
           <div class="subtitle">{{$t('step.SELECT_METRICS')}}</div>
         </div>
         <div class="column is-12">
-          <div class="metric"
+          <div class="metric mb-2"
             :key="`metric-${index}`"
             v-for="metric, index in metrics">
               <b-checkbox v-model="checkboxGroup"
@@ -98,6 +98,9 @@ export default {
         position: 'is-bottom-right'
       })
     },
+  },
+  mounted() {
+    this.checkboxGroup = this.selectedMetrics
   }
 }
 </script>

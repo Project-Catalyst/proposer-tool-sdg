@@ -23,6 +23,7 @@
       <div class="container buttons mt-4">
         <b-button
           @click="goBack"
+          v-if="step > 1"
           :disabled="!backAvailable"
           type="is-primary is-large">Back</b-button>
         <b-button
@@ -31,12 +32,19 @@
           v-if="step !== 3"
           type="is-primary is-large">Next</b-button>
       </div>
+      <div class="container buttons mt-4">
+        <b-button
+          @click="reset"
+          v-if="this.selectedGoals.length > 0"
+          type="is-primary">Start from the beginning</b-button>
+      </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 
+import { mapState } from "vuex";
 import goals from "@/assets/data/goals.json";
 
 import StepA from "@/components/steps/StepA"
@@ -53,50 +61,30 @@ export default {
   data() {
     return {
       step: 1,
-      goals: goals,
-      selectedGoals: [],
-      selectedSubgoals: [],
-      selectedMetrics: []
+      goals: goals
     }
   },
   methods: {
     selectGoal(goals) {
       // returns an array of goals to be added to selected
       goals.forEach((goal) => {
-        var found = this.selectedGoals.indexOf(goal)
-        if (found === -1) {
-          this.selectedGoals.push(goal)
-        }
-        this.selectedGoals = this.selectedGoals.sort((a, b) => a.id - b.id)
+        this.$store.commit('goals/addGoal', goal)
       })
     },
     unselectGoal(goal) {
-      var found = this.selectedGoals.indexOf(goal)
-      if (found > -1) {
-        this.selectedGoals.splice(found, 1)
-      }
+      this.$store.commit('goals/removeGoal', goal)
     },
     selectSubgoal(subgoals) {
       // returns an array of goals to be added to selected
       subgoals.forEach((subgoal) => {
-        var found = this.selectedSubgoals.indexOf(subgoal)
-        if (found === -1) {
-          this.selectedSubgoals.push(subgoal)
-        }
-        this.selectedSubgoals = this.selectedSubgoals.sort(
-          (a, b) => a.id.localeCompare(b.id)
-        )
+        this.$store.commit('goals/addSubgoal', subgoal)
       })
     },
     unselectSubgoal(subgoal) {
-      var found = this.selectedSubgoals.indexOf(subgoal)
-      if (found > -1) {
-        this.selectedSubgoals.splice(found, 1)
-      }
+      this.$store.commit('goals/removeSubgoal', subgoal)
     },
     setMetric(metrics) {
-      // returns an array of goals to be added to selected
-      this.selectedMetrics = metrics
+      this.$store.commit('goals/setMetrics', metrics)
     },
     goBack() {
       if (this.backAvailable) {
@@ -107,9 +95,27 @@ export default {
       if (this.nextAvailable) {
         this.step += 1
       }
+    },
+    reset() {
+      this.$buefy.dialog.confirm({
+        message: 'Do you want to start the process from the beginning? Your current progress will be lost.',
+        confirmText: 'Reset progress',
+        closeOnConfirm: true,
+        cancelText: 'Cancel',
+        onConfirm: () => {
+          this.$buefy.toast.open(`Storage cleared!`)
+          this.$store.commit('goals/resetState')
+          this.step = 1
+        }
+      })
     }
   },
   computed: {
+    ...mapState({
+      selectedGoals: (state) => state.goals.selectedGoals,
+      selectedSubgoals: (state) => state.goals.selectedSubgoals,
+      selectedMetrics: (state) => state.goals.selectedMetrics
+    }),
     backAvailable() {
       return this.step > 1
     },
