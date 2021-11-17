@@ -24,10 +24,28 @@
         </div>
         <div class="column is-12">
           <div class="content" v-if="selectedMetrics.length > 0">
+            <h5>SDG Goals</h5>
+            <p v-for="goal in selectedGoals"
+              :key="`goal-${goal.id}`">
+              {{goal.title}}
+            </p>
+            <h5>SDG Subgoals</h5>
+            <p v-for="subgoal in selectedSubgoals"
+              :key="`subgoal-${subgoal.id}`">
+              {{subgoal.title}}
+            </p>
+            <h5>KPI</h5>
             <p v-for="metric in selectedMetrics"
               :key="`metric-${metric.id}`">
               {{metric.title}}
             </p>
+            <b-button
+              @click="copy"
+              type="is-primary"
+              size="is-small"
+              icon-left="content-copy">
+              Copy text to be included in IdeaScale proposal
+            </b-button>
           </div>
           <div class="content" v-if="selectedMetrics.length === 0">
             No metrics selected
@@ -54,6 +72,15 @@ export default {
       return this.selectedSubgoals.map((subgoal) => {
         return subgoal.metrics
       }).filter((el) => (el)).flat()
+    },
+    textToCopy() {
+      let text = 'SDG goals:\n'
+      this.selectedGoals.forEach((g) => text += `${g.title}\n`)
+      text += 'SDG subgoals:\n'
+      this.selectedSubgoals.forEach((s) => text += `${s.title}\n`)
+      text += 'KPI:\n'
+      this.selectedMetrics.forEach((m) => text += `${m.title}\n`)
+      return text
     }
   },
   watch: {
@@ -62,6 +89,14 @@ export default {
     }
   },
   methods: {
+    copy() {
+      this.$clipboard(this.textToCopy)
+      this.$buefy.notification.open({
+        message: this.$t('general.ADDRESS_COPIED'),
+        type: 'is-primary',
+        position: 'is-bottom-right'
+      })
+    },
   }
 }
 </script>
