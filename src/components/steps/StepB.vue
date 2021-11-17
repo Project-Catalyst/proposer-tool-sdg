@@ -94,7 +94,6 @@ export default {
       white-space: initial !important;
       padding-top: 0.75em;
       padding-bottom: 0.75em;
-      margin-right: 0 !important;
     }
   }
   .autocomplete .dropdown-item {

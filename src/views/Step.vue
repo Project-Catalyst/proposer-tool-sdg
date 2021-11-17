@@ -66,6 +66,7 @@ export default {
         if (found === -1) {
           this.selectedGoals.push(goal)
         }
+        this.selectedGoals = this.selectedGoals.sort((a, b) => a.id - b.id)
       })
     },
     unselectGoal(goal) {
@@ -81,6 +82,9 @@ export default {
         if (found === -1) {
           this.selectedSubgoals.push(subgoal)
         }
+        this.selectedSubgoals = this.selectedSubgoals.sort(
+          (a, b) => a.id.localeCompare(b.id)
+        )
       })
     },
     unselectSubgoal(subgoal) {
