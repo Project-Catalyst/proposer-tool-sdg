@@ -16,21 +16,21 @@ const actions = {
 // mutations
 const mutations = {
   addGoal(state, goal) {
-    var found = state.selectedGoals.indexOf(goal)
-    if (found === -1) {
+    var found = state.selectedGoals.filter((sgoal) => goal.id === sgoal.id)
+    if (found.length === 0) {
       state.selectedGoals.push(goal)
     }
     state.selectedGoals = state.selectedGoals.sort((a, b) => a.id - b.id)
   },
   removeGoal(state, goal) {
-    var found = state.selectedGoals.indexOf(goal)
-    if (found > -1) {
+    var found = state.selectedGoals.filter((sgoal) => goal.id === sgoal.id)
+    if (found.length > 0) {
       state.selectedGoals.splice(found, 1)
     }
   },
   addSubgoal(state, subgoal) {
-    var found = state.selectedSubgoals.indexOf(subgoal)
-    if (found === -1) {
+    var found = state.selectedSubgoals.filter((ssgoal) => ssgoal.id === subgoal.id)
+    if (found.length === 0) {
       state.selectedSubgoals.push(subgoal)
     }
     state.selectedSubgoals = state.selectedSubgoals.sort(
@@ -38,8 +38,8 @@ const mutations = {
     )
   },
   removeSubgoal(state, subgoal) {
-    var found = state.selectedSubgoals.indexOf(subgoal)
-    if (found > -1) {
+    var found = state.selectedSubgoals.filter((ssgoal) => ssgoal.id === subgoal.id)
+    if (found.length > 0) {
       state.selectedSubgoals.splice(found, 1)
     }
   },

@@ -68,6 +68,13 @@ export default {
     selectGoal(goals) {
       // returns an array of goals to be added to selected
       goals.forEach((goal) => {
+        if (this.selectedGoals.indexOf(goal) > -1) {
+          this.$buefy.notification.open({
+            message: this.$t('general.GOAL_ALREADY_SELECTED', { title: goal.title }),
+            type: 'is-primary',
+            position: 'is-bottom-right'
+          })
+        }
         this.$store.commit('goals/addGoal', goal)
       })
     },

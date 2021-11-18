@@ -136,16 +136,20 @@ export default {
       return values
     },
     getFilteredTags(text) {
+      let filteredTags
       if (text) {
-        this.filteredTags = this.tags.filter((option) => {
+        filteredTags = this.tags.filter((option) => {
           return option
               .toString()
               .toLowerCase()
               .indexOf(text.toLowerCase()) >= 0
         })
       } else {
-        this.filteredTags = this.tags
+        filteredTags = this.tags
       }
+      this.filteredTags = filteredTags.filter((option) => {
+        return this.selectedTags.indexOf(option) === -1
+      })
 
     }
   },
@@ -171,12 +175,22 @@ export default {
     }
 
   }
-  .autocomplete .dropdown-item {
-    white-space: initial;
-    overflow: initial;
-    text-overflow: initial;
-    span {
+  .autocomplete {
+    .dropdown-menu {
+      z-index: 2000;
+      &.is-opened-top {
+        .dropdown-content {
+          max-height: 300px !important;
+        }
+      }
+    }
+    .dropdown-item {
       white-space: initial;
+      overflow: initial;
+      text-overflow: initial;
+      span {
+        white-space: initial;
+      }
     }
   }
 }
