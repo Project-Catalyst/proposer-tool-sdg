@@ -114,6 +114,14 @@ export default {
           this.$router.push({ name: "step", params: { step: 1} })
         }
       })
+    },
+    checkRouteConsistency(step) {
+      if ((step === 2) && (this.selectedGoals.length === 0)) {
+        this.$router.push({ name: "step", params: { step: 1} })
+      }
+      if ((step === 3) && (this.selectedSubgoals.length === 0)) {
+        this.$router.push({ name: "step", params: { step: 2} })
+      }
     }
   },
   computed: {
@@ -140,6 +148,14 @@ export default {
       }
       return false
     }
+  },
+  watch: {
+    step(step) {
+      this.checkRouteConsistency(step)
+    }
+  },
+  mounted() {
+    this.checkRouteConsistency(this.step)
   }
 }
 </script>
