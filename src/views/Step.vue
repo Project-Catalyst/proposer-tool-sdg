@@ -60,7 +60,6 @@ export default {
   },
   data() {
     return {
-      step: 1,
       goals: goals
     }
   },
@@ -95,12 +94,12 @@ export default {
     },
     goBack() {
       if (this.backAvailable) {
-        this.step -= 1
+        this.$router.push({ name: "step", params: { step: (this.step - 1)} })
       }
     },
     goNext() {
       if (this.nextAvailable) {
-        this.step += 1
+        this.$router.push({ name: "step", params: { step: (this.step + 1)} })
       }
     },
     reset() {
@@ -112,7 +111,7 @@ export default {
         onConfirm: () => {
           this.$buefy.toast.open(`Storage cleared!`)
           this.$store.commit('goals/resetState')
-          this.step = 1
+          this.$router.push({ name: "step", params: { step: 1} })
         }
       })
     }
@@ -123,6 +122,12 @@ export default {
       selectedSubgoals: (state) => state.goals.selectedSubgoals,
       selectedMetrics: (state) => state.goals.selectedMetrics
     }),
+    step() {
+      if (this.$route) {
+        return parseInt(this.$route.params.step)
+      }
+      return 1
+    },
     backAvailable() {
       return this.step > 1
     },

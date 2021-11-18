@@ -14,7 +14,7 @@
       </div>
       <div class="buttons is-flex is-justify-content-center">
         <b-button tag="router-link"
-          :to="{ name: 'step' }" type="is-primary is-large">
+          :to="{ name: 'step', params: { step: 1 } }" type="is-primary is-large">
           {{ $t('general.START') }}
         </b-button>
       </div>
