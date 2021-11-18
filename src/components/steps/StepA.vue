@@ -42,10 +42,10 @@
               @select="option => selectGoal(option)">
               <template slot-scope="props">
                   <div class="media">
-                    <div class="media-left">
+                    <div class="media-left is-hidden-mobile">
                       <img width="80" :src="`assets/images/sdgs/${props.option.image}`">
                     </div>
-                    <div class="media-content is-text is-size-4">
+                    <div class="media-content is-text is-size-4 is-size-6-mobile">
                       {{ props.option.title }}
                     </div>
                   </div>

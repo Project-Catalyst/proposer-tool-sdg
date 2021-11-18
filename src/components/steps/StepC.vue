@@ -3,10 +3,10 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="subtitle">{{$t('step.SELECT_METRICS')}}</div>
+          <div class="subtitle" v-html="$t('step.SELECT_METRICS')"></div>
         </div>
         <div class="column is-12">
-          <div class="metric mb-2"
+          <div class="metric mb-4"
             :key="`metric-${index}`"
             v-for="metric, index in metrics">
               <b-checkbox v-model="checkboxGroup"
