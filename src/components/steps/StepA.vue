@@ -17,6 +17,7 @@
                 placeholder="Select a tag"
                 max-height="450px"
                 @add="selectTag"
+                @remove="getFilteredTags(false)"
                 @typing="getFilteredTags">
                 <template v-slot="props">
                     {{props.option}}
@@ -95,7 +96,12 @@ export default {
     tags() {
       let goalsTags = this.goals.map((goal) => {
         return goal.keywords
-      }).flat()
+      })
+      .flat()
+      .filter((x, i, a) => a.indexOf(x) === i)
+      .sort(
+        (a, b) => a.localeCompare(b)
+      )
       return goalsTags
     },
     /*
