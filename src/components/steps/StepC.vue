@@ -3,6 +3,7 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
+          <div class="title">{{"STEP 3: Select your measurement Metrics"}}</div>
           <div class="subtitle" v-html="$t('step.SELECT_METRICS')"></div>
         </div>
         <div class="column is-12">

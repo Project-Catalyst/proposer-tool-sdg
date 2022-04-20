@@ -20,24 +20,30 @@
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
       @set-metric="setMetric" />
-      <div class="container buttons mt-4">
-        <b-button
-          @click="goBack"
-          v-if="step > 1"
-          :disabled="!backAvailable"
-          type="is-primary is-large">Back</b-button>
-        <b-button
-          @click="goNext"
-          :disabled="!nextAvailable"
-          v-if="step !== 3"
-          type="is-primary is-large">Next</b-button>
-      </div>
-      <div class="container buttons mt-4">
-        <b-button
-          @click="reset"
-          v-if="this.selectedGoals.length > 0"
-          type="is-primary">Start from the beginning</b-button>
-      </div>
+    <step-d
+      v-if="step === 4"
+     />
+    <step-e
+      v-if="step === 5"
+      />
+    <div class="container buttons mt-4">
+      <b-button
+        @click="goBack"
+        v-if="step > 1"
+        :disabled="!backAvailable"
+        type="is-primary is-large">Back</b-button>
+      <b-button
+        @click="goNext"
+        :disabled="!nextAvailable"
+        v-if="step !== 5"
+        type="is-primary is-large">Next</b-button>
+    </div>
+    <div class="container buttons mt-4">
+      <b-button
+        @click="reset"
+        v-if="this.selectedGoals.length > 0"
+        type="is-primary">Start from the beginning</b-button>
+    </div>
   </div>
 </template>
 
@@ -50,13 +56,17 @@ import goals from "@/assets/data/goals.json";
 import StepA from "@/components/steps/StepA"
 import StepB from "@/components/steps/StepB"
 import StepC from "@/components/steps/StepC"
+import StepD from "@/components/steps/StepD"
+import StepE from "@/components/steps/StepE"
 
 export default {
   name: 'Step',
   components: {
     StepA,
     StepB,
-    StepC
+    StepC,
+    StepD,
+    StepE
   },
   data() {
     return {
@@ -144,6 +154,12 @@ export default {
         return true
       }
       if (this.step === 2 && this.selectedSubgoals.length > 0) {
+        return true
+      }
+      if (this.step === 3 ) {
+        return true
+      }
+      if (this.step === 4 ) {
         return true
       }
       return false

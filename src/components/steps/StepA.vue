@@ -3,6 +3,7 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
+          <div class="title">{{"STEP 1: Select your tags and SDG Goals"}}</div>
           <div class="subtitle">{{$t('step.SELECT_TAG')}}</div>
         </div>
         <div class="column is-12">
