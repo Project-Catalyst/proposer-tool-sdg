@@ -5,27 +5,42 @@
       :goals="goals"
       :selectedGoals="selectedGoals"
       @select-goal="selectGoal"
-      @unselect-goal="unselectGoal" />
+      @unselect-goal="unselectGoal" 
+    />
     <step-b
       v-if="step === 2"
       :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       @select-subgoal="selectSubgoal"
-      @unselect-subgoal="unselectSubgoal" />
+      @unselect-subgoal="unselectSubgoal" 
+    />
     <step-c
       v-if="step === 3"
       :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
-      @set-metric="setMetric" />
+      @set-metric="setMetric" 
+    />
     <step-d
       v-if="step === 4"
-     />
+      :goals="goals"
+      :selectedGoals="selectedGoals"
+      :selectedSubgoals="selectedSubgoals"
+      :selectedMetrics="selectedMetrics"
+      :selectedIndexes="selectedIndexes"
+      @select-uhri="selectIndex"
+      @unselect-uhri="unselectIndex" 
+    />
     <step-e
       v-if="step === 5"
-      />
+      :goals="goals"
+      :selectedGoals="selectedGoals"
+      :selectedSubgoals="selectedSubgoals"
+      :selectedMetrics="selectedMetrics"
+      :selectedIndexes="selectedIndexes"
+    />
     <div class="container buttons mt-4">
       <b-button
         @click="goBack"
@@ -102,6 +117,17 @@ export default {
     setMetric(metrics) {
       this.$store.commit('goals/setMetrics', metrics)
     },
+    selectIndex(uhris) {
+      // ADJUST THIS FUNCTION TO UHRI index
+      // returns an array of goals to be added to selected
+      uhris.forEach((uhri) => {
+        this.$store.commit('goals/addIndex', uhri)
+      })
+    },
+    unselectIndex(uhri) {
+      // ADJUST THIS FUNCTION TO UHRI index
+      this.$store.commit('goals/removeIndex', uhri)
+    },
     goBack() {
       if (this.backAvailable) {
         this.$router.push({ name: "step", params: { step: (this.step - 1)} })
@@ -138,7 +164,8 @@ export default {
     ...mapState({
       selectedGoals: (state) => state.goals.selectedGoals,
       selectedSubgoals: (state) => state.goals.selectedSubgoals,
-      selectedMetrics: (state) => state.goals.selectedMetrics
+      selectedMetrics: (state) => state.goals.selectedMetrics,
+      selectedIndexes: (state) => state.goals.selectedIndexes,
     }),
     step() {
       if (this.$route) {

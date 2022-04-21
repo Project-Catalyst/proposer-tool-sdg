@@ -4,19 +4,86 @@
       <div class="columns is-multiline is-12">
         <div class="column is-12">
             <div class="title">{{"STEP 4: Select your Universal Human Rights Index"}}</div>
-          <div class="subtitle" v-html="$t('step.SELECT_UHRI_GOALS')"></div>
+          <div class="subtitle" v-html="$t('step.SELECT_UHRI')"></div>
         </div>
-        <!-- <div class="column is-12">
-          <div class="uhri mb-4"
-            :key="`uhri-${index}`"
-            v-for="metric, index in metrics"
-            >
-              <b-checkbox v-model="checkboxGroup"
-                :native-value="metric">
-                {{metric.title}}
-              </b-checkbox>
+        <div class="column is-12"><b-field label="Specific UHRI filters">
+          <div class="column is-4"><b-field label="UHRI Text">
+            <b-autocomplete
+                ref="autocomplete"
+                v-model="search"
+                :data="filteredDataArray(this.uhriIndexes)"
+                placeholder="Search by UHRI text"
+                icon="magnify"
+                max-height="450px"
+                :open-on-focus="true"
+                :field="'title'"
+                @select="option => printOption(option)">
+                <template #empty>No results found</template>
+            </b-autocomplete>  
+          </b-field></div>
+          <div class="column is-4"><b-field label="UHRI Theme">
+            <b-autocomplete
+                ref="autocomplete"
+                v-model="search"
+                :data="filteredDataArray(this.uhriIndexes)"
+                placeholder="Search by UHRI theme"
+                icon="magnify"
+                max-height="450px"
+                :open-on-focus="true"
+                :field="'title'"
+                @select="option => printOption(option)">
+                <template #empty>No results found</template>
+            </b-autocomplete>  
+          </b-field></div>
+          <div class="column is-4"><b-field label="UHRI Region">
+            <b-autocomplete
+                ref="autocomplete"
+                v-model="search"
+                :data="filteredDataArray(this.uhriIndexes)"
+                placeholder="Search by UHRI region"
+                icon="magnify"
+                max-height="450px"
+                :open-on-focus="true"
+                :field="'title'"
+                @select="option => printOption(option)">
+                <template #empty>No results found</template>
+            </b-autocomplete>  
+          </b-field></div>
+        </b-field></div>
+        <div class="column is-12"><b-field label="Select your UHRI indexes">
+          <b-autocomplete
+              ref="autocomplete"
+              v-model="search"
+              :data="filteredDataArray(this.uhriIndexes)"
+              placeholder="Search by UHRI indexes"
+              icon="magnify"
+              max-height="450px"
+              :open-on-focus="true"
+              :field="'title'"
+              @select="option => selectIndex(option)">
+              <template #empty>No results found</template>
+          </b-autocomplete>  
+        </b-field></div>
+      </div>
+    </section>
+    <section class="results box">
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          <div class="subtitle">{{$t('step.SELECTED_UHRI')}}</div>
+        </div>
+        <div class="column is-12">
+          <b-taglist v-if="selectedIndexes.length > 0">
+            <b-tag type="is-primary is-light"
+              closable
+              size="is-medium"
+              @close="unselectIndex(uhri)"
+              :key="`uhri-selected-${index}`"
+              v-for="uhri, index in selectedIndexes">{{uhri.title}}</b-tag>
+          </b-taglist>
+          <div class="content" v-if="selectedIndexes.length === 0">
+            No UHRI indexes selected
           </div>
-        </div> -->
+        </div>
       </div>
     </section>
   </div>
@@ -28,51 +95,64 @@
 
 export default {
   name: 'StepD',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedMetrics'],
+  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedIndexes'],
   data() {
     return {
-      checkboxGroup: []
+      search: ''
     }
   },
   computed: {
-    metrics() {
-      return this.selectedSubgoals.map((subgoal) => {
-        return subgoal.metrics
-      }).filter((el) => (el)).flat()
-    },
-    textToCopy() {
-      let text = 'SDG goals:\n'
-      this.selectedGoals.forEach((g) => text += `${g.title}\n`)
-      text += '\nSDG subgoals:\n'
-      this.selectedSubgoals.forEach((s) => text += `${s.title}\n`)
-      text += '\nKey Performance Indicator (KPI):\n'
-      this.selectedMetrics.forEach((m) => text += `${m.title}\n`)
-      text += '\n\n#proposertoolsdg'
-      return text
-    }
-  },
-  watch: {
-    checkboxGroup(val) {
-      this.$emit('set-metric', val)
+    uhriIndexes() {
+      return this.selectedGoals.map((goal) => {
+        return goal.subgoals
+      }).flat()
     }
   },
   methods: {
-    copy() {
-      this.$clipboard(this.textToCopy)
-      this.$buefy.notification.open({
-        message: this.$t('general.TEXT_COPIED'),
-        type: 'is-primary',
-        position: 'is-bottom-right'
-      })
+    printOption(option) {
+      console.log(option)
     },
-  },
-  mounted() {
-    this.checkboxGroup = this.selectedMetrics
+    selectIndex(uhri) {
+      if (uhri) {
+        this.$emit('select-uhri', [uhri])
+        setTimeout(() => this.search = '', 10)
+      }
+    },
+    unselectIndex(uhri) {
+      this.$emit('unselect-uhri', uhri)
+    },
+    filteredDataArray(values) {
+      if (this.search.length > 0) {
+        return values.filter((option) => {
+          return option.title
+              .toString()
+              .toLowerCase()
+              .indexOf(this.search.toLowerCase()) >= 0
+        })
+      }
+      return values
+    },
   }
 }
 </script>
 
 <style lang="scss">
-.step-c {
+.step-d {
+  .results {
+    .tag {
+      height: auto;
+      white-space: initial !important;
+      padding-top: 0.75em;
+      padding-bottom: 0.75em;
+    }
+  }
+  .autocomplete .dropdown-item {
+    white-space: initial;
+    overflow: initial;
+    text-overflow: initial;
+    span {
+      white-space: initial;
+    }
+  }
 }
 </style>

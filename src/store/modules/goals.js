@@ -2,7 +2,8 @@
 const getDefaultState = () => ({
   selectedGoals: [],
   selectedSubgoals: [],
-  selectedMetrics: []
+  selectedMetrics: [],
+  selectedIndexes: []
 })
 const state = getDefaultState()
 
@@ -45,6 +46,23 @@ const mutations = {
   },
   setMetrics(state, metrics) {
     state.selectedMetrics = metrics
+  },
+  addIndex(state, uhri) {
+    // ADJUST THIS FUNCTION TO UHRI
+    var found = state.selectedIndexes.filter((ssgoal) => ssgoal.id === uhri.id)
+    if (found.length === 0) {
+      state.selectedIndexes.push(uhri)
+    }
+    state.selectedIndexes = state.selectedIndexes.sort(
+      (a, b) => a.id.localeCompare(b.id)
+    )
+  },
+  removeIndex(state, uhri) {
+    // ADJUST THIS FUNCTION TO UHRI
+    var found = state.selectedIndexes.filter((ssgoal) => ssgoal.id === uhri.id)
+    if (found.length > 0) {
+      state.selectedIndexes.splice(found, 1)
+    }
   },
   resetState (state) {
     Object.assign(state, getDefaultState())
