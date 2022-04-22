@@ -55,7 +55,7 @@
 
 export default {
   name: 'StepE',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedMetrics'],
+  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes'],
   data() {
     return {
     }

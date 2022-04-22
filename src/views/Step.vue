@@ -28,7 +28,6 @@
       :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
-      :selectedMetrics="selectedMetrics"
       :selectedIndexes="selectedIndexes"
       @select-uhri="selectIndex"
       @unselect-uhri="unselectIndex" 
