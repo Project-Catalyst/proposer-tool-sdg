@@ -3,8 +3,9 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-            <div class="title">{{"STEP 4: Select your Universal Human Rights Index"}}</div>
-          <div class="subtitle" v-html="$t('step.SELECT_UHRI')"></div>
+          <div class="title">{{"Step 4: Select your Universal Human Rights Index"}}</div>
+          <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE')"></div>
+          <div v-html="$t('step.UHRI_MSG')"></div>
         </div>
         <div class="column is-12"><b-field label="FILTERS">
           <div class="column is-4"><b-field label="Country">
@@ -12,8 +13,8 @@
                 ref="autocomplete"
                 v-model="search_country"
                 :data="filteredDataCountry(this.uhriCountries)"
-                placeholder="Search UHRI by country"
-                icon="magnify"
+                placeholder="Filter UHRI by country"
+                icon="filter"
                 max-height="450px"
                 :open-on-focus="true"
                 :field="'title'"
@@ -26,8 +27,8 @@
                 ref="autocomplete"
                 v-model="search_region"
                 :data="filteredDataRegion(this.uhriRegions)"
-                placeholder="Search UHRI by region"
-                icon="magnify"
+                placeholder="Filter UHRI by region"
+                icon="filter"
                 max-height="450px"
                 :open-on-focus="true"
                 :field="'title'"
@@ -40,8 +41,8 @@
                 ref="autocomplete"
                 v-model="search_theme"
                 :data="filteredDataTheme(this.uhriThemes)"
-                placeholder="Search UHRI by theme"
-                icon="magnify"
+                placeholder="Filter UHRI by theme"
+                icon="filter"
                 max-height="450px"
                 :open-on-focus="true"
                 :field="'title'"
@@ -50,16 +51,12 @@
             </b-autocomplete>  
           </b-field></div>
         </b-field></div>
-      </div>
-    </section>
-    <section class="results box">
-      <div class="columns is-multiline">
         <div class="column is-12"><b-field label="SELECT YOUR UHRI INDEXES">
           <b-autocomplete
               ref="autocomplete"
               v-model="search"
               :data="filteredDataIndex(this.uhriIndexesTemp)"
-              placeholder="Search by UHRI indexes"
+              placeholder="Search UHRI by text"
               icon="magnify"
               max-height="450px"
               :open-on-focus="true"
@@ -68,8 +65,12 @@
               <template #empty>No results found</template>
           </b-autocomplete>  
         </b-field></div>
+      </div>
+    </section>
+    <section class="results box">
+      <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="subtitle">{{$t('step.SELECTED_UHRI')}}</div>
+          <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
         </div>
         <div class="column is-12">
           <b-taglist v-if="selectedIndexes.length > 0">
@@ -90,7 +91,6 @@
 </template>
 
 <script>
-// [REMOVE] THIS CODE WAS IMPORTED FROM STEP-C FOR ADAPTATION
 // @ is an alias to /src
 
 // import axios from 'axios';
@@ -133,7 +133,8 @@ export default {
       console.log("CALL API.update(sdg_ids, **params)")
       console.log(this.sdg_ids)
       console.log(this.filters)
-      // API.load() endpoint 
+      
+      // API.loadOptions() endpoint 
       // API.load(this.sdg_ids, this.filters).then((res) => {
       //   this.uhriIndexes = res.data.uhri_list
       //   this.uhriCountries = res.data.countries_list

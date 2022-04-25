@@ -3,10 +3,11 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"STEP 3: Select your measurement Metrics"}}</div>
-          <div class="subtitle" v-html="$t('step.SELECT_METRICS')"></div>
+          <div class="title">{{"Step 3: Select your Key Performance Indicator (KPI)"}}</div>
+          <div class="subtitle" v-html="$t('step.STEP3_SUBTITLE')"></div>
         </div>
         <div class="column is-12">
+          <b-field label="SELECT YOUR KPI:"></b-field>
           <div class="metric mb-4"
             :key="`metric-${index}`"
             v-for="metric, index in metrics">
@@ -18,23 +19,6 @@
         </div>
       </div>
     </section>
-    <!-- <section class="results box">
-      <div class="columns is-multiline">
-        <div class="column is-12">
-          <div class="subtitle">{{$t('step.SELECTED_METRICS')}}</div>
-        </div>
-        <div class="column is-12">
-          <div v-if="selectedMetrics.length > 0">
-            <div :key="`metric-${index}`" v-for="metric, index in checkboxGroup">
-              {{metric.title}}
-            </div>
-          </div>
-          <div class="content" v-if="selectedMetrics.length === 0">
-            No metrics selected 
-          </div>
-        </div>
-      </div>
-    </section> -->
   </div>
 </template>
 

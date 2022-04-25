@@ -3,11 +3,18 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"STEP 2: Select your SDG Sub-Goals"}}</div>
-          <div class="subtitle">{{$t('step.SELECT_SUBGOAL')}}</div>
+          <div class="title">{{"Step 2: Select your SDG Sub-Goals"}}</div>
+          <div class="subtitle" v-html="$t('step.STEP2_SUBTITLE')"></div>
+          <div class="content">
+            <p v-for="goal in selectedGoals"
+            :key="`goal-${goal.id}`">
+            {{goal.title}}
+            </p>
+          </div>
         </div>
         <div class="column is-12">
-          <b-autocomplete
+          <div class="column is-12"><b-field label="SELECT YOUR SDG SUB-GOALS:">
+            <b-autocomplete
               ref="autocomplete"
               v-model="search"
               :data="filteredDataArray(this.subgoals)"
@@ -18,14 +25,15 @@
               :field="'title'"
               @select="option => selectSubgoal(option)">
               <template #empty>No results found</template>
-          </b-autocomplete>
+            </b-autocomplete>
+          </b-field></div>
         </div>
       </div>
     </section>
     <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="subtitle">{{$t('step.SELECTED_SUBGOALS')}}</div>
+          <div class="subtitle" v-html="$t('step.SELECTED_SUBGOALS')"></div>
         </div>
         <div class="column is-12">
           <b-taglist v-if="selectedSubgoals.length > 0">
