@@ -25,8 +25,8 @@ const mutations = {
   },
   removeGoal(state, goal) {
     var found = state.selectedGoals.filter((sgoal) => goal.id === sgoal.id)
-    if (found.length > 0) {
-      state.selectedGoals.splice(found, 1)
+    if (found.length === 1) {
+      state.selectedGoals = state.selectedGoals.filter(function(el) { return el.id != found[0].id; });
     }
   },
   addSubgoal(state, subgoal) {
@@ -41,7 +41,7 @@ const mutations = {
   removeSubgoal(state, subgoal) {
     var found = state.selectedSubgoals.filter((ssgoal) => ssgoal.id === subgoal.id)
     if (found.length > 0) {
-      state.selectedSubgoals.splice(found, 1)
+      state.selectedSubgoals = state.selectedSubgoals.filter(function(el) { return el.id != found[0].id; });
     }
   },
   setMetrics(state, metrics) {
@@ -61,7 +61,7 @@ const mutations = {
     // ADJUST THIS FUNCTION TO UHRI
     var found = state.selectedIndexes.filter((ssgoal) => ssgoal.id === uhri.id)
     if (found.length > 0) {
-      state.selectedIndexes.splice(found, 1)
+      state.selectedIndexes = state.selectedIndexes.filter(function(el) { return el.id != found[0].id; });
     }
   },
   resetState (state) {
