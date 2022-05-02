@@ -4,6 +4,7 @@
       v-if="step === 1"
       :goals="goals"
       :selectedGoals="selectedGoals"
+      :selectedSubgoals="selectedSubgoals"
       @select-goal="selectGoal"
       @unselect-goal="unselectGoal" 
     />
@@ -28,12 +29,22 @@
       :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
+      :selectedFilters="selectedFilters"
+      @select-filter="selectFilter"
+      @unselect-filter="unselectFilter" 
+    />
+    <step-e
+      v-if="step === 5"
+      :goals="goals"
+      :selectedGoals="selectedGoals"
+      :selectedSubgoals="selectedSubgoals"
+      :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
       @select-uhri="selectIndex"
       @unselect-uhri="unselectIndex" 
     />
-    <step-e
-      v-if="step === 5"
+    <step-f
+      v-if="step === 6"
       :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
@@ -49,7 +60,7 @@
       <b-button
         @click="goNext"
         :disabled="!nextAvailable"
-        v-if="step !== 5"
+        v-if="step !== maxSteps"
         type="is-primary is-large">Next</b-button>
     </div>
     <div class="container buttons mt-4">
@@ -72,6 +83,7 @@ import StepB from "@/components/steps/StepB"
 import StepC from "@/components/steps/StepC"
 import StepD from "@/components/steps/StepD"
 import StepE from "@/components/steps/StepE"
+import StepF from "@/components/steps/StepF"
 
 export default {
   name: 'Step',
@@ -80,11 +92,13 @@ export default {
     StepB,
     StepC,
     StepD,
-    StepE
+    StepE,
+    StepF
   },
   data() {
     return {
-      goals: goals
+      goals: goals,
+      maxSteps: 6
     }
   },
   methods: {
@@ -117,15 +131,18 @@ export default {
       this.$store.commit('goals/setMetrics', metrics)
     },
     selectIndex(uhris) {
-      // ADJUST THIS FUNCTION TO UHRI index
-      // returns an array of goals to be added to selected
       uhris.forEach((uhri) => {
         this.$store.commit('goals/addIndex', uhri)
       })
     },
     unselectIndex(uhri) {
-      // ADJUST THIS FUNCTION TO UHRI index
       this.$store.commit('goals/removeIndex', uhri)
+    },
+    selectFilter(key, value) {
+      this.$store.commit('goals/addFilter', [key, value])
+    },
+    unselectFilter(key, value) {
+      this.$store.commit('goals/removeFilter', [key, value])
     },
     goBack() {
       if (this.backAvailable) {
@@ -164,7 +181,8 @@ export default {
       selectedGoals: (state) => state.goals.selectedGoals,
       selectedSubgoals: (state) => state.goals.selectedSubgoals,
       selectedMetrics: (state) => state.goals.selectedMetrics,
-      selectedIndexes: (state) => state.goals.selectedIndexes,
+      selectedFilters: (state) => state.goals.selectedFilters,
+      selectedIndexes: (state) => state.goals.selectedIndexes
     }),
     step() {
       if (this.$route) {
@@ -182,10 +200,7 @@ export default {
       if (this.step === 2 && this.selectedSubgoals.length > 0) {
         return true
       }
-      if (this.step === 3 ) {
-        return true
-      }
-      if (this.step === 4 ) {
+      if (this.step !== this.maxSteps ) {
         return true
       }
       return false
@@ -198,6 +213,7 @@ export default {
   },
   mounted() {
     this.checkRouteConsistency(this.step)
+    console.log(this.selectedIndexes)
   }
 }
 </script>

@@ -3,49 +3,80 @@
     <section class="box">
         <div class="columns is-multiline is-12">
             <div class="column is-12">
-                <div class="title">{{"SDG SUMMARY"}}</div>
-                <div class="subtitle" v-html="$t('step.STEP5_SUBTITLE')"></div>
+                <div class="title">{{"Step 4: Select your Universal Human Rights Index"}}</div>
+                <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE')"></div>
+                <div v-html="$t('step.UHRI_MSG')"></div>
+            </div>
+            <div class="column is-12"><b-field label="1. CHOOSE HOW TO FILTER THE UHRI INDEXES"></b-field>
+            </div>
+            <div class="column is-12">
+              <b-field label="Country">
+                <b-taglist v-if="selectedFilters.country.length > 0">
+                  <b-tag type="is-primary is-light"
+                    size="is-medium"
+                    :key="`filter-selected-${index}`"
+                    v-for="filter, index in selectedFilters.country">{{filter}}</b-tag>
+                </b-taglist>
+                <div class="content" v-if="selectedFilters.country.length === 0">
+                  No Country filters selected
+                </div>
+              </b-field>
+              <b-field label="Region">
+                <b-taglist v-if="selectedFilters.region.length > 0">
+                  <b-tag type="is-primary is-light"
+                    size="is-medium"
+                    :key="`filter-selected-${index}`"
+                    v-for="filter, index in selectedFilters.region">{{filter}}</b-tag>
+                </b-taglist>
+                <div class="content" v-if="selectedFilters.region.length === 0">
+                  No Region filters selected
+                </div>
+              </b-field>
+              <b-field label="Theme">
+                <b-taglist v-if="selectedFilters.theme.length > 0">
+                  <b-tag type="is-primary is-light" 
+                    size="is-medium"
+                    :key="`filter-selected-${index}`"
+                    v-for="filter, index in selectedFilters.theme">{{filter}}</b-tag>
+                </b-taglist>
+                <div class="content" v-if="selectedFilters.theme.length === 0">
+                  No Theme filters selected
+                </div>
+              </b-field>
+            </div>
+            <div class="column is-12"><b-field label="2. SELECT YOUR UHRI INDEXES">
+                <b-autocomplete
+                    ref="autocomplete"
+                    v-model="search"
+                    :data="filteredDataIndex(this.indexes)"
+                    placeholder="Search UHRI by text"
+                    icon="magnify"
+                    max-height="450px"
+                    :open-on-focus="true"
+                    :field="'title'"
+                    @select="option => selectIndex(option)">
+                    <template #empty>No results found</template>
+                </b-autocomplete></b-field>
             </div>
         </div>
     </section>
     <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="content">
-            <h5>SDG Goals</h5>
-              <p v-for="goal in selectedGoals"
-              :key="`goal-${goal.id}`">
-              {{goal.title}}
-              </p>
-            <h5>SDG Subgoals</h5>
-              <p v-for="subgoal in selectedSubgoals"
-              :key="`subgoal-${subgoal.id}`">
-              {{subgoal.title}}
-              </p>
-            <h5>Key Performance Indicator (KPI)</h5>
-              <p v-for="metric in selectedMetrics"
-              :key="`metric-${metric.id}`">
-              {{metric.title}}
-              </p>
-              <div v-if="selectedMetrics.length === 0">
-                No KPI metrics selected
-              </div>
-            <h5>Universal Human Rights Index (UHRI)</h5>
-              <p v-for="uhri in selectedIndexes"
-              :key="`uhri-${uhri.id}`">
-              {{uhri.title}}
-              </p>
-              <div v-if="selectedIndexes.length === 0">
-                No UHRI indexes selected
-              </div>
+          <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
+        </div>
+        <div class="column is-12">
+          <b-taglist v-if="selectedIndexes.length > 0">
+            <b-tag type="is-primary is-light"
+              closable
+              size="is-medium"
+              @close="unselectIndex(uhri)"
+              :key="`uhri-selected-${index}`"
+              v-for="uhri, index in selectedIndexes">{{uhri}}</b-tag>
+          </b-taglist>
+          <div class="content" v-if="selectedIndexes.length === 0">
+            No UHRI indexes selected
           </div>
-          <b-button
-            @click="copy"
-            type="is-primary"
-            size="is-small"
-            icon-left="content-copy">
-            Copy text to be included in IdeaScale proposal
-          </b-button>
         </div>
       </div>
     </section>
@@ -55,36 +86,74 @@
 <script>
 // @ is an alias to /src
 
+import UhriAPI from '@/api/uhri.js'
+
 export default {
   name: 'StepE',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes'],
+  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
-    }
-  },
-  computed: {
-    textToCopy() {
-      let text = 'SDG goals:\n'
-      this.selectedGoals.forEach((g) => text += `${g.title}\n`)
-      text += '\nSDG subgoals:\n'
-      this.selectedSubgoals.forEach((s) => text += `${s.title}\n`)
-      text += '\nKey Performance Indicator (KPI):\n'
-      this.selectedMetrics.forEach((m) => text += `${m.title}\n`)
-      text += '\nUniversal Human Rights Index (UHRI):\n'
-      this.selectedIndexes.forEach((i) => text += `${i.title}\n`) // ADJUST THIS LINE FOR API-DATA FORMAT
-      text += '\n\n#proposertoolsdg'
-      return text
+      search: '',
+      // populate dropdown
+      indexes: []
+      
     }
   },
   methods: {
-    copy() {
-      this.$clipboard(this.textToCopy)
-      this.$buefy.notification.open({
-        message: this.$t('general.TEXT_COPIED'),
-        type: 'is-primary',
-        position: 'is-bottom-right'
-      })
+    selectIndex(uhri) {
+      if (uhri) {
+        this.$emit('select-uhri', [uhri])
+        setTimeout(() => this.search = '', 10)
+      }
     },
+    unselectIndex(uhri) {
+      this.$emit('unselect-uhri', uhri)
+    },
+    filteredDataIndex(values) {
+      if (this.search.length > 0) {
+        return values.filter((option) => {
+          // return option.title
+          return option
+              .toString()
+              .toLowerCase()
+              .indexOf(this.search.toLowerCase()) >= 0
+        })
+      }
+      return values
+    },
+  },
+  mounted(){
+    let g_ids = this.selectedGoals.map((goal) => {return goal.id.toString()})
+    let sg_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
+
+    // ADJUST FILTERS VALUES
+    UhriAPI.uhriIndexes(g_ids, sg_ids, 
+                this.selectedFilters.country,
+                this.selectedFilters.region,
+                this.selectedFilters.theme).then((r) => {
+    this.indexes = r.data
+    })
   }
 }
 </script>
+
+<style lang="scss">
+.step-e {
+  .results {
+    .tag {
+      height: auto;
+      white-space: initial !important;
+      padding-top: 0.75em;
+      padding-bottom: 0.75em;
+    }
+  }
+  .autocomplete .dropdown-item {
+    white-space: initial;
+    overflow: initial;
+    text-overflow: initial;
+    span {
+      white-space: initial;
+    }
+  }
+}
+</style>

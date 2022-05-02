@@ -3,6 +3,11 @@ const getDefaultState = () => ({
   selectedGoals: [],
   selectedSubgoals: [],
   selectedMetrics: [],
+  selectedFilters: {
+    'country': [],
+    'region': [],
+    'theme': []
+  },
   selectedIndexes: []
 })
 const state = getDefaultState()
@@ -47,21 +52,40 @@ const mutations = {
   setMetrics(state, metrics) {
     state.selectedMetrics = metrics
   },
+  addFilter(state, filter) {
+    let key = filter[0]
+    let value = filter[1]
+
+    var found = state.selectedFilters[key].filter((sf) => sf === value)
+    if (found.length === 0) {
+      state.selectedFilters[key].push(value)
+    }
+    state.selectedFilters[key] = state.selectedFilters[key].sort(
+      (a, b) => a.localeCompare(b)
+    )
+  },
+  removeFilter(state, filter) {
+    let key = filter[0]
+    let value = filter[1]
+    
+    var found = state.selectedFilters[key].filter((sf) => sf === value)
+    if (found.length > 0) {
+      state.selectedFilters[key] = state.selectedFilters[key].filter(function(el) { return el != found[0]; });
+    }
+  },
   addIndex(state, uhri) {
-    // ADJUST THIS FUNCTION TO UHRI
-    var found = state.selectedIndexes.filter((ssgoal) => ssgoal.id === uhri.id)
+    var found = state.selectedIndexes.filter((suhri) => suhri === uhri)
     if (found.length === 0) {
       state.selectedIndexes.push(uhri)
     }
     state.selectedIndexes = state.selectedIndexes.sort(
-      (a, b) => a.id.localeCompare(b.id)
+      (a, b) => a.localeCompare(b)
     )
   },
   removeIndex(state, uhri) {
-    // ADJUST THIS FUNCTION TO UHRI
-    var found = state.selectedIndexes.filter((ssgoal) => ssgoal.id === uhri.id)
+    var found = state.selectedIndexes.filter((suhri) => suhri === uhri)
     if (found.length > 0) {
-      state.selectedIndexes = state.selectedIndexes.filter(function(el) { return el.id != found[0].id; });
+      state.selectedIndexes = state.selectedIndexes.filter(function(el) { return el != found[0]; });
     }
   },
   resetState (state) {

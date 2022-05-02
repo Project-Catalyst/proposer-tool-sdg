@@ -106,6 +106,11 @@ export default {
       )
       return goalsTags
     },
+    selectedSubgoalsIds() {
+      return this.selectedSubgoals.map((sgoal) => {
+        return sgoal.id
+      })
+    }
     /*
     selectedTags() {
       let goalsTags = this.selectedGoals.map((goal) => {
@@ -130,6 +135,19 @@ export default {
       }
     },
     unselectGoal(goal) {
+      // console.log(`REMOVING ${goal.id}`)
+      // let sgoals_ids = goal.subgoals.map((sgoal) => {
+      //   return sgoal.id
+      // })
+      // console.log(sgoals_ids)
+      // let selec_ids = this.selectedSubgoalsIds
+      // console.log(selec_ids)
+      // sgoals_ids.forEach(id => {
+      //   if (selec_ids.includes(id)){
+      //     console.log(id)
+      //   }
+      // })
+      // console.log(goal)
       this.$emit('unselect-goal', goal)
     },
     filteredDataArray(values) {

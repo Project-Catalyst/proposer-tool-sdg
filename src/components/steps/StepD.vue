@@ -7,7 +7,7 @@
           <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE')"></div>
           <div v-html="$t('step.UHRI_MSG')"></div>
         </div>
-        <div class="column is-12"><b-field label="FILTERS">
+        <div class="column is-12"><b-field label="1. CHOOSE HOW TO FILTER THE UHRI INDEXES">
           <div class="column is-4"><b-field label="Country">
             <b-autocomplete
                 ref="autocomplete"
@@ -18,7 +18,7 @@
                 max-height="450px"
                 :open-on-focus="true"
                 :field="'title'"
-                @select="option => filterOption(option, 'country')">
+                @select="option => selectFilter('country', option)">
                 <template #empty>No results found</template>
             </b-autocomplete>  
           </b-field></div>
@@ -32,7 +32,7 @@
                 max-height="450px"
                 :open-on-focus="true"
                 :field="'title'"
-                @select="option => filterOption(option, 'region')">
+                @select="option => selectFilter('region', option)">
                 <template #empty>No results found</template>
             </b-autocomplete>  
           </b-field></div>
@@ -46,44 +46,58 @@
                 max-height="450px"
                 :open-on-focus="true"
                 :field="'title'"
-                @select="option => filterOption(option, 'theme')">
+                @select="option => selectFilter('theme', option)">
                 <template #empty>No results found</template>
             </b-autocomplete>  
           </b-field></div>
-        </b-field></div>
-        <div class="column is-12"><b-field label="SELECT YOUR UHRI INDEXES">
-          <b-autocomplete
-              ref="autocomplete"
-              v-model="search"
-              :data="filteredDataIndex(this.uhriIndexesTemp)"
-              placeholder="Search UHRI by text"
-              icon="magnify"
-              max-height="450px"
-              :open-on-focus="true"
-              :field="'title'"
-              @select="option => selectIndex(option)">
-              <template #empty>No results found</template>
-          </b-autocomplete>  
         </b-field></div>
       </div>
     </section>
     <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
+          <div class="subtitle" v-html="$t('step.SELECTED_FILTERS')"></div>
         </div>
         <div class="column is-12">
-          <b-taglist v-if="selectedIndexes.length > 0">
-            <b-tag type="is-primary is-light"
-              closable
-              size="is-medium"
-              @close="unselectIndex(uhri)"
-              :key="`uhri-selected-${index}`"
-              v-for="uhri, index in selectedIndexes">{{uhri.title}}</b-tag>
-          </b-taglist>
-          <div class="content" v-if="selectedIndexes.length === 0">
-            No UHRI indexes selected
-          </div>
+          <b-field label="Selected Country Filters:">
+            <b-taglist v-if="selectedFilters.country.length > 0">
+              <b-tag type="is-primary is-light"
+                closable
+                size="is-medium"
+                @close="unselectFilter('country', filter)"
+                :key="`filter-selected-${index}`"
+                v-for="filter, index in selectedFilters.country">{{filter}}</b-tag>
+            </b-taglist>
+            <div class="content" v-if="selectedFilters.country.length === 0">
+              No Country filters selected
+            </div>
+          </b-field>
+          <b-field label="Selected Region Filters:">
+            <b-taglist v-if="selectedFilters.region.length > 0">
+              <b-tag type="is-primary is-light"
+                closable
+                size="is-medium"
+                @close="unselectFilter('region',filter)"
+                :key="`filter-selected-${index}`"
+                v-for="filter, index in selectedFilters.region">{{filter}}</b-tag>
+            </b-taglist>
+            <div class="content" v-if="selectedFilters.region.length === 0">
+              No Region filters selected
+            </div>
+          </b-field>
+          <b-field label="Selected Theme Filters:">
+            <b-taglist v-if="selectedFilters.theme.length > 0">
+              <b-tag type="is-primary is-light"
+                closable
+                size="is-medium"
+                @close="unselectFilter('theme',filter)"
+                :key="`filter-selected-${index}`"
+                v-for="filter, index in selectedFilters.theme">{{filter}}</b-tag>
+            </b-taglist>
+            <div class="content" v-if="selectedFilters.theme.length === 0">
+              No Theme filters selected
+            </div>
+          </b-field>
         </div>
       </div>
     </section>
@@ -93,85 +107,46 @@
 <script>
 // @ is an alias to /src
 
-// import axios from 'axios';
-// import CatalystAPI from '@/api/catalyst.js'
+import UhriAPI from '@/api/uhri.js'
 
 export default {
   name: 'StepD',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedIndexes'],
+  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedFilters'],
   data() {
     return {
-      search: '',
       search_country: '',
       search_region: '',
       search_theme: '',
+      // populate dropdown
+      uhriCountries: [],
+      uhriRegions: [], 
+      uhriThemes: []
       
-      filters: {
-        "country": '',
-        "region": '',
-        "theme": ''
-      },
-
-      // populate with mounted api
-      sdg_ids: [],
-      uhriIndexes: [],
-      uhriCountries: ["Sierra Leone", "Singapore", "Palau", "Latvia"],
-      uhriRegions: ["Africa", "Asia-Pacific", "Eastern Europe"], 
-      uhriThemes: ["- Right to education", "- Human trafficking & contemporary forms of slavery",
-                "- Equality & non-discrimination", "- Ratification of & accession to international instruments"]
-    }
-  },
-  computed: {
-    uhriIndexesTemp() { // [REMOVE] WILL BE POPULATED ON THE DATA()
-      return this.selectedGoals.map((goal) => {
-        return goal.subgoals
-      }).flat()
     }
   },
   methods: {
-    loadUhriData(){
-      console.log("CALL API.update(sdg_ids, **params)")
-      console.log(this.sdg_ids)
-      console.log(this.filters)
-      
-      // API.loadOptions() endpoint 
-      // API.load(this.sdg_ids, this.filters).then((res) => {
-      //   this.uhriIndexes = res.data.uhri_list
-      //   this.uhriCountries = res.data.countries_list
-      //   this.uhriRegions = res.data.region_list
-      //   this.uhriThemes = res.data.themes_list
-      // })
-    },
-    filterOption(option, filter) {
-      if (option === null) {
-        option = ''
+    selectFilter(filter, value) {
+      if (value) {
+        this.$emit('select-filter', filter, value)
       }
-      this.filters[filter] = option
-      this.loadUhriData()
-    },
-    selectIndex(uhri) {
-      if (uhri) {
-        this.$emit('select-uhri', [uhri])
-        setTimeout(() => this.search = '', 10)
+
+      if(filter==='country'){
+        setTimeout(() => this.search_country = '', 10)
+      }
+      else if(filter==='region'){
+        setTimeout(() => this.search_region = '', 10)
+      }
+      else if(filter==='theme'){
+        setTimeout(() => this.search_theme = '', 10)
       }
     },
-    unselectIndex(uhri) {
-      this.$emit('unselect-uhri', uhri)
-    },
-    filteredDataIndex(values) {
-      if (this.search.length > 0) {
-        return values.filter((option) => {
-          return option.title
-              .toString()
-              .toLowerCase()
-              .indexOf(this.search.toLowerCase()) >= 0
-        })
-      }
-      return values
+    unselectFilter(filter, value) {
+      this.$emit('unselect-filter', filter, value)
     },
     filteredDataCountry(values) {
       if (this.search_country.length > 0) {
         return values.filter((option) => {
+          // option.id
           return option
               .toString()
               .toLowerCase()
@@ -183,6 +158,7 @@ export default {
     filteredDataRegion(values) {
       if (this.search_region.length > 0) {
         return values.filter((option) => {
+          // option.id
           return option
               .toString()
               .toLowerCase()
@@ -194,6 +170,7 @@ export default {
     filteredDataTheme(values) {
       if (this.search_theme.length > 0) {
         return values.filter((option) => {
+          // option.id
           return option
               .toString()
               .toLowerCase()
@@ -204,10 +181,21 @@ export default {
     },
   },
   mounted(){
-    this.sdg_ids = this.selectedGoals.map((goal) => {return goal.id.toString()}).concat(
-              this.selectedSubgoals.map((sgoal) => {return sgoal.id})
-            )
-    this.loadUhriData()
+
+    let g_ids = this.selectedGoals.map((goal) => {return goal.id})
+    let sg_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
+
+    UhriAPI.countries(g_ids, sg_ids).then((r) => {
+      this.uhriCountries = r.data
+      console.log('this.uhriCountries')
+      console.log(this.uhriCountries)
+    })
+    UhriAPI.regions(g_ids, sg_ids).then((r) => {
+      this.uhriRegions = r.data
+    })
+    UhriAPI.themes(g_ids, sg_ids).then((r) => {
+      this.uhriThemes = r.data
+    })
   }
 }
 </script>
