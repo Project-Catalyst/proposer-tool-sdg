@@ -17,7 +17,7 @@
                 icon="filter"
                 max-height="450px"
                 :open-on-focus="true"
-                :field="'title'"
+                :field="'name'"
                 @select="option => selectFilter('country', option)">
                 <template #empty>No results found</template>
             </b-autocomplete>  
@@ -31,7 +31,7 @@
                 icon="filter"
                 max-height="450px"
                 :open-on-focus="true"
-                :field="'title'"
+                :field="'name'"
                 @select="option => selectFilter('region', option)">
                 <template #empty>No results found</template>
             </b-autocomplete>  
@@ -45,7 +45,7 @@
                 icon="filter"
                 max-height="450px"
                 :open-on-focus="true"
-                :field="'title'"
+                :field="'name'"
                 @select="option => selectFilter('theme', option)">
                 <template #empty>No results found</template>
             </b-autocomplete>  
@@ -66,7 +66,7 @@
                 size="is-medium"
                 @close="unselectFilter('country', filter)"
                 :key="`filter-selected-${index}`"
-                v-for="filter, index in selectedFilters.country">{{filter}}</b-tag>
+                v-for="filter, index in selectedFilters.country">{{filter.name}}</b-tag>
             </b-taglist>
             <div class="content" v-if="selectedFilters.country.length === 0">
               No Country filters selected
@@ -79,7 +79,7 @@
                 size="is-medium"
                 @close="unselectFilter('region',filter)"
                 :key="`filter-selected-${index}`"
-                v-for="filter, index in selectedFilters.region">{{filter}}</b-tag>
+                v-for="filter, index in selectedFilters.region">{{filter.name}}</b-tag>
             </b-taglist>
             <div class="content" v-if="selectedFilters.region.length === 0">
               No Region filters selected
@@ -92,7 +92,7 @@
                 size="is-medium"
                 @close="unselectFilter('theme',filter)"
                 :key="`filter-selected-${index}`"
-                v-for="filter, index in selectedFilters.theme">{{filter}}</b-tag>
+                v-for="filter, index in selectedFilters.theme">{{filter.name}}</b-tag>
             </b-taglist>
             <div class="content" v-if="selectedFilters.theme.length === 0">
               No Theme filters selected
@@ -146,8 +146,7 @@ export default {
     filteredDataCountry(values) {
       if (this.search_country.length > 0) {
         return values.filter((option) => {
-          // option.id
-          return option
+          return option.name
               .toString()
               .toLowerCase()
               .indexOf(this.search_country.toLowerCase()) >= 0
@@ -158,8 +157,7 @@ export default {
     filteredDataRegion(values) {
       if (this.search_region.length > 0) {
         return values.filter((option) => {
-          // option.id
-          return option
+          return option.name
               .toString()
               .toLowerCase()
               .indexOf(this.search_region.toLowerCase()) >= 0
@@ -182,19 +180,26 @@ export default {
   },
   mounted(){
 
-    let g_ids = this.selectedGoals.map((goal) => {return goal.id})
-    let sg_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
+    // let g_ids = this.selectedGoals.map((goal) => {return goal.id})
+    // let sg_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
 
-    UhriAPI.countries(g_ids, sg_ids).then((r) => {
-      this.uhriCountries = r.data
-      console.log('this.uhriCountries')
-      console.log(this.uhriCountries)
+    UhriAPI.countries().then((r) => {
+      let data = r.data.countries
+      data.forEach(c => {
+        this.uhriCountries.push(c)        
+      })
     })
-    UhriAPI.regions(g_ids, sg_ids).then((r) => {
-      this.uhriRegions = r.data
+    UhriAPI.regions().then((r) => {
+      let data = r.data.regions
+      data.forEach(el => {
+        this.uhriRegions.push(el)        
+      })
     })
-    UhriAPI.themes(g_ids, sg_ids).then((r) => {
-      this.uhriThemes = r.data
+    UhriAPI.themes().then((r) => {
+      let data = r.data.themes
+      data.forEach(el => {
+        this.uhriThemes.push(el)        
+      })
     })
   }
 }

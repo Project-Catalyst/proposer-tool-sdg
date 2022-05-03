@@ -213,7 +213,6 @@ export default {
   },
   mounted() {
     this.checkRouteConsistency(this.step)
-    console.log(this.selectedIndexes)
   }
 }
 </script>

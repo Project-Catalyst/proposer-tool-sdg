@@ -61,7 +61,7 @@ const mutations = {
       state.selectedFilters[key].push(value)
     }
     state.selectedFilters[key] = state.selectedFilters[key].sort(
-      (a, b) => a.localeCompare(b)
+      (a, b) => a.name.localeCompare(b.name)
     )
   },
   removeFilter(state, filter) {
