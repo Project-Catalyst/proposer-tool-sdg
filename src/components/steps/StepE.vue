@@ -15,7 +15,7 @@
                   <b-tag type="is-primary is-light"
                     size="is-medium"
                     :key="`filter-selected-${index}`"
-                    v-for="filter, index in selectedFilters.country">{{filter}}</b-tag>
+                    v-for="filter, index in selectedFilters.country">{{filter.name}}</b-tag>
                 </b-taglist>
                 <div class="content" v-if="selectedFilters.country.length === 0">
                   No Country filters selected
@@ -26,7 +26,7 @@
                   <b-tag type="is-primary is-light"
                     size="is-medium"
                     :key="`filter-selected-${index}`"
-                    v-for="filter, index in selectedFilters.region">{{filter}}</b-tag>
+                    v-for="filter, index in selectedFilters.region">{{filter.name}}</b-tag>
                 </b-taglist>
                 <div class="content" v-if="selectedFilters.region.length === 0">
                   No Region filters selected
@@ -37,7 +37,7 @@
                   <b-tag type="is-primary is-light" 
                     size="is-medium"
                     :key="`filter-selected-${index}`"
-                    v-for="filter, index in selectedFilters.theme">{{filter}}</b-tag>
+                    v-for="filter, index in selectedFilters.theme">{{filter.name}}</b-tag>
                 </b-taglist>
                 <div class="content" v-if="selectedFilters.theme.length === 0">
                   No Theme filters selected
@@ -46,6 +46,7 @@
             </div>
             <div class="column is-12"><b-field label="2. SELECT YOUR UHRI INDEXES">
                 <b-autocomplete
+                    v-if="indexes.length > 0"
                     ref="autocomplete"
                     v-model="search"
                     :data="filteredDataIndex(this.indexes)"
@@ -56,7 +57,13 @@
                     :field="'title'"
                     @select="option => selectIndex(option)">
                     <template #empty>No results found</template>
-                </b-autocomplete></b-field>
+                </b-autocomplete>
+                <div class="content" v-if="indexes.length > 0">
+                  Loaded {{count}} indexes
+                </div>
+                <div class="content" v-if="indexes.length === 0">
+                  <b-progress size="is-small"></b-progress>Loading indexes from database
+                </div></b-field>
             </div>
         </div>
     </section>
@@ -72,7 +79,7 @@
               size="is-medium"
               @close="unselectIndex(uhri)"
               :key="`uhri-selected-${index}`"
-              v-for="uhri, index in selectedIndexes">{{uhri}}</b-tag>
+              v-for="uhri, index in selectedIndexes">{{uhri.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedIndexes.length === 0">
             No UHRI indexes selected
@@ -94,9 +101,8 @@ export default {
   data() {
     return {
       search: '',
-      // populate dropdown
-      indexes: []
-      
+      indexes: [],
+      count: 0
     }
   },
   methods: {
@@ -123,15 +129,17 @@ export default {
     },
   },
   mounted(){
-    let g_ids = this.selectedGoals.map((goal) => {return goal.id.toString()})
-    let sg_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
+    let goals_ids = this.selectedGoals.map((goal) => {return goal.id})
+    let subgoals_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
 
-    // ADJUST FILTERS VALUES
-    UhriAPI.uhriIndexes(g_ids, sg_ids, 
-                this.selectedFilters.country,
-                this.selectedFilters.region,
-                this.selectedFilters.theme).then((r) => {
-    this.indexes = r.data
+    UhriAPI.uhriIndexes(goals_ids, 
+                        subgoals_ids, 
+                        this.selectedFilters.country,
+                        this.selectedFilters.region,
+                        this.selectedFilters.theme).then((r) => {
+      console.log(r.data)
+      this.indexes = r.data.humanRights
+      this.count = r.data.count
     })
   }
 }

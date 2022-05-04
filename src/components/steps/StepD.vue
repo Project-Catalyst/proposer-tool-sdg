@@ -117,7 +117,6 @@ export default {
       search_country: '',
       search_region: '',
       search_theme: '',
-      // populate dropdown
       uhriCountries: [],
       uhriRegions: [], 
       uhriThemes: []
@@ -179,27 +178,15 @@ export default {
     },
   },
   mounted(){
-
-    // let g_ids = this.selectedGoals.map((goal) => {return goal.id})
-    // let sg_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
-
     UhriAPI.countries().then((r) => {
-      let data = r.data.countries
-      data.forEach(c => {
-        this.uhriCountries.push(c)        
-      })
+      this.uhriCountries = r.data.countries
     })
     UhriAPI.regions().then((r) => {
-      let data = r.data.regions
-      data.forEach(el => {
-        this.uhriRegions.push(el)        
-      })
+      this.uhriRegions = r.data.regions
     })
     UhriAPI.themes().then((r) => {
-      let data = r.data.themes
-      data.forEach(el => {
-        this.uhriThemes.push(el)        
-      })
+      this.uhriThemes = r.data.themes
+      this.uhriThemes.sort((a, b) => a.name.localeCompare(b.name))
     })
   }
 }

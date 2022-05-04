@@ -33,7 +33,7 @@
             <h5>Universal Human Rights Index (UHRI)</h5>
               <p v-for="uhri in selectedIndexes"
               :key="`uhri-${uhri}`">
-              {{uhri}}
+              {{uhri.title}}
               </p>
               <div v-if="selectedIndexes.length === 0">
                 No UHRI indexes selected
@@ -71,8 +71,7 @@ export default {
       text += '\nKey Performance Indicator (KPI):\n'
       this.selectedMetrics.forEach((m) => text += `${m.title}\n`)
       text += '\nUniversal Human Rights Index (UHRI):\n'
-      this.selectedIndexes.forEach((i) => text += `${i}\n`) // ADJUST THIS LINE FOR API-DATA FORMAT
-      // this.selectedIndexes.forEach((i) => text += `${i.title}\n`) // ADJUST THIS LINE FOR API-DATA FORMAT
+      this.selectedIndexes.forEach((i) => text += `${i.title}\n`)
       text += '\n\n#proposertoolsdg'
       return text
     }

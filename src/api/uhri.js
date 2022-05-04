@@ -3,26 +3,31 @@ import axios from 'axios';
 const base_url = 'http://142.93.138.243:5000/api/v1'
 
 export default {
-  uhriIndexes(goals_ids, subgoals_ids, country, region, theme){
-    // Return:
-    // UHRI TITLES
-    console.log(">> API.titles")
-    console.log(goals_ids)
-    console.log(subgoals_ids)
-    console.log(country)
-    console.log(region)
-    console.log(theme)
+  uhriIndexes(goals_ids, subgoals_ids, countries, regions, themes){
     
-    // return axios.get('base_url/endpointPath', {
-    //             params: {
-    //                     G_ID: goals_ids,        // array[str]
-    //                     SG_ID: subgoals_ids,    // array[str]
-    //                     COUNTRY: country,       // TYPE?
-    //                     REGION: region,         // TYPE?
-    //                     THEME: theme,           // TYPE?
-    //                 }
-    //             })
-    return axios.get('_texts.json')
+    console.log(">> API.uhriIndexes")
+    console.log("GOALS:")
+    console.log(goals_ids)
+    console.log("SUB-GOALS:")
+    console.log(subgoals_ids)
+    
+    // assume there will always be Goals and Subgoals
+    let query = goals_ids.map((id) => `sdgIds=${id}`).join("&")
+    query = query + "&" + subgoals_ids.map((id) => `sgIds="${id}"`).join("&")
+
+    if(countries.length > 0){
+      query = query + "&" + countries.map((el) => `country="${el.name}"`).join("&")
+    }
+    if(regions.length > 0){
+      query = query + "&" + regions.map((el) => `region="${el.name}"`).join("&")
+    }
+    if(themes.length > 0){
+      query = query + "&" + themes.map((el) => `theme="${el.name}"`).join("&")
+    }
+    console.log('QUERY:')
+    console.log(query)
+
+    return axios.get(`${base_url}/humanRights?${query}`)
   },
   countries(){
     return axios.get(`${base_url}/countries`)
