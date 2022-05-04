@@ -52,6 +52,12 @@ const mutations = {
   setMetrics(state, metrics) {
     state.selectedMetrics = metrics
   },
+  removeMetric(state, metric){
+    var found = state.selectedMetrics.filter((smetric) => smetric.id === metric.id)
+    if (found.length > 0) {
+      state.selectedMetrics = state.selectedMetrics.filter(function(el) { return el.id != found[0].id; });
+    }
+  },
   addFilter(state, filter) {
     let key = filter[0]
     let value = filter[1]
@@ -79,7 +85,7 @@ const mutations = {
       state.selectedIndexes.push(uhri)
     }
     state.selectedIndexes = state.selectedIndexes.sort(
-      (a, b) => a.localeCompare(b)
+      (a, b) => a.title.localeCompare(b.title)
     )
   },
   removeIndex(state, uhri) {

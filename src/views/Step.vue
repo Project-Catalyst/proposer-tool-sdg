@@ -117,6 +117,12 @@ export default {
     },
     unselectGoal(goal) {
       this.$store.commit('goals/removeGoal', goal)
+      // remove child goal.subgoals
+      let ssgoals = this.selectedSubgoals.map((sgoal) => { return sgoal.id })
+      let unselec_sgoals = goal.subgoals.filter((sgoal) => ssgoals.includes(sgoal.id))
+      unselec_sgoals.forEach(sgoal => {
+        this.unselectSubgoal(sgoal)
+      });
     },
     selectSubgoal(subgoals) {
       // returns an array of goals to be added to selected
@@ -126,9 +132,18 @@ export default {
     },
     unselectSubgoal(subgoal) {
       this.$store.commit('goals/removeSubgoal', subgoal)
+      // remove child subgoal.metrics
+      let smetrics = this.selectedMetrics.map((metric) => { return metric.id })
+      let unselec_metrics = subgoal.metrics.filter((metric) => smetrics.includes(metric.id))
+      unselec_metrics.forEach(metric => {
+        this.removeMetric(metric)
+      });
     },
     setMetric(metrics) {
       this.$store.commit('goals/setMetrics', metrics)
+    },
+    removeMetric(metric){
+      this.$store.commit('goals/removeMetric', metric)
     },
     selectIndex(uhris) {
       uhris.forEach((uhri) => {
