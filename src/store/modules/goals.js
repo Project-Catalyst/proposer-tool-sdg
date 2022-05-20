@@ -79,14 +79,8 @@ const mutations = {
       state.selectedFilters[key] = state.selectedFilters[key].filter(function(el) { return el != found[0]; });
     }
   },
-  addIndex(state, uhri) {
-    var found = state.selectedIndexes.filter((suhri) => suhri === uhri)
-    if (found.length === 0) {
-      state.selectedIndexes.push(uhri)
-    }
-    state.selectedIndexes = state.selectedIndexes.sort(
-      (a, b) => a.title.localeCompare(b.title)
-    )
+  setIndexes(state, uhris) {
+    state.selectedIndexes = uhris
   },
   removeIndex(state, uhri) {
     var found = state.selectedIndexes.filter((suhri) => suhri === uhri)

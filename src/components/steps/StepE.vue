@@ -1,90 +1,102 @@
 <template>
   <div class="step-e">
     <section class="box">
-        <div class="columns is-multiline is-12">
-            <div class="column is-12">
-                <div class="title">{{"Step 4: Select your Universal Human Rights Index"}}</div>
-                <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE')"></div>
-                <div v-html="$t('step.UHRI_MSG')"></div>
-            </div>
-            <div class="column is-12"><b-field label="1. CHOOSE HOW TO FILTER THE UHRI INDEXES"></b-field>
-            </div>
-            <div class="column is-12">
-              <b-field label="Country">
-                <b-taglist v-if="selectedFilters.country.length > 0">
-                  <b-tag type="is-primary is-light"
-                    size="is-medium"
-                    :key="`filter-selected-${index}`"
-                    v-for="filter, index in selectedFilters.country">{{filter.name}}</b-tag>
-                </b-taglist>
-                <div class="content" v-if="selectedFilters.country.length === 0">
-                  No Country filters selected
-                </div>
-              </b-field>
-              <b-field label="Region">
-                <b-taglist v-if="selectedFilters.region.length > 0">
-                  <b-tag type="is-primary is-light"
-                    size="is-medium"
-                    :key="`filter-selected-${index}`"
-                    v-for="filter, index in selectedFilters.region">{{filter.name}}</b-tag>
-                </b-taglist>
-                <div class="content" v-if="selectedFilters.region.length === 0">
-                  No Region filters selected
-                </div>
-              </b-field>
-              <b-field label="Theme">
-                <b-taglist v-if="selectedFilters.theme.length > 0">
-                  <b-tag type="is-primary is-light" 
-                    size="is-medium"
-                    :key="`filter-selected-${index}`"
-                    v-for="filter, index in selectedFilters.theme">{{filter.name}}</b-tag>
-                </b-taglist>
-                <div class="content" v-if="selectedFilters.theme.length === 0">
-                  No Theme filters selected
-                </div>
-              </b-field>
-            </div>
-            <div class="column is-12"><b-field label="2. SELECT YOUR UHRI INDEXES">
-                <b-autocomplete
-                    v-if="indexes.length > 0"
-                    ref="autocomplete"
-                    v-model="search"
-                    :data="filteredDataIndex(this.indexes)"
-                    placeholder="Search UHRI by text"
-                    icon="magnify"
-                    max-height="450px"
-                    :open-on-focus="true"
-                    :field="'title'"
-                    @select="option => selectIndex(option)">
-                    <template #empty>No results found</template>
-                </b-autocomplete>
-                <div class="content" v-if="indexes.length > 0">
-                  Loaded {{count}} indexes
-                </div>
-                <div class="content" v-if="indexes.length === 0">
-                  <b-progress size="is-small"></b-progress>Loading indexes from database
-                </div></b-field>
-            </div>
-        </div>
-    </section>
-    <section class="results box">
-      <div class="columns is-multiline">
+      <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
+          <div class="title">{{"Step 4: Select your Universal Human Rights Indexes (UHRI)"}}</div>
+          <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE2')"></div>
         </div>
-        <div class="column is-12">
-          <b-taglist v-if="selectedIndexes.length > 0">
-            <b-tag type="is-primary is-light"
-              closable
-              size="is-medium"
-              @close="unselectIndex(uhri)"
-              :key="`uhri-selected-${index}`"
-              v-for="uhri, index in selectedIndexes">{{uhri.title}}</b-tag>
-          </b-taglist>
-          <div class="content" v-if="selectedIndexes.length === 0">
-            No UHRI indexes selected
+      </div>
+      <div class="columns filters">
+          <div class="column is-4">
+            <b-field label="Country">
+            <b-autocomplete
+                ref="autocomplete"
+                v-model="search_country"
+                :data="filteredDataCountry(this.uhriCountries)"
+                placeholder="Filter UHRI by country"
+                icon="filter"
+                max-height="450px"
+                :open-on-focus="true"
+                :field="'name'"
+                @select="option => selectFilter('country', option)">
+                <template #empty>No results found</template>
+            </b-autocomplete>
+            </b-field>
+              <b-taglist v-if="selectedFilters.country.length > 0">
+                <b-tag type="is-primary is-light"
+                  closable
+                  size="is-small"
+                  @close="unselectFilter('country', filter)"
+                  :key="`filter-selected-${index}`"
+                  v-for="filter, index in selectedFilters.country">{{filter.name}}</b-tag>
+              </b-taglist>
+              <div class="content" v-if="selectedFilters.country.length === 0">
+                <em>* Field required</em>
+              </div>
           </div>
-        </div>
+          <div class="column is-4">
+            <b-field label="Region">
+            <b-autocomplete
+                ref="autocomplete"
+                v-model="search_region"
+                :data="filteredDataRegion(this.uhriRegions)"
+                placeholder="Filter UHRI by region"
+                icon="filter"
+                max-height="450px"
+                :open-on-focus="true"
+                :field="'name'"
+                @select="option => selectFilter('region', option)">
+                <template #empty>No results found</template>
+            </b-autocomplete>  
+            </b-field>
+              <b-taglist v-if="selectedFilters.region.length > 0">
+                <b-tag type="is-primary is-light"
+                  closable
+                  size="is-small"
+                  @close="unselectFilter('region',filter)"
+                  :key="`filter-selected-${index}`"
+                  v-for="filter, index in selectedFilters.region">{{filter.name}}</b-tag>
+              </b-taglist>
+              <div class="content" v-if="selectedFilters.region.length === 0">
+                No filters selected
+              </div>
+          </div>
+          <div class="column is-4">
+            <b-field label="Theme">
+            <b-autocomplete
+                ref="autocomplete"
+                v-model="search_theme"
+                :data="filteredDataTheme(this.uhriThemes)"
+                placeholder="Filter UHRI by theme"
+                icon="filter"
+                max-height="450px"
+                :open-on-focus="true"
+                :field="'name'"
+                @select="option => selectFilter('theme', option)">
+                <template #empty>No results found</template>
+            </b-autocomplete>  
+            </b-field>
+              <b-taglist v-if="selectedFilters.theme.length > 0">
+                <b-tag type="is-primary is-light"
+                  closable
+                  size="is-small"
+                  @close="unselectFilter('theme',filter)"
+                  :key="`filter-selected-${index}`"
+                  v-for="filter, index in selectedFilters.theme">{{filter.name}}</b-tag>
+              </b-taglist>
+              <div class="content" v-if="selectedFilters.theme.length === 0">
+                No filters selected
+              </div>
+          </div>
+      </div>
+      <div class="content has-text-centered">
+          <div class="column is-12">
+              <b-button 
+              @click="goUhriSearch"
+              :disabled="!canLoadIndexes"
+              type="is-primary is-medium">Load UHRI indexes</b-button>
+          </div>
       </div>
     </section>
   </div>
@@ -100,46 +112,90 @@ export default {
   props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
-      search: '',
-      indexes: [],
-      count: 0
+      search_country: '',
+      search_region: '',
+      search_theme: '',
+      uhriCountries: [],
+      uhriRegions: [], 
+      uhriThemes: [],
+      stepUhri: 4
     }
   },
   methods: {
-    selectIndex(uhri) {
-      if (uhri) {
-        this.$emit('select-uhri', [uhri])
-        setTimeout(() => this.search = '', 10)
+    goUhriSearch() {
+        this.$router.push({ name: "step", params: { step: this.stepUhri+2} })
+    },
+    selectFilter(filter, value) {
+      if (value) {
+        this.$emit('select-filter', filter, value)
+      }
+
+      if(filter==='country'){
+        setTimeout(() => this.search_country = '', 10)
+      }
+      else if(filter==='region'){
+        setTimeout(() => this.search_region = '', 10)
+      }
+      else if(filter==='theme'){
+        setTimeout(() => this.search_theme = '', 10)
       }
     },
-    unselectIndex(uhri) {
-      this.$emit('unselect-uhri', uhri)
+    unselectFilter(filter, value) {
+      this.$emit('unselect-filter', filter, value)
     },
-    filteredDataIndex(values) {
-      if (this.search.length > 0) {
+    filteredDataCountry(values) {
+      if (this.search_country.length > 0) {
         return values.filter((option) => {
-          // return option.title
+          return option.name
+              .toString()
+              .toLowerCase()
+              .indexOf(this.search_country.toLowerCase()) >= 0
+        })
+      }
+      return values
+    },
+    filteredDataRegion(values) {
+      if (this.search_region.length > 0) {
+        return values.filter((option) => {
+          return option.name
+              .toString()
+              .toLowerCase()
+              .indexOf(this.search_region.toLowerCase()) >= 0
+        })
+      }
+      return values
+    },
+    filteredDataTheme(values) {
+      if (this.search_theme.length > 0) {
+        return values.filter((option) => {
+          // option.id
           return option
               .toString()
               .toLowerCase()
-              .indexOf(this.search.toLowerCase()) >= 0
+              .indexOf(this.search_theme.toLowerCase()) >= 0
         })
       }
       return values
     },
   },
+  computed: {
+    canLoadIndexes(){
+      if (this.selectedFilters.country.length > 0) {
+        return true
+      }
+      return false
+    }
+  },
   mounted(){
-    let goals_ids = this.selectedGoals.map((goal) => {return goal.id})
-    let subgoals_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
-
-    UhriAPI.uhriIndexes(goals_ids, 
-                        subgoals_ids, 
-                        this.selectedFilters.country,
-                        this.selectedFilters.region,
-                        this.selectedFilters.theme).then((r) => {
-      console.log(r.data)
-      this.indexes = r.data.humanRights
-      this.count = r.data.count
+    UhriAPI.countries().then((r) => {
+      this.uhriCountries = r.data.countries
+    })
+    UhriAPI.regions().then((r) => {
+      this.uhriRegions = r.data.regions
+    })
+    UhriAPI.themes().then((r) => {
+      this.uhriThemes = r.data.themes
+      this.uhriThemes.sort((a, b) => a.name.localeCompare(b.name))
     })
   }
 }
@@ -147,7 +203,7 @@ export default {
 
 <style lang="scss">
 .step-e {
-  .results {
+  .filters {
     .tag {
       height: auto;
       white-space: initial !important;

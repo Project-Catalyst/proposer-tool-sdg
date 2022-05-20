@@ -73,7 +73,7 @@
               v-for="goal, index in selectedGoals">{{goal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedGoals.length === 0">
-            No goals selected
+            <em>* SDG Goals selection required</em>
           </div>
         </div>
       </div>

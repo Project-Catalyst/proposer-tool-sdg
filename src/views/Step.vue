@@ -30,8 +30,7 @@
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
-      @select-filter="selectFilter"
-      @unselect-filter="unselectFilter" 
+      :selectedIndexes="selectedIndexes"
     />
     <step-e
       v-if="step === 5"
@@ -40,11 +39,21 @@
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
-      @select-uhri="selectIndex"
-      @unselect-uhri="unselectIndex" 
+      @select-filter="selectFilter"
+      @unselect-filter="unselectFilter" 
     />
     <step-f
       v-if="step === 6"
+      :goals="goals"
+      :selectedGoals="selectedGoals"
+      :selectedSubgoals="selectedSubgoals"
+      :selectedFilters="selectedFilters"
+      :selectedIndexes="selectedIndexes"
+      @set-uhri="setIndex"
+      @unselect-uhri="unselectIndex" 
+    />
+    <step-g
+      v-if="step === 7"
       :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
@@ -60,8 +69,12 @@
       <b-button
         @click="goNext"
         :disabled="!nextAvailable"
-        v-if="step !== maxSteps"
+        v-if="step < stepUhri"
         type="is-primary is-large">Next</b-button>
+      <b-button style="float: right;"
+        @click="goFinish"
+        v-if="step >= stepUhri && step !== maxSteps"
+        type="is-primary is-light is-large" outlined>Finish selection</b-button>
     </div>
     <div class="container buttons mt-4">
       <b-button
@@ -84,6 +97,7 @@ import StepC from "@/components/steps/StepC"
 import StepD from "@/components/steps/StepD"
 import StepE from "@/components/steps/StepE"
 import StepF from "@/components/steps/StepF"
+import StepG from "@/components/steps/StepG"
 
 export default {
   name: 'Step',
@@ -93,12 +107,14 @@ export default {
     StepC,
     StepD,
     StepE,
-    StepF
+    StepF,
+    StepG
   },
   data() {
     return {
       goals: goals,
-      maxSteps: 6
+      maxSteps: 7,
+      stepUhri: 4
     }
   },
   methods: {
@@ -145,10 +161,8 @@ export default {
     removeMetric(metric){
       this.$store.commit('goals/removeMetric', metric)
     },
-    selectIndex(uhris) {
-      uhris.forEach((uhri) => {
-        this.$store.commit('goals/addIndex', uhri)
-      })
+    setIndex(uhris) {
+      this.$store.commit('goals/setIndexes', uhris)
     },
     unselectIndex(uhri) {
       this.$store.commit('goals/removeIndex', uhri)
@@ -161,13 +175,28 @@ export default {
     },
     goBack() {
       if (this.backAvailable) {
-        this.$router.push({ name: "step", params: { step: (this.step - 1)} })
+        if (this.step===(this.stepUhri+1) && (this.selectedFilters.country.length > 0) ){
+          this.$router.push({ name: "step", params: { step: (this.stepUhri - 1)} })  
+        } else if (this.step===(this.stepUhri+2) && (this.selectedIndexes.length > 0) ){
+          this.$router.push({ name: "step", params: { step: (this.stepUhri - 1)} })  
+        } else {
+          this.$router.push({ name: "step", params: { step: (this.step - 1)} })
+        }
       }
     },
     goNext() {
       if (this.nextAvailable) {
-        this.$router.push({ name: "step", params: { step: (this.step + 1)} })
+        if (this.step===(this.stepUhri-1) && (this.selectedIndexes.length > 0) ){
+          this.$router.push({ name: "step", params: { step: (this.stepUhri + 2)} })  
+        } else if (this.step===(this.stepUhri-1) && (this.selectedFilters.country.length > 0) ){
+          this.$router.push({ name: "step", params: { step: (this.stepUhri + 1)} })  
+        } else {
+          this.$router.push({ name: "step", params: { step: (this.step + 1)} })
+        }
       }
+    },
+    goFinish() {
+      this.$router.push({ name: "step", params: { step: this.maxSteps} })
     },
     reset() {
       this.$buefy.dialog.confirm({
@@ -209,16 +238,16 @@ export default {
       return this.step > 1
     },
     nextAvailable() {
-      if (this.step === 1 && this.selectedGoals.length > 0) {
-        return true
+      if (this.step === 1 && this.selectedGoals.length === 0) {
+        return false
       }
-      if (this.step === 2 && this.selectedSubgoals.length > 0) {
-        return true
+      if (this.step === 2 && this.selectedSubgoals.length === 0) {
+        return false
       }
-      if (this.step !== this.maxSteps ) {
-        return true
+      if (this.step === this.maxSteps ) {
+        return false
       }
-      return false
+      return true
     }
   },
   watch: {

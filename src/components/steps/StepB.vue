@@ -51,7 +51,7 @@
               v-for="subgoal, index in selectedSubgoals">{{subgoal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedSubgoals.length === 0">
-            No subgoals selected
+            <em>* Subgoals selection required</em>
           </div>
         </div>
       </div>
