@@ -21,6 +21,26 @@
             </div>
         </div>
     </section>
+    <section class="results box">
+      <div class="columns is-multiline">
+        <div class="column is-12">
+          <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
+        </div>
+        <div class="column is-12">
+          <b-taglist v-if="selectedIndexes.length > 0">
+            <b-tag type="is-primary is-light"
+              closable
+              size="is-medium"
+              @close="unselectIndex(uhri)"
+              :key="`uhri-selected-${index}`"
+              v-for="uhri, index in selectedIndexes">{{uhri.title}}</b-tag>
+          </b-taglist>
+          <div class="content" v-if="selectedIndexes.length === 0">
+            <em>No UHRI selected</em>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -29,7 +49,7 @@
 
 export default {
   name: 'StepD',
-//   props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedFilters', 'selectedIndexes'],
+  props: ['goals', 'selectedIndexes'],
   data() {
     return {
       stepUhri: 4
@@ -38,6 +58,9 @@ export default {
   methods: {
     goUhriFilters() {
         this.$router.push({ name: "step", params: { step: this.stepUhri+1} })
+    },
+    unselectIndex(uhri){
+      this.$emit('unselect-uhri', uhri)
     }
   }
 }

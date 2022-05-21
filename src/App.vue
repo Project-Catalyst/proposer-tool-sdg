@@ -7,11 +7,11 @@
         </b-navbar-item>
       </template>
       <template #end>
-        <b-navbar-item tag="router-link" :to="{ name: 'step', params: { step: 1 } }">
-          {{ $t('general.START') }}
-        </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'home' }">
           {{ $t('general.HOME') }}
+        </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ name: 'step', params: { step: 1 } }">
+          {{ $t('general.START') }}
         </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'page', params: {slug: 'about'}}">
           {{ $t('general.ABOUT') }}

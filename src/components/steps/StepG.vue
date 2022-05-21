@@ -32,21 +32,23 @@
               </div>
             <h5>Universal Human Rights Index (UHRI)</h5>
               <p v-for="uhri in selectedIndexes"
-              :key="`uhri-${uhri}`">
+              :key="`idx-${uhri}`">
               {{uhri.title}}
               </p>
               <div v-if="selectedIndexes.length === 0">
                 No UHRI indexes selected
               </div>
           </div>
-          <b-button
-            @click="copy"
-            type="is-primary"
-            size="is-small"
-            icon-left="content-copy">
-            Copy text to be included in IdeaScale proposal
-          </b-button>
         </div>
+      </div>
+      <div class="content has-text-centered">
+        <b-button
+          @click="copy"
+          type="is-primary"
+          size="is-small"
+          icon-left="content-copy">
+          Copy text to be included in IdeaScale proposal
+        </b-button>
       </div>
     </section>
   </div>

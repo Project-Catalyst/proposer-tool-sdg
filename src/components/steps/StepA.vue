@@ -3,35 +3,11 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 1: Select your Tags and SDG Goals"}}</div>
+          <div class="title">{{"Step 1: Select your SDG Goals"}}</div>
           <div class="subtitle" v-html="$t('step.STEP1_SUBTITLE')"></div>
         </div>
         <div class="column is-12">
-          <div class="column is-12"><b-field label="SELECT YOUR TAGS:">
-            <b-taginput
-                ref="tagInput"
-                v-model="selectedTags"
-                :data="filteredTags"
-                autocomplete
-                field="tag"
-                icon="label"
-                :open-on-focus="true"
-                placeholder="Select a tag"
-                max-height="450px"
-                @add="selectTag"
-                @remove="getFilteredTags(false)"
-                @typing="getFilteredTags">
-                <template v-slot="props">
-                    {{props.option}}
-                </template>
-                <template #empty>
-                    There are no items
-                </template>
-            </b-taginput>
-          </b-field></div>
-        </div>
-        <div class="column is-12">
-          <div class="column is-12"><b-field label="(OR/AND) SELECT YOUR SDG's:">
+          <div class="column is-12"><b-field label="SELECT YOUR SDG's:">
             <b-autocomplete
                 ref="autocomplete"
                 v-model="search"
@@ -54,6 +30,30 @@
                   </template>
                 <template #empty>No results found</template>
             </b-autocomplete>
+          </b-field></div>
+        </div>
+        <div class="column is-12">
+          <div class="column is-12"><b-field label="(OR/AND) SELECT YOUR TAGS:">
+            <b-taginput
+                ref="tagInput"
+                v-model="selectedTags"
+                :data="filteredTags"
+                autocomplete
+                field="tag"
+                icon="label"
+                :open-on-focus="true"
+                placeholder="Select a tag"
+                max-height="450px"
+                @add="selectTag"
+                @remove="getFilteredTags(false)"
+                @typing="getFilteredTags">
+                <template v-slot="props">
+                    {{props.option}}
+                </template>
+                <template #empty>
+                    There are no items
+                </template>
+            </b-taginput>
           </b-field></div>
         </div>
       </div>
@@ -135,19 +135,6 @@ export default {
       }
     },
     unselectGoal(goal) {
-      // console.log(`REMOVING ${goal.id}`)
-      // let sgoals_ids = goal.subgoals.map((sgoal) => {
-      //   return sgoal.id
-      // })
-      // console.log(sgoals_ids)
-      // let selec_ids = this.selectedSubgoalsIds
-      // console.log(selec_ids)
-      // sgoals_ids.forEach(id => {
-      //   if (selec_ids.includes(id)){
-      //     console.log(id)
-      //   }
-      // })
-      // console.log(goal)
       this.$emit('unselect-goal', goal)
     },
     filteredDataArray(values) {

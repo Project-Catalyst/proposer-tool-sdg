@@ -3,9 +3,8 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 4: Select your Universal Human Rights Index"}}</div>
+          <div class="title">{{"Step 4: Select your Universal Human Rights Indexes"}}</div>
           <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE3')"></div>
-          <!-- <div v-html="$t('step.UHRI_MSG')"></div> -->
         </div>
         <div class="column is-12">
           <b-field label="SELECT YOUR UHRI:"></b-field>
@@ -23,7 +22,7 @@
         <div class="column is-12">
             <b-button 
             @click="goUhriFilter"
-            type="is-primary is-medium">Back to UHRI filter selection</b-button>
+            type="is-primary is-small">Open UHRI filter selection</b-button>
         </div>
       </div>
     </section>

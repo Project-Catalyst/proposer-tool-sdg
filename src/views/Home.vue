@@ -4,6 +4,7 @@
       <div class="columns is-multiline">
         <div class="column is-12">
           <div class="title">{{$t('general.TITLE')}}</div>
+          <div class="subtitle" v-html="$t('general.SUBTITLE')"></div>
         </div>
         <div class="column is-12">
           <div class="content" v-html="$t('general.EXPLANATION')"></div>

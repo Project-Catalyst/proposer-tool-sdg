@@ -31,6 +31,7 @@
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
+      @unselect-uhri="unselectIndex" 
     />
     <step-e
       v-if="step === 5"
@@ -50,7 +51,6 @@
       :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
       @set-uhri="setIndex"
-      @unselect-uhri="unselectIndex" 
     />
     <step-g
       v-if="step === 7"
@@ -175,10 +175,8 @@ export default {
     },
     goBack() {
       if (this.backAvailable) {
-        if (this.step===(this.stepUhri+1) && (this.selectedFilters.country.length > 0) ){
-          this.$router.push({ name: "step", params: { step: (this.stepUhri - 1)} })  
-        } else if (this.step===(this.stepUhri+2) && (this.selectedIndexes.length > 0) ){
-          this.$router.push({ name: "step", params: { step: (this.stepUhri - 1)} })  
+        if (this.step > this.stepUhri ){
+          this.$router.push({ name: "step", params: { step: (this.stepUhri)} })
         } else {
           this.$router.push({ name: "step", params: { step: (this.step - 1)} })
         }
@@ -186,10 +184,10 @@ export default {
     },
     goNext() {
       if (this.nextAvailable) {
-        if (this.step===(this.stepUhri-1) && (this.selectedIndexes.length > 0) ){
-          this.$router.push({ name: "step", params: { step: (this.stepUhri + 2)} })  
-        } else if (this.step===(this.stepUhri-1) && (this.selectedFilters.country.length > 0) ){
+        if (this.step===(this.stepUhri) && (this.selectedFilters.country.length === 0) ){
           this.$router.push({ name: "step", params: { step: (this.stepUhri + 1)} })  
+        } else if (this.step===(this.stepUhri) && (this.selectedFilters.country.length > 0) ){
+          this.$router.push({ name: "step", params: { step: (this.stepUhri + 2)} })  
         } else {
           this.$router.push({ name: "step", params: { step: (this.step + 1)} })
         }
