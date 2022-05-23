@@ -39,16 +39,16 @@
                 v-model="selectedTags"
                 :data="filteredTags"
                 autocomplete
-                field="tag"
+                field="title"
                 icon="label"
                 :open-on-focus="true"
-                placeholder="Select a tag"
+                placeholder="Search a tag"
                 max-height="450px"
                 @add="selectTag"
                 @remove="getFilteredTags(false)"
                 @typing="getFilteredTags">
                 <template v-slot="props">
-                    {{props.option}}
+                    {{props.option.title}}
                 </template>
                 <template #empty>
                     There are no items
@@ -70,7 +70,7 @@
               size="is-medium"
               @close="unselectGoal(goal)"
               :key="`goals-selected-${index}`"
-              v-for="goal, index in selectedGoals">{{goal.title}}</b-tag>
+              v-for="goal, index in selectedGoals">{{goal.id}} - {{goal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedGoals.length === 0">
             <em>* SDG Goals selection required</em>
@@ -83,29 +83,21 @@
 
 <script>
 // @ is an alias to /src
+import API from '@/api/api.js'
 
 export default {
   name: 'StepA',
-  props: ['goals', 'selectedGoals', 'subgoals', 'selectedSubgoals'],
+  props: ['selectedGoals', 'subgoals', 'selectedSubgoals'],
   data() {
     return {
       search: '',
       filteredTags: [],
-      selectedTags: []
+      selectedTags: [],
+      goals: [],
+      tags: []
     }
   },
   computed: {
-    tags() {
-      let goalsTags = this.goals.map((goal) => {
-        return goal.keywords
-      })
-      .flat()
-      .filter((x, i, a) => a.indexOf(x) === i)
-      .sort(
-        (a, b) => a.localeCompare(b)
-      )
-      return goalsTags
-    },
     selectedSubgoalsIds() {
       return this.selectedSubgoals.map((sgoal) => {
         return sgoal.id
@@ -123,7 +115,9 @@ export default {
   methods: {
     selectTag(tag) {
       var relatedGoals = this.goals.filter((goal) => {
-        return goal.keywords.includes(tag)
+        return goal.Keywords.map((keyword) => {
+                return keyword.id
+              }).includes(tag.id)
       })
       this.$refs.tagInput.$refs.autocomplete.isActive = false
       this.$emit('select-goal', relatedGoals)
@@ -152,7 +146,7 @@ export default {
       let filteredTags
       if (text) {
         filteredTags = this.tags.filter((option) => {
-          return option
+          return option.title
               .toString()
               .toLowerCase()
               .indexOf(text.toLowerCase()) >= 0
@@ -167,7 +161,13 @@ export default {
     }
   },
   mounted() {
-    this.getFilteredTags()
+    API.goals().then((r) => {
+      this.goals = r.data.sdgGoals
+    })
+    API.tags().then((r) => {
+      this.tags = r.data.keywords
+      this.getFilteredTags()
+    })
   }
 }
 </script>

@@ -59,7 +59,7 @@
 
 export default {
   name: 'StepG',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes'],
+  props: ['selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes'],
   data() {
     return {
     }

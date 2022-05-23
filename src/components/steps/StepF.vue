@@ -36,7 +36,7 @@
 
 export default {
   name: 'StepF',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
+  props: ['selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
       checkboxIndexes: [],

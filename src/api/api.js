@@ -3,6 +3,12 @@ import axios from 'axios';
 const base_url = 'http://142.93.138.243:5000/api/v1'
 
 export default {
+  goals(){
+    return axios.get(`${base_url}/sdgGoals`)
+  },
+  tags(){
+    return axios.get(`${base_url}/keywords`)
+  },
   uhriIndexes(goals_ids, subgoals_ids, countries, regions, themes){
     
     console.log(">> API.uhriIndexes")

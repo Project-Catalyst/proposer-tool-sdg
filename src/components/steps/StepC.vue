@@ -27,7 +27,7 @@
 
 export default {
   name: 'StepC',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedMetrics'],
+  props: ['selectedGoals', 'selectedSubgoals', 'selectedMetrics'],
   data() {
     return {
       checkboxGroup: []

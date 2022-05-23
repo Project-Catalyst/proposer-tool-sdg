@@ -31,7 +31,7 @@ const mutations = {
   removeGoal(state, goal) {
     var found = state.selectedGoals.filter((sgoal) => goal.id === sgoal.id)
     if (found.length === 1) {
-      state.selectedGoals = state.selectedGoals.filter(function(el) { return el.id != found[0].id; });
+      state.selectedGoals = state.selectedGoals.filter(function(el) { return el.id !== found[0].id });
     }
   },
   addSubgoal(state, subgoal) {

@@ -2,7 +2,6 @@
   <div class="step">
     <step-a
       v-if="step === 1"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       @select-goal="selectGoal"
@@ -10,7 +9,6 @@
     />
     <step-b
       v-if="step === 2"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       @select-subgoal="selectSubgoal"
@@ -18,7 +16,6 @@
     />
     <step-c
       v-if="step === 3"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
@@ -26,7 +23,6 @@
     />
     <step-d
       v-if="step === 4"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -35,7 +31,6 @@
     />
     <step-e
       v-if="step === 5"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -45,7 +40,6 @@
     />
     <step-f
       v-if="step === 6"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -54,7 +48,6 @@
     />
     <step-g
       v-if="step === 7"
-      :goals="goals"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
@@ -89,7 +82,6 @@
 // @ is an alias to /src
 
 import { mapState } from "vuex";
-import goals from "@/assets/data/goals.json";
 
 import StepA from "@/components/steps/StepA"
 import StepB from "@/components/steps/StepB"
@@ -112,7 +104,6 @@ export default {
   },
   data() {
     return {
-      goals: goals,
       maxSteps: 7,
       stepUhri: 4
     }
@@ -134,11 +125,13 @@ export default {
     unselectGoal(goal) {
       this.$store.commit('goals/removeGoal', goal)
       // remove child goal.subgoals
-      let ssgoals = this.selectedSubgoals.map((sgoal) => { return sgoal.id })
-      let unselec_sgoals = goal.subgoals.filter((sgoal) => ssgoals.includes(sgoal.id))
-      unselec_sgoals.forEach(sgoal => {
-        this.unselectSubgoal(sgoal)
+      if (this.selectedSubgoals.length > 0) {
+        let ssgoals = this.selectedSubgoals.map((sgoal) => { return sgoal.id })
+        let unselec_sgoals = goal.subgoals.filter((sgoal) => ssgoals.includes(sgoal.id))
+        unselec_sgoals.forEach(sgoal => {
+          this.unselectSubgoal(sgoal)
       });
+      }
     },
     selectSubgoal(subgoals) {
       // returns an array of goals to be added to selected
@@ -149,11 +142,13 @@ export default {
     unselectSubgoal(subgoal) {
       this.$store.commit('goals/removeSubgoal', subgoal)
       // remove child subgoal.metrics
-      let smetrics = this.selectedMetrics.map((metric) => { return metric.id })
-      let unselec_metrics = subgoal.metrics.filter((metric) => smetrics.includes(metric.id))
-      unselec_metrics.forEach(metric => {
-        this.removeMetric(metric)
-      });
+      if (this.selectedMetrics.length > 0) {
+        let smetrics = this.selectedMetrics.map((metric) => { return metric.id })
+        let unselec_metrics = subgoal.metrics.filter((metric) => smetrics.includes(metric.id))
+        unselec_metrics.forEach(metric => {
+          this.removeMetric(metric)
+        });
+      }
     },
     setMetric(metrics) {
       this.$store.commit('goals/setMetrics', metrics)

@@ -105,11 +105,11 @@
 <script>
 // @ is an alias to /src
 
-import UhriAPI from '@/api/uhri.js'
+import UhriAPI from '@/api/api.js'
 
 export default {
   name: 'StepE',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
+  props: ['selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
       search_country: '',

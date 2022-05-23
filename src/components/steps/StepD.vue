@@ -49,7 +49,7 @@
 
 export default {
   name: 'StepD',
-  props: ['goals', 'selectedIndexes'],
+  props: ['selectedIndexes'],
   data() {
     return {
       stepUhri: 4

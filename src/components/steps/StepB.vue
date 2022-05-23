@@ -64,7 +64,7 @@
 
 export default {
   name: 'StepB',
-  props: ['goals', 'selectedGoals', 'selectedSubgoals'],
+  props: ['selectedGoals', 'selectedSubgoals'],
   data() {
     return {
       search: ''
