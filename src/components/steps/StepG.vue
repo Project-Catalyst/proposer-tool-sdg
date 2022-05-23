@@ -15,17 +15,17 @@
             <h5>SDG Goals</h5>
               <p v-for="goal in selectedGoals"
               :key="`goal-${goal.id}`">
-              {{goal.title}}
+              {{goal.id}} - {{goal.title}}
               </p>
             <h5>SDG Subgoals</h5>
               <p v-for="subgoal in selectedSubgoals"
               :key="`subgoal-${subgoal.id}`">
-              {{subgoal.title}}
+              {{subgoal.id}} - {{subgoal.title}}
               </p>
             <h5>Key Performance Indicator (KPI)</h5>
               <p v-for="metric in selectedMetrics"
               :key="`metric-${metric.id}`">
-              {{metric.title}}
+              {{metric.id}} - {{metric.title}}
               </p>
               <div v-if="selectedMetrics.length === 0">
                 No KPI metrics selected
