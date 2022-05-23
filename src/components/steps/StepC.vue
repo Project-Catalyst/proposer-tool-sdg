@@ -46,7 +46,6 @@ export default {
       this.metrics = r.data.metrics
     })
     this.checkboxGroup = this.selectedMetrics
-    console.log(this.selectedMetrics)
   }
 }
 </script>

@@ -7,15 +7,24 @@
           <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE3')"></div>
         </div>
         <div class="column is-12">
-          <b-field label="SELECT YOUR UHRI:"></b-field>
-          <div class="uhri mb-4"
-            :key="`uhri-${index}`"
-            v-for="uhri, index in availableIndexes">
-              <b-checkbox v-model="checkboxIndexes"
+          <b-field label="SELECT YOUR UHRI:">
+            <div class="content" v-if="availableIndexes.length > 0">
+              <em>>> Loaded {{count}} indexes</em>
+            </div>
+            <div class="uhri mb-4"
+              :key="`uhri-${index}`"
+              v-for="uhri, index in availableIndexes">
+                <b-checkbox 
+                v-if="availableIndexes.length > 0"
+                v-model="checkboxIndexes"
                 :native-value="uhri">
-                {{uhri.title}}
-              </b-checkbox>
-          </div>
+                  {{uhri.title}}
+                </b-checkbox>
+            </div>
+            <div class="content" v-if="availableIndexes.length === 0">
+              <b-progress size="is-small"></b-progress>Loading indexes from database
+            </div>
+          </b-field>
         </div>
       </div>
       <div class="content has-text-centered">
@@ -31,8 +40,7 @@
 
 <script>
 // @ is an alias to /src
-
-// import UhriAPI from '@/api/uhri.js'
+import API from '@/api/api.js'
 
 export default {
   name: 'StepF',
@@ -56,21 +64,18 @@ export default {
     }
   },
   mounted(){
-    // let goals_ids = this.selectedGoals.map((goal) => {return goal.id})
-    // let subgoals_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
+    let goals_ids = this.selectedGoals.map((goal) => {return goal.id})
+    let subgoals_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
 
-    // UhriAPI.uhriIndexes(goals_ids, 
-    //                     subgoals_ids, 
-    //                     this.selectedFilters.country,
-    //                     this.selectedFilters.region,
-    //                     this.selectedFilters.theme).then((r) => {
-    //   console.log(r.data)
-    //   this.indexes = r.data.humanRights
-    //   this.count = r.data.count
-    // })
-    this.availableIndexes = this.goals
-    this.count = this.goals.length
-
+    API.uhriIndexes(goals_ids, 
+                        subgoals_ids, 
+                        this.selectedFilters.country,
+                        this.selectedFilters.region,
+                        this.selectedFilters.theme).then((r) => {
+      console.log(r.data)
+      this.availableIndexes = r.data.humanRights
+      this.count = r.data.count
+    })
     this.checkboxIndexes = this.selectedIndexes
   }
 }
