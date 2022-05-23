@@ -8,9 +8,9 @@
           <div class="column is-12"><b-field label="Selected Goals:">
                 <b-taglist v-if="selectedGoals.length > 0">
                   <b-tag type="is-primary is-light"
-                    size="is-medium"
+                    size="is-small"
                     :key="`goal-selected-${index}`"
-                    v-for="goal, index in selectedGoals">{{goal.title}}</b-tag>
+                    v-for="goal, index in selectedGoals">{{goal.id}} - {{goal.title}}</b-tag>
                 </b-taglist>
                 <div class="content" v-if="selectedGoals.length === 0">
                   No Region filters selected
@@ -30,6 +30,7 @@
               :open-on-focus="true"
               :field="'title'"
               @select="option => selectSubgoal(option)">
+              <template slot-scope="props"> {{ props.option.id }} - {{ props.option.title }} </template>
               <template #empty>No results found</template>
             </b-autocomplete>
           </b-field></div>
@@ -48,7 +49,7 @@
               size="is-medium"
               @close="unselectSubgoal(subgoal)"
               :key="`subgoals-selected-${index}`"
-              v-for="subgoal, index in selectedSubgoals">{{subgoal.title}}</b-tag>
+              v-for="subgoal, index in selectedSubgoals">{{subgoal.id}} - {{subgoal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedSubgoals.length === 0">
             <em>* Subgoals selection required</em>
@@ -61,21 +62,23 @@
 
 <script>
 // @ is an alias to /src
+import API from '@/api/api.js'
 
 export default {
   name: 'StepB',
   props: ['selectedGoals', 'selectedSubgoals'],
   data() {
     return {
-      search: ''
+      search: '',
+      subgoals: []
     }
   },
   computed: {
-    subgoals() {
-      return this.selectedGoals.map((goal) => {
-        return goal.subgoals
-      }).flat()
-    }
+    // subgoals() {
+    //   return this.selectedGoals.map((goal) => {
+    //     return goal.subgoals
+    //   }).flat()
+    // }
   },
   methods: {
     selectSubgoal(subgoal) {
@@ -98,19 +101,23 @@ export default {
       }
       return values
     },
+  },
+  mounted() {
+    let goals_ids = this.selectedGoals.map((goal) => {return goal.id})
+    API.subgoals(goals_ids).then((r) => {
+      this.subgoals = r.data.subgoals
+    })
   }
 }
 </script>
 
 <style lang="scss">
 .step-b {
-  .results {
-    .tag {
-      height: auto;
-      white-space: initial !important;
-      padding-top: 0.75em;
-      padding-bottom: 0.75em;
-    }
+  .tag {
+    height: auto;
+    white-space: initial !important;
+    padding-top: 0.75em;
+    padding-bottom: 0.75em;
   }
   .autocomplete .dropdown-item {
     white-space: initial;
