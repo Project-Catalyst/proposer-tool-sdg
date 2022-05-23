@@ -13,7 +13,7 @@
             v-for="metric, index in metrics">
               <b-checkbox v-model="checkboxGroup"
                 :native-value="metric">
-                {{metric.title}}
+                {{metric.id}} - {{metric.title}}
               </b-checkbox>
           </div>
         </div>
@@ -24,20 +24,15 @@
 
 <script>
 // @ is an alias to /src
+import API from '@/api/api.js'
 
 export default {
   name: 'StepC',
-  props: ['selectedGoals', 'selectedSubgoals', 'selectedMetrics'],
+  props: ['selectedSubgoals', 'selectedMetrics'],
   data() {
     return {
-      checkboxGroup: []
-    }
-  },
-  computed: {
-    metrics() {
-      return this.selectedSubgoals.map((subgoal) => {
-        return subgoal.metrics
-      }).filter((el) => (el)).flat()
+      checkboxGroup: [],
+      metrics: []
     }
   },
   watch: {
@@ -46,7 +41,12 @@ export default {
     }
   },
   mounted() {
+    let subgoals_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
+    API.metrics(subgoals_ids).then((r) => {
+      this.metrics = r.data.metrics
+    })
     this.checkboxGroup = this.selectedMetrics
+    console.log(this.selectedMetrics)
   }
 }
 </script>

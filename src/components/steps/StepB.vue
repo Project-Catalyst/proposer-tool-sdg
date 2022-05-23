@@ -73,13 +73,6 @@ export default {
       subgoals: []
     }
   },
-  computed: {
-    // subgoals() {
-    //   return this.selectedGoals.map((goal) => {
-    //     return goal.subgoals
-    //   }).flat()
-    // }
-  },
   methods: {
     selectSubgoal(subgoal) {
       if (subgoal) {

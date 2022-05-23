@@ -13,6 +13,10 @@ export default {
     let query = goals_ids.map((id) => `sdgIds=${id}`).join("&")
     return axios.get(`${base_url}/subgoals?${query}`)
   },
+  metrics(subgoals_ids){
+    let query = subgoals_ids.map((id) => `sgIds=${id}`).join("&")
+    return axios.get(`${base_url}/metrics?${query}`)
+  },
   uhriIndexes(goals_ids, subgoals_ids, countries, regions, themes){
     
     console.log(">> API.uhriIndexes")

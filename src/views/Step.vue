@@ -110,7 +110,6 @@ export default {
   },
   methods: {
     selectGoal(goals) {
-      // returns an array of goals to be added to selected
       goals.forEach((goal) => {
         if (this.selectedGoals.indexOf(goal) > -1) {
           this.$buefy.notification.open({
@@ -124,27 +123,24 @@ export default {
     },
     unselectGoal(goal) {
       this.$store.commit('goals/removeGoal', goal)
-      // remove child goal.subgoals
+      // remove child subgoals
       if (this.selectedSubgoals.length > 0) {
-        let ssgoals = this.selectedSubgoals.map((sgoal) => { return sgoal.id })
-        let unselec_sgoals = goal.subgoals.filter((sgoal) => ssgoals.includes(sgoal.id))
+        let unselec_sgoals = this.selectedSubgoals.filter((sgoal) => sgoal.SdgGoalId === goal.id)
         unselec_sgoals.forEach(sgoal => {
           this.unselectSubgoal(sgoal)
-      });
+        });
       }
     },
     selectSubgoal(subgoals) {
-      // returns an array of goals to be added to selected
       subgoals.forEach((subgoal) => {
         this.$store.commit('goals/addSubgoal', subgoal)
       })
     },
     unselectSubgoal(subgoal) {
       this.$store.commit('goals/removeSubgoal', subgoal)
-      // remove child subgoal.metrics
+      // remove child metrics
       if (this.selectedMetrics.length > 0) {
-        let smetrics = this.selectedMetrics.map((metric) => { return metric.id })
-        let unselec_metrics = subgoal.metrics.filter((metric) => smetrics.includes(metric.id))
+        let unselec_metrics = this.selectedMetrics.filter((metric) => metric.SubgoalId === subgoal.id)
         unselec_metrics.forEach(metric => {
           this.removeMetric(metric)
         });
