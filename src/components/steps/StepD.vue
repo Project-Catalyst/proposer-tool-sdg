@@ -15,7 +15,7 @@
                 <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE1')"></div>
             </div>
             <div class="column is-12 is-centered">
-                <b-button 
+                <b-button
                 @click="goUhriFilters"
                 type="is-primary is-medium">Open UHRI selection</b-button>
             </div>
@@ -33,7 +33,9 @@
               size="is-medium"
               @close="unselectIndex(uhri)"
               :key="`uhri-selected-${index}`"
-              v-for="uhri, index in selectedIndexes">{{uhri.title}}</b-tag>
+              v-for="uhri, index in selectedIndexes">
+                <div class="uhri-indexes" v-html="uhri.title" />
+              </b-tag>
           </b-taglist>
           <div class="content" v-if="selectedIndexes.length === 0">
             <em>No UHRI selected</em>

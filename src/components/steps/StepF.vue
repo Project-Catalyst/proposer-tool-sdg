@@ -18,7 +18,7 @@
                 v-if="availableIndexes.length > 0"
                 v-model="checkboxIndexes"
                 :native-value="uhri">
-                  <div v-html="uhri.title" />
+                  <div class="uhri-indexes" v-html="uhri.title" />
                 </b-checkbox>
             </div>
             <div class="content" v-if="availableIndexes.length === 0">

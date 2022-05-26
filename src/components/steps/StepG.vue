@@ -31,10 +31,11 @@
                 No KPI metrics selected
               </div>
             <h5>Universal Human Rights Index (UHRI)</h5>
-              <p v-for="uhri in selectedIndexes"
-              :key="`idx-${uhri}`">
-              {{uhri.title}}
-              </p>
+              <div v-for="uhri in selectedIndexes"
+              class="uhri-indexes mb-5"
+              :key="`idx-${uhri}`"
+              v-html="uhri.title">
+              </div>
               <div v-if="selectedIndexes.length === 0">
                 No UHRI indexes selected
               </div>
@@ -90,3 +91,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .uhri-indexes {
+    p, h5 {
+      font-weight: initial !important;
+    }
+  }
+</style>
