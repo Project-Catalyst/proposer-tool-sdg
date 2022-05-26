@@ -8,7 +8,10 @@
         </div>
         <div class="column is-12">
           <b-field label="SELECT YOUR UHRI:">
-            <div class="content" v-if="availableIndexes.length > 0">
+            <div class="content" v-if="count === false">
+              <b-progress size="is-small"></b-progress>Loading indexes from database
+            </div>
+            <div class="content" v-if="count !== false">
               <em>>> Loaded {{count}} indexes</em>
             </div>
             <div class="uhri mb-4"
@@ -20,9 +23,6 @@
                 :native-value="uhri">
                   <div class="uhri-indexes" v-html="uhri.title" />
                 </b-checkbox>
-            </div>
-            <div class="content" v-if="availableIndexes.length === 0">
-              <b-progress size="is-small"></b-progress>Loading indexes from database
             </div>
           </b-field>
         </div>
@@ -49,7 +49,7 @@ export default {
     return {
       checkboxIndexes: [],
       availableIndexes: [],
-      count: 0,
+      count: false,
       stepUhri: 4
     }
   },
@@ -72,7 +72,6 @@ export default {
                         this.selectedFilters.country,
                         this.selectedFilters.region,
                         this.selectedFilters.theme).then((r) => {
-      console.log(r.data)
       this.availableIndexes = r.data.humanRights
       this.count = r.data.count
     })
