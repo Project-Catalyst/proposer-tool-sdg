@@ -14,11 +14,11 @@
             <div class="uhri mb-4"
               :key="`uhri-${index}`"
               v-for="uhri, index in availableIndexes">
-                <b-checkbox 
+                <b-checkbox
                 v-if="availableIndexes.length > 0"
                 v-model="checkboxIndexes"
                 :native-value="uhri">
-                  {{uhri.title}}
+                  <div v-html="uhri.title" />
                 </b-checkbox>
             </div>
             <div class="content" v-if="availableIndexes.length === 0">
@@ -29,7 +29,7 @@
       </div>
       <div class="content has-text-centered">
         <div class="column is-12">
-            <b-button 
+            <b-button
             @click="goUhriFilter"
             type="is-primary is-small">Open UHRI filter selection</b-button>
         </div>
@@ -67,8 +67,8 @@ export default {
     let goals_ids = this.selectedGoals.map((goal) => {return goal.id})
     let subgoals_ids = this.selectedSubgoals.map((sgoal) => {return sgoal.id})
 
-    API.uhriIndexes(goals_ids, 
-                        subgoals_ids, 
+    API.uhriIndexes(goals_ids,
+                        subgoals_ids,
                         this.selectedFilters.country,
                         this.selectedFilters.region,
                         this.selectedFilters.theme).then((r) => {
