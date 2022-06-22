@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base_url = 'http://142.93.138.243:5000/api/v1'
+const base_url = 'https://proposer-sdg-tool-api.ze.lc/api/v1'
 
 export default {
   goals(){
