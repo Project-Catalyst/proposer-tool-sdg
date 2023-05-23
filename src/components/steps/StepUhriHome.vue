@@ -1,30 +1,43 @@
 <template>
   <div class="step-uhri-home">
     <section class="box">
-        <div class="columns is-multiline is-12">
-            <div class="column is-12">
-                <div class="title">{{"Step 4: Select your Universal Human Rights Indexes (UHRI)"}}</div>
-            </div>
-            <div class="column is-12">
-                <div class="subtitle" v-html="$t('step.UHRI_SUBTITLE')"></div>
-                <div v-html="$t('step.UHRI_MSG')"></div>
-            </div>
+      <div class="columns is-multiline is-12">
+        <div class="column is-12">
+          <div class="title">{{ $t('uhri.HOME_TITLE') }}</div>
         </div>
-        <div class="content has-text-centered">
-            <div class="column is-12">
-                <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE1')"></div>
-            </div>
-            <div class="column is-12 is-centered">
-                <b-button
-                @click="goUhriFilters"
-                type="is-primary is-medium">Open UHRI selection</b-button>
-            </div>
+        <div class="column is-12">
+          <div class="subtitle"> 
+            {{$t('uhri.HOME_SUBTITLE')}} 
+          </div>
+          <i18n path="uhri.HOME_MSG" tag="p" class=""> 
+            <template v-slot:enter>
+              <br/>
+            </template>
+            <template v-slot:informationUrl>
+              <a href='https://uhri.ohchr.org/en/' target='_blank'>https://uhri.ohchr.org/en/</a>
+            </template>
+            <template v-slot:dataUrl>
+              <a href='https://uhri.ohchr.org/en/our-data-api' target='_blank'>https://uhri.ohchr.org/en/our-data-api</a>
+            </template>
+          </i18n>
         </div>
+      </div>
+      <div class="content has-text-centered">
+        <div class="column is-12">
+            <div class="subtitle"> <b>{{$t('uhri.HOME_PROCEED_MSG')}}</b> </div>
+        </div>
+        <div class="column is-12 is-centered">
+            <b-button
+            @click="goUhriFilters"
+            type="is-primary is-medium">Open UHRI selection</b-button>
+        </div>
+      </div>
     </section>
+
     <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
+          <div class="subtitle"> <b> {{ $t('uhri.SELECTED_INDEXES') }} </b> </div>
         </div>
         <div class="column is-12">
           <b-taglist v-if="selectedIndexes.length > 0">

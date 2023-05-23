@@ -3,11 +3,18 @@
     <section class="box">
         <div class="columns is-multiline is-12">
             <div class="column is-12">
-                <div class="title">{{$t('sdg.HOME_TITLE')}}</div>
+                <div class="title"> {{ $t('sdg.HOME_TITLE') }}</div>
             </div>
             <div class="column is-12">
-                <div class="subtitle" v-html="$t('sgd.HOME_SUBTITLE')"></div>
-                <div v-html="$t('sdg.HOME_MSG')"></div>
+                <div class="subtitle"> {{ $t('sdg.HOME_SUBTITLE') }} </div>
+                <i18n path="sdg.HOME_MSG" tag="p" class=""> 
+                  <template v-slot:enter>
+                    <br/>
+                  </template>
+                  <template v-slot:informationUrl>
+                    <a href='https://sdgs.un.org/goals/' target='_blank'>https://sdgs.un.org/goals</a>
+                  </template>
+                </i18n>
             </div>
         </div>
         <div class="content has-text-centered">
