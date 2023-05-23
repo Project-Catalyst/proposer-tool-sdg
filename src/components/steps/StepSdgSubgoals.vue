@@ -1,5 +1,5 @@
 <template>
-  <div class="step-b">
+  <div class="step-sdg-subgoals">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
@@ -52,7 +52,7 @@
               v-for="subgoal, index in selectedSubgoals">{{subgoal.id}} - {{subgoal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedSubgoals.length === 0">
-            <em>* Subgoals selection required</em>
+            <em>No Subgoals selected</em>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
 import API from '@/api/api.js'
 
 export default {
-  name: 'StepB',
+  name: 'StepSdgSubgoals',
   props: ['selectedGoals', 'selectedSubgoals'],
   data() {
     return {
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-b {
+.step-sdg-subgoals {
   .tag {
     height: auto;
     white-space: initial !important;

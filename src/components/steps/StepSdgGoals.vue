@@ -1,5 +1,5 @@
 <template>
-  <div class="step-a">
+  <div class="step-sdg-goals">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
@@ -73,7 +73,7 @@
               v-for="goal, index in selectedGoals">{{goal.id}} - {{goal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedGoals.length === 0">
-            <em>* SDG Goals selection required</em>
+            <em>No SDG Goals selected</em>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@
 import API from '@/api/api.js'
 
 export default {
-  name: 'StepA',
+  name: 'StepSdgGoals',
   props: ['selectedGoals', 'subgoals', 'selectedSubgoals'],
   data() {
     return {
@@ -173,7 +173,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-a {
+.step-sdg-goals {
   .tags {
     .tag:not(.is-light) {
       cursor: pointer;

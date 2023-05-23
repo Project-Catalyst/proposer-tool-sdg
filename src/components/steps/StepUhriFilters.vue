@@ -1,5 +1,5 @@
 <template>
-  <div class="step-e">
+  <div class="step-uhri-filters">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
@@ -108,8 +108,8 @@
 import UhriAPI from '@/api/api.js'
 
 export default {
-  name: 'StepE',
-  props: ['selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
+  name: 'StepUhriFilters',
+  props: ['searchIndex', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
       search_country: '',
@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     goUhriSearch() {
-        this.$router.push({ name: "step", params: { step: this.stepUhri+2} })
+        this.$router.push({ name: "step", params: { step: this.searchIndex} })
     },
     selectFilter(filter, value) {
       if (value) {
@@ -202,7 +202,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-e {
+.step-uhri-filters {
   .filters {
     .tag {
       height: auto;

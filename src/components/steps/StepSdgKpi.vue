@@ -1,5 +1,5 @@
 <template>
-  <div class="step-c">
+  <div class="step-sdg-kpi">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
@@ -27,7 +27,7 @@
 import API from '@/api/api.js'
 
 export default {
-  name: 'StepC',
+  name: 'StepSdgKpi',
   props: ['selectedSubgoals', 'selectedMetrics'],
   data() {
     return {

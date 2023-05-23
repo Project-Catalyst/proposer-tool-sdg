@@ -35,5 +35,17 @@ export default {
     SELECTED_UHRI: "<b>Selected Universal Human Rights Indexes</b>",
     STEP5_SUBTITLE: "</br><b>Review your Selection!</b></br>- You can find below the summary of the Goals and Metrics you've selected. You may <em>copy-paste</em> into <b>IdeaScale</b> for further edition.</br>- We also recommend adding your specific <em>Key Performance Indicator (KPI)</em> for each measurement to increase the audibility of the proposal.",
     SELECTED_SUMMARY: "Summary of all selected Goals and Metrics"
+  },
+  sdg: {
+    HOME_TITLE: "Sustainable Development Goals (SDG) Selection",
+    HOME_SUBTITLE: "PUT HERE SDG SUBTITLE",
+    HOME_MSG: "PUT HERE SDG EXPLANATION",
+    HOME_PROCEED_MSG: "<b>Proceed the SDG selection process to choose the goals, subgoals and kpi to include in your proposal.</b>",
+  },
+  phdi: {
+    HOME_TITLE: "Planetary pressures-adjusted Human Development Index (PHDI) Selection",
+    HOME_USABILITY: "WHY IS THE PHDI USEFUL?",
+    HOME_INTERPRETATION: "WHAT IS THE INTERPRETATION OF THE PHDI?",
+    HOME_MSG_SELECTION: "<b>Insert here the default message for the selection.</b>",
   }
 }

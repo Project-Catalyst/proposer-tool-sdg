@@ -1,5 +1,5 @@
 <template>
-  <div class="step-g">
+  <div class="selection-summary">
     <section class="box">
         <div class="columns is-multiline is-12">
             <div class="column is-12">
@@ -59,7 +59,7 @@
 // @ is an alias to /src
 
 export default {
-  name: 'StepG',
+  name: 'SelectionSummary',
   props: ['selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes'],
   data() {
     return {

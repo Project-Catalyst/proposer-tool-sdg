@@ -1,5 +1,5 @@
 <template>
-  <div class="step-f">
+  <div class="step-uhri-search">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
@@ -30,7 +30,7 @@
       <div class="content has-text-centered">
         <div class="column is-12">
             <b-button
-            @click="goUhriFilter"
+            @click="goUhriFilters"
             type="is-primary is-small">Open UHRI filter selection</b-button>
         </div>
       </div>
@@ -43,8 +43,8 @@
 import API from '@/api/api.js'
 
 export default {
-  name: 'StepF',
-  props: ['selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
+  name: 'StepUhriSearch',
+  props: ['filterIndex', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
       checkboxIndexes: [],
@@ -54,8 +54,8 @@ export default {
     }
   },
   methods: {
-    goUhriFilter() {
-        this.$router.push({ name: "step", params: { step: this.stepUhri+1} })
+    goUhriFilters() {
+        this.$router.push({ name: "step", params: { step: this.filterIndex.filters} })
     }
   },
   watch: {
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-f {
+.step-uhri-search {
   .results {
     .tag {
       height: auto;

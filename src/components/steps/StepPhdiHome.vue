@@ -1,27 +1,27 @@
 <template>
-  <div class="step-d">
+  <div class="step-phdi-home">
     <section class="box">
         <div class="columns is-multiline is-12">
             <div class="column is-12">
-                <div class="title">{{"Step 4: Select your Universal Human Rights Indexes (UHRI)"}}</div>
+                <div class="title">{{$t('sdg.HOME_TITLE')}}</div>
             </div>
-            <div class="column is-12">
-                <div class="subtitle" v-html="$t('step.UHRI_SUBTITLE')"></div>
-                <div v-html="$t('step.UHRI_MSG')"></div>
-            </div>
+            <!-- <div class="column is-12">
+                <div class="subtitle" v-html="$t('sgd.HOME_SUBTITLE')"></div>
+                <div v-html="$t('sdg.HOME_MSG')"></div>
+            </div> -->
         </div>
         <div class="content has-text-centered">
             <div class="column is-12">
-                <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE1')"></div>
+                <div class="subtitle" v-html="$t('phdi.HOME_MSG_SELECTION')"></div>
             </div>
-            <div class="column is-12 is-centered">
+            <!-- <div class="column is-12 is-centered">
                 <b-button
                 @click="goUhriFilters"
-                type="is-primary is-medium">Open UHRI selection</b-button>
-            </div>
+                type="is-primary is-medium">Begin SDG selection</b-button>
+            </div> -->
         </div>
     </section>
-    <section class="results box">
+    <!-- <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
           <div class="subtitle" v-html="$t('step.SELECTED_UHRI')"></div>
@@ -42,7 +42,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
   </div>
 </template>
 
@@ -50,26 +50,26 @@
 // @ is an alias to /src
 
 export default {
-  name: 'StepD',
+  name: 'StepPhdiHome',
   props: ['selectedIndexes'],
   data() {
     return {
-      stepUhri: 4
+      // stepUhri: 4
     }
   },
   methods: {
-    goUhriFilters() {
-        this.$router.push({ name: "step", params: { step: this.stepUhri+1} })
-    },
-    unselectIndex(uhri){
-      this.$emit('unselect-uhri', uhri)
-    }
+    // goUhriFilters() {
+    //     this.$router.push({ name: "step", params: { step: this.stepUhri+1} })
+    // },
+    // unselectIndex(uhri){
+    //   this.$emit('unselect-uhri', uhri)
+    // }
   }
 }
 </script>
 
 <style lang="scss">
-.step-d {
+.step-phdi-home {
   .results {
     .tag {
       height: auto;
