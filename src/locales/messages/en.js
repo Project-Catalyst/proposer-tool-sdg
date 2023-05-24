@@ -84,28 +84,34 @@ export default {
                           own progress over time, highlighting those countries that are moving in the right direction so that others can learn from them.\
                           This interpretation is also consistent with the open-endedness of the human development journey in the Anthropocene.\
                           It is meant to provide a sense of possibility: how to achieve high levels of the HDI with lower emissions and resource use.",
-    HOME_MSG_SELECTION: "{Country} is ranked {HDI rank} (Human Development Index) and when adjusted for the Planetary pressures is ranked\
-                        {HDI rank - Difference from HDI rank} a {fall/rise} of {Difference from HDI rank}.\
-                        {0}{0}\
-                        In 2021 it had a Human Development Index (HDI) value of {Human Development Index (HDI)} that when adjusted for the\
-                        Planetary pressures-adjusted HDI (PHDI) had a value of {Planetary pressures-adjusted HDI (PHDI) value},\
-                        a difference of {Difference from HDI value (%)}.\
-                        {0}{0}\
-                        The Planetary Pressures adjustment factor of {Adjustment factor for planetary pressures} is made up of the SDG9.4\
-                        Carbon dioxide emissions per capita (production) 2020 of {Carbon dioxide emissions per capita (production)} tonnes\
-                        (indexed value {Carbon dioxide emissions (production) index}), and the SDG8.4 and 12.2 Material footprint per\
-                        capita of {Material footprint per capita} tonnes (indexed value {Material footprint index}).\
-                        {0}{0}\
+    HOME_MSG_SELECTION: "{msgCountry} is ranked {msgHdiRank} (Human Development Index) and when adjusted for the Planetary pressures is ranked\
+                        {msgHdiRankMinusDiff} a {msgRankDeriv} of {msgHdiDiffRank}.\
+                        {enter}{enter}\
+                        In 2021 it had a Human Development Index (HDI) value of {msgHdi} that when adjusted for the\
+                        Planetary pressures-adjusted HDI (PHDI) had a value of {msgPhdiValue},\
+                        a difference of {msgHdiDiffValuePerc}.\
+                        {enter}{enter}\
+                        The Planetary Pressures adjustment factor of {msgAdjFactor} is made up of the SDG9.4\
+                        Carbon dioxide emissions per capita (production) 2020 of {msgCooPercap} tonnes\
+                        (indexed value {msgCooIndex}), and the SDG8.4 and 12.2 Material footprint per\
+                        capita of {msgMaterialPercap} tonnes (indexed value {msgMaterialIndex}).\
+                        {enter}{enter}\
                         For more information about the details of the PHDI please reference:\
-                        https://hdr.undp.org/planetary-pressures-adjusted-human-development-index#/indicies/PHDI\
-                        https://hdr.undp.org/system/files/documents/phdi2020technicalnotespdf.pdf\
-                        {0}{0}\
+                        {enter}\
+                        {msgInfoLink1}\
+                        {enter}\
+                        {msgInfoLink2}\
+                        {enter}{enter}\
                         The specific SDG targets\
-                        https://indicators.report/targets/9-4/\
-                        https://indicators.report/targets/8-4/\
-                        https://indicators.report/targets/12-2/\
-                        {0}{0}\
+                        {enter}\
+                        {msgSdgLink1}\
+                        {enter}\
+                        {msgSdgLink2}\
+                        {enter}\
+                        {msgSdgLink3}\
+                        {enter}{enter}\
                         Source data:\
-                        https://hdr.undp.org/sites/default/files/2021-22_HDR/HDR21-22_Statistical_Annex_PHDI_Table.xlsx (table 7)",
+                        {enter}\
+                        {msgSourceData} (table 7)",
   }
 }

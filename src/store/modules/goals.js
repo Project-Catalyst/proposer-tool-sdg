@@ -8,7 +8,8 @@ const getDefaultState = () => ({
     'region': [],
     'theme': []
   },
-  selectedIndexes: []
+  selectedIndexes: [],
+  selectedPhdi: null,
 })
 const state = getDefaultState()
 
@@ -86,6 +87,14 @@ const mutations = {
     var found = state.selectedIndexes.filter((suhri) => suhri === uhri)
     if (found.length > 0) {
       state.selectedIndexes = state.selectedIndexes.filter(function(el) { return el != found[0]; });
+    }
+  },
+  setPhdiIndex(state, index) {
+    state.selectedPhdi = index
+  },
+  removePhdiIndex(state, index) {
+    if(index) {
+      state.selectedPhdi = null
     }
   },
   resetState (state) {

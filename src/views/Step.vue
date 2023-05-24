@@ -55,6 +55,9 @@
     />
     <step-phdi-home
       v-if="step === 8"
+      :selectedPhdi="selectedPhdi"
+      @select-phdi="setPhdi"
+      @remove-phdi="removePhdi"
     />
     <selection-summary
       v-if="step === 9"
@@ -62,6 +65,7 @@
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
       :selectedIndexes="selectedIndexes"
+      :selectedPhdi="selectedPhdi"
     />
     <div class="container buttons mt-4">
       <b-button
@@ -190,6 +194,12 @@ export default {
     unselectIndex(uhri) {
       this.$store.commit('goals/removeIndex', uhri)
     },
+    setPhdi(index) {
+      this.$store.commit('goals/setPhdiIndex', index)
+    },
+    removePhdi(index) {
+      this.$store.commit('goals/removePhdiIndex', index)
+    },
     selectFilter(key, value) {
       this.$store.commit('goals/addFilter', [key, value])
     },
@@ -268,7 +278,8 @@ export default {
       selectedSubgoals: (state) => state.goals.selectedSubgoals,
       selectedMetrics: (state) => state.goals.selectedMetrics,
       selectedFilters: (state) => state.goals.selectedFilters,
-      selectedIndexes: (state) => state.goals.selectedIndexes
+      selectedIndexes: (state) => state.goals.selectedIndexes,
+      selectedPhdi: (state) => state.goals.selectedPhdi
     }),
     maxSteps() {
       return this.mainSteps.summaryStepIndex

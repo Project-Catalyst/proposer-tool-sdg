@@ -1,4 +1,5 @@
 import axios from 'axios';
+import phdiData from '@/assets/data/hdr22.json'
 
 const base_url = 'https://proposer-sdg-tool-api.ze.lc/api/v1'
 
@@ -41,5 +42,12 @@ export default {
   },
   themes(){
     return axios.get(`${base_url}/themes`)
+  },
+  phdiIndexes() {
+    return new Promise((resolve) => {
+      if(phdiData.length > 0){
+        resolve(phdiData);
+      } else { resolve([]) }
+    });
   }
 }

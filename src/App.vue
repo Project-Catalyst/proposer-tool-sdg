@@ -38,7 +38,7 @@
             icon-left="content-copy">
           </b-button>
         </p> -->
-        <p>{{$t('general.MADE_BY')}}</p>
+        <p>{{ $t('general.MADE_BY')}} </p>
         <p><img class="aim-logo" src="@/assets/images/aim-logo.png" alt="Cardano AIM" /></p>
         <p class="is-size-4 has-text-weight-bold">
           <a href="https://cardanoscan.io/pool/b61f05ec1e907ab9b069eaec6c664056c16f56cab59076109c66d2ae" target="_blank">
@@ -60,6 +60,18 @@
     </footer>
   </div>
 </template>
+
+<script>
+// @ is an alias to /src
+
+export default {
+  name: 'App',
+  data() {
+    return {}
+  },
+  methods: { }
+}
+</script>
 
 <style lang="scss">
 
