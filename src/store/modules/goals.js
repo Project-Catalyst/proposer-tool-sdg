@@ -10,6 +10,7 @@ const getDefaultState = () => ({
   },
   selectedIndexes: [],
   selectedPhdi: null,
+  hasPhdiImage: false,
 })
 const state = getDefaultState()
 
@@ -92,10 +93,8 @@ const mutations = {
   setPhdiIndex(state, index) {
     state.selectedPhdi = index
   },
-  removePhdiIndex(state, index) {
-    if(index) {
-      state.selectedPhdi = null
-    }
+  setPhdiImage(state, value) {
+    state.hasPhdiImage = value
   },
   resetState (state) {
     Object.assign(state, getDefaultState())

@@ -56,8 +56,9 @@
     <step-phdi-home
       v-if="step === 8"
       :selectedPhdi="selectedPhdi"
-      @select-phdi="setPhdi"
-      @remove-phdi="removePhdi"
+      :hasPhdiImage="hasPhdiImage"
+      @set-phdi="setPhdi"
+      @set-phdi-image="setPhdiImage"
     />
     <selection-summary
       v-if="step === 9"
@@ -66,6 +67,7 @@
       :selectedMetrics="selectedMetrics"
       :selectedIndexes="selectedIndexes"
       :selectedPhdi="selectedPhdi"
+      :hasPhdiImage="hasPhdiImage"
     />
     <div class="container buttons mt-4">
       <b-button
@@ -84,7 +86,7 @@
       <b-button style="float: right;"
         @click="goFinish"
         v-if="step !== maxSteps"
-        type="is-primary is-light is-large" outlined>Go to summary</b-button>
+        type="is-primary is-light is-large" outlined> {{ finishButtonMsg }}</b-button>
     </div>
     <div class="container buttons mt-4">
       <b-button
@@ -197,8 +199,8 @@ export default {
     setPhdi(index) {
       this.$store.commit('goals/setPhdiIndex', index)
     },
-    removePhdi(index) {
-      this.$store.commit('goals/removePhdiIndex', index)
+    setPhdiImage(value) {
+      this.$store.commit('goals/setPhdiImage', value)
     },
     selectFilter(key, value) {
       this.$store.commit('goals/addFilter', [key, value])
@@ -279,7 +281,8 @@ export default {
       selectedMetrics: (state) => state.goals.selectedMetrics,
       selectedFilters: (state) => state.goals.selectedFilters,
       selectedIndexes: (state) => state.goals.selectedIndexes,
-      selectedPhdi: (state) => state.goals.selectedPhdi
+      selectedPhdi: (state) => state.goals.selectedPhdi,
+      hasPhdiImage: (state) => state.goals.hasPhdiImage
     }),
     maxSteps() {
       return this.mainSteps.summaryStepIndex
@@ -335,6 +338,9 @@ export default {
       else if (this.isHomePhdi) {section = "PHDI"}
       return `Skip ${section}`
     },
+    finishButtonMsg() {
+      return (this.isHomePhdi) ? 'Finish process' : 'Go to summary'
+    }
   },
   watch: {
     step(step) {

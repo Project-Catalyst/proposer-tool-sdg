@@ -125,7 +125,11 @@
                     <img :src="`assets/images/phdi/PHDI_diagram.png`">
                     <div class="is-flex is-flex-direction-row is-justify-content-flex-end is-align-content-center">
                       <p class="m-0 mr-3">Include graphic in proposal</p>
-                      <b-checkbox></b-checkbox>
+                      <b-checkbox
+                        v-model="addImage" 
+                        @input="setPhdiImage"
+                        :disabled="!selection">
+                      </b-checkbox>
                     </div>
                   </div>
                 </div>
@@ -193,12 +197,13 @@ import API from '@/api/api.js'
 
 export default {
   name: 'StepPhdiHome',
-  props: ['selectedPhdi'],
+  props: ['selectedPhdi', 'hasPhdiImage'],
   data() {
     return {
       data: [],
       selection: null,
       search: '',
+      addImage: null,
       isOpen: {
         card1: false,
         card2: true,
@@ -214,12 +219,13 @@ export default {
     if(this.selection){
       this.search = this.getProperty('country')
       this.triggerCards(true)
+      this.addImage = this.hasPhdiImage
     }
   },
   watch: { 
     selectedPhdi: function() { // watch it
       this.selection = this.selectedPhdi
-    }
+    },
   },
   computed: {
     msgNullVal() {
@@ -258,16 +264,19 @@ export default {
     },
     selectIndex(index) {
       if (index) {
-        this.$emit('select-phdi', index)
+        this.$emit('set-phdi', index)
         this.triggerCards(true)
       }
     },
     removeIndex() {
       if(this.selection) {
-        this.$emit('remove-phdi', this.selection)
+        this.$emit('set-phdi', null)
         setTimeout(() => this.search = '', 10)
         this.triggerCards(false)
       }
+    },
+    setPhdiImage() {
+      this.$emit('set-phdi-image', this.addImage)
     },
     closeSelection() {
       if(this.search === '') {

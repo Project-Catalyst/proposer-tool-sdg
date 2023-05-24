@@ -39,6 +39,14 @@
               <div v-if="selectedIndexes.length === 0">
                 No UHRI indexes selected
               </div>
+            <h5>Planetary pressures-adjusted Human Development Index (PHDI)</h5>
+              <div v-if="!selectedPhdi">
+                No UHRI indexes selected
+              </div>
+              <div v-else>
+                {{ selectedPhdi.country }}
+              </div>
+              <img width="50%" v-if="hasPhdiImage" :src="`assets/images/phdi/PHDI_diagram.png`">
           </div>
         </div>
       </div>
@@ -60,7 +68,7 @@
 
 export default {
   name: 'SelectionSummary',
-  props: ['selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes'],
+  props: ['selectedGoals', 'selectedSubgoals', 'selectedMetrics', 'selectedIndexes', 'selectedPhdi', 'hasPhdiImage'],
   data() {
     return {
     }
@@ -75,6 +83,8 @@ export default {
       this.selectedMetrics.forEach((m) => text += `${m.title}\n`)
       text += '\nUniversal Human Rights Index (UHRI):\n'
       this.selectedIndexes.forEach((i) => text += `${i.title}\n`)
+      text += '\nPlanetary pressures-adjusted Human Development Index (PHDI):\n'
+      text += `${this.selectedPhdi.country}\n`
       text += '\n\n#proposertoolsdg'
       return text
     }
