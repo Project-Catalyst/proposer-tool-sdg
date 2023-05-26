@@ -17,7 +17,8 @@ export default {
                   <a href='https://www.sustainableada.com/' target='_blank'>https://www.sustainableada.com/</a>",
     MADE_BY: "Made by Catalyst Community for the Catalyst Community",
     DONATE: "If you want to support the development of the voter tool you can donate some ADA to:",
-    TEXT_COPIED: "Text successfully copied!",
+    TEXT_COPIED: "Successfully copied!",
+    TEXT_NOT_COPIED: "Failed to copy to clipboard!",
     GOAL_ALREADY_SELECTED: '"{title}" already selected.',
   },
   step: {

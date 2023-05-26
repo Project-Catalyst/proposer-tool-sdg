@@ -27,7 +27,7 @@
     />
     <step-uhri-home
       v-if="step === 5"
-      :substepsIndex="subSteps.uhriRangeIndex"
+      :substepsIndex="subSteps.uhriSelection"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -36,7 +36,7 @@
     />
     <step-uhri-filters
       v-if="step === 6"
-      :searchIndex="subSteps.uhriRangeIndex.search"
+      :searchIndex="subSteps.uhriSelection.search"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -46,7 +46,7 @@
     />
     <step-uhri-search
       v-if="step === 7"
-      :filterIndex="subSteps.uhriRangeIndex.filters"
+      :filterIndex="subSteps.uhriSelection.filters"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -128,18 +128,18 @@ export default {
   data() {
     return {
       mainSteps: {
-        sdgStepIndex: 1,
-        uhriStepIndex: 5,
-        phdiStepIndex: 8,
-        summaryStepIndex: 9,
+        sdgStep: 1,
+        uhriStep: 5,
+        phdiStep: 8,
+        summaryStep: 9,
       },
       subSteps: {
-        sdgRangeIndex: {
+        sdgSelection: {
           goals: 2,
           subgoals: 3,
           kpi: 4
         },
-        uhriRangeIndex: {
+        uhriSelection: {
           filters: 6,
           search: 7
         },
@@ -198,6 +198,9 @@ export default {
     },
     setPhdi(index) {
       this.$store.commit('goals/setPhdiIndex', index)
+      if(!index) {
+        this.$store.commit('goals/setPhdiImage', false)
+      }
     },
     setPhdiImage(value) {
       this.$store.commit('goals/setPhdiImage', value)
@@ -211,13 +214,13 @@ export default {
     goBack() {
       if (this.backAvailable) {
         if (this.isHomeUhri) {
-          this.$router.push({ name: "step", params: { step: (this.mainSteps.sdgStepIndex)} })
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.sdgStep)} })
         }
         else if (this.isUhriSubstep ){
-          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStepIndex)} })
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep)} })
         }
         else if (this.isHomePhdi) {
-          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStepIndex)} })
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep)} })
         } 
         else {
           this.$router.push({ name: "step", params: { step: (this.step - 1)} })
@@ -227,9 +230,9 @@ export default {
     goNext() {
       if (this.nextAvailable) {
         if (this.isHomeUhri && (this.selectedFilters.country.length === 0) ){
-          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStepIndex + 1)} })  
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep + 1)} })  
         } else if (this.isHomeUhri && (this.selectedFilters.country.length > 0) ){
-          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStepIndex + 2)} })  
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep + 2)} })  
         } else {
           this.$router.push({ name: "step", params: { step: (this.step + 1)} })
         }
@@ -237,13 +240,13 @@ export default {
     },
     SkipSelection() {
       if(this.isHomeSdg) {
-        this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStepIndex)} })  
+        this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep)} })  
       }
       else if (this.isHomeUhri) {
-        this.$router.push({ name: "step", params: { step: (this.mainSteps.phdiStepIndex)} })
+        this.$router.push({ name: "step", params: { step: (this.mainSteps.phdiStep)} })
       }
       else if (this.isHomePhdi) {
-        this.$router.push({ name: "step", params: { step: (this.mainSteps.summaryStepIndex)} })
+        this.$router.push({ name: "step", params: { step: (this.mainSteps.summaryStep)} })
       }
     },
     goFinish() {
@@ -262,17 +265,6 @@ export default {
         }
       })
     },
-    checkRouteConsistency(step) {
-      if(step) {
-        return
-      }
-      // if ((step === 2) && (this.selectedGoals.length === 0)) {
-      //   this.$router.push({ name: "step", params: { step: 1} })
-      // }
-      // if ((step === 3) && (this.selectedSubgoals.length === 0)) {
-      //   this.$router.push({ name: "step", params: { step: 2} })
-      // }
-    }
   },
   computed: {
     ...mapState({
@@ -285,7 +277,7 @@ export default {
       hasPhdiImage: (state) => state.goals.hasPhdiImage
     }),
     maxSteps() {
-      return this.mainSteps.summaryStepIndex
+      return this.mainSteps.summaryStep
     },
     step() {
       if (this.$route) {
@@ -294,38 +286,32 @@ export default {
       return 1
     },
     isHomeSelection() {
-      return (this.step===this.mainSteps.sdgStepIndex) || 
-             (this.step===this.mainSteps.uhriStepIndex) || 
-             (this.step===this.mainSteps.phdiStepIndex)
+      return (this.step===this.mainSteps.sdgStep) || 
+             (this.step===this.mainSteps.uhriStep) || 
+             (this.step===this.mainSteps.phdiStep)
     },
     isHomeSdg() {
-      return this.step===this.mainSteps.sdgStepIndex
+      return this.step===this.mainSteps.sdgStep
     },
     isSdgSubstep() {
-      return Object.values(this.subSteps.sdgRangeIndex).includes(this.step)
+      return Object.values(this.subSteps.sdgSelection).includes(this.step)
     },
     isHomeUhri() {
-      return this.step===this.mainSteps.uhriStepIndex
+      return this.step===this.mainSteps.uhriStep
     },
     isUhriSubstep() {
-      return Object.values(this.subSteps.uhriRangeIndex).includes(this.step)
+      return Object.values(this.subSteps.uhriSelection).includes(this.step)
     },
     isHomePhdi() {
-      return this.step===this.mainSteps.phdiStepIndex
+      return this.step===this.mainSteps.phdiStep
     },
     isSummary() {
-      return this.step===this.mainSteps.summaryStepIndex
+      return this.step===this.mainSteps.summary
     },
     backAvailable() {
       return this.step > 1
     },
     nextAvailable() {
-      if (this.step === this.stepSdgGoals && this.selectedGoals.length === 0) {
-        return false
-      }
-      // if (this.step === 2 && this.selectedSubgoals.length === 0) {
-      //   return false
-      // }
       if (this.step === this.maxSteps ) {
         return false
       }
@@ -342,13 +328,13 @@ export default {
       return (this.isHomePhdi) ? 'Finish process' : 'Go to summary'
     }
   },
-  watch: {
-    step(step) {
-      this.checkRouteConsistency(step)
-    }
-  },
-  mounted() {
-    this.checkRouteConsistency(this.step)
-  }
+  // watch: {
+  //   step(step) {
+  //     this.checkRouteConsistency(step)
+  //   }
+  // },
+  // mounted() {
+  //   this.checkRouteConsistency(this.step)
+  // }
 }
 </script>

@@ -34,70 +34,7 @@
             </div>
             
             <div id="message-display" class="column is-6 mt-4">
-              <div id="selection-message" class="p-4">
-                <i18n v-if="selectedPhdi" path="phdi.HOME_MSG_SELECTION" tag="p" class="">
-                  <template v-slot:enter>
-                    <br/>
-                  </template>
-                  <template v-slot:msgCountry>
-                    <b> {{ msgGetProperty('country') }} </b>
-                  </template>
-                  <template v-slot:msgHdiRank>
-                    <b> {{ msgGetProperty('hdiRank') }} </b>
-                  </template>
-                  <template v-slot:msgHdiRankMinusDiff>
-                    <b> {{ msgHdiRankMinusDiff() }} </b>
-                  </template>
-                  <template v-slot:msgRankDeriv>
-                    <b> {{ msgRankDeriv() }} </b>
-                  </template>
-                  <template v-slot:msgHdiDiffRank>
-                    <b> {{ msgGetProperty('hdiDiffRank') }} </b>
-                  </template>
-                  <template v-slot:msgHdi>
-                    <b> {{ msgGetProperty('hdi') }} </b>
-                  </template>
-                  <template v-slot:msgPhdiValue>
-                    <b> {{ msgGetProperty('phdiValue') }} </b>
-                  </template>
-                  <template v-slot:msgHdiDiffValuePerc>
-                    <b> {{ msgGetProperty('hdiDiffValuePerc') }} </b>
-                  </template>
-                  <template v-slot:msgAdjFactor>
-                    <b> {{ msgGetProperty('adjFactor') }} </b>
-                  </template>
-                  <template v-slot:msgCooPercap>
-                    <b>  {{ getProperty('cooPercap') }} </b>
-                  </template>
-                  <template v-slot:msgCooIndex>
-                    <b> {{ msgGetProperty('cooIndex') }} </b>
-                  </template>
-                  <template v-slot:msgMaterialPercap>
-                    <b> {{ msgGetProperty('materialPercap') }} </b>
-                  </template>
-                  <template v-slot:msgMaterialIndex>
-                    <b> {{ msgGetProperty('materialIndex') }} </b>
-                  </template>
-                  <template v-slot:msgInfoLink1>
-                    <a href="https://hdr.undp.org/planetary-pressures-adjusted-human-development-index#/indicies/PHDI" _target="blank">https://hdr.undp.org/planetary-pressures-adjusted-human-development-index#/indicies/PHDI</a>
-                  </template>
-                  <template v-slot:msgInfoLink2>
-                    <a href="https://hdr.undp.org/system/files/documents/phdi2020technicalnotespdf.pdf" _target="blank">https://hdr.undp.org/system/files/documents/phdi2020technicalnotespdf.pdf</a>
-                  </template>
-                  <template v-slot:msgSdgLink1>
-                    <a href="https://indicators.report/targets/9-4/" _target="blank">https://indicators.report/targets/9-4/</a>
-                  </template>
-                  <template v-slot:msgSdgLink2>
-                    <a href="https://indicators.report/targets/8-4/" _target="blank">https://indicators.report/targets/8-4/</a>
-                  </template>
-                  <template v-slot:msgSdgLink3>
-                    <a href="https://indicators.report/targets/12-2/" _target="blank">https://indicators.report/targets/12-2/</a>
-                  </template>
-                  <template v-slot:msgSourceData>
-                    <a href="https://hdr.undp.org/sites/default/files/2021-22_HDR/HDR21-22_Statistical_Annex_PHDI_Table.xlsx" _target="blank">https://hdr.undp.org/sites/default/files/2021-22_HDR/HDR21-22_Statistical_Annex_PHDI_Table.xlsx</a>
-                  </template>
-                </i18n>
-              </div>
+              <phdi-message :selectedPhdi="selectedPhdi" class="message"></phdi-message>
             </div>
 
             <div id="info" class="column is-6 mt-4">
@@ -194,10 +131,14 @@
 <script>
 // @ is an alias to /src
 import API from '@/api/api.js'
+import PhdiMessage from '@/components/PhdiMessage.vue'
 
 export default {
   name: 'StepPhdiHome',
   props: ['selectedPhdi', 'hasPhdiImage'],
+  components: {
+    PhdiMessage
+  },
   data() {
     return {
       data: [],
@@ -225,6 +166,9 @@ export default {
   watch: { 
     selectedPhdi: function() { // watch it
       this.selection = this.selectedPhdi
+      if(!this.selection) {
+        this.addImage = this.hasPhdiImage
+      }
     },
   },
   computed: {
@@ -241,7 +185,6 @@ export default {
           return (numericRoundedProps.includes(property))
           ? this.selection[property] ? this.selection[property].toFixed(2) : this.selection[property]
           : this.selection[property] 
-
         }
       }
       return null
@@ -311,6 +254,12 @@ export default {
 
 <style lang="scss">
 #selection-message {
+  height:100%;
+  outline-style: solid;
+  outline-color: rgba(0, 0, 0, 0.555);
+  outline-width: 2px;
+}
+.message {
   height:100%;
   outline-style: solid;
   outline-color: rgba(0, 0, 0, 0.555);
