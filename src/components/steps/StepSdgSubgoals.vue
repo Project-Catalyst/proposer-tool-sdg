@@ -3,8 +3,8 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 2: Select your SDG Sub-Goals"}}</div>
-          <div class="subtitle" v-html="$t('step.STEP2_SUBTITLE')"></div>
+          <div class="title">{{$t('sdg.SUBGOALS_TITLE')}}</div>
+          <div class="subtitle" v-html="$t('sdg.SUBGOALS_SUBTITLE')"></div>
           <div class="column is-12"><b-field label="Selected Goals:">
                 <b-taglist v-if="selectedGoals.length > 0">
                   <b-tag type="is-primary is-light"
@@ -40,7 +40,7 @@
     <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="subtitle" v-html="$t('step.SELECTED_SUBGOALS')"></div>
+          <div class="subtitle" v-html="$t('sdg.SUBGOALS_SELECTED')"></div>
         </div>
         <div class="column is-12">
           <b-taglist v-if="selectedSubgoals.length > 0">

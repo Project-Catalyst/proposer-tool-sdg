@@ -44,22 +44,22 @@
         <b>{{ msgGetValue('materialIndex') }}</b>
       </template>
       <template v-slot:msgInfoLink1>
-        <a :href="messageKeys.links.msgInfoLink1" _target="blank">{{ msgInfoLink1 }}</a>
+        <a :href="messageKeys.links.msgInfoLink1" target="_blank">{{ msgInfoLink1 }}</a>
       </template>
       <template v-slot:msgInfoLink2>
-        <a :href="messageKeys.links.msgInfoLink2" _target="blank">{{ msgInfoLink2 }}</a>
+        <a :href="messageKeys.links.msgInfoLink2" target="_blank">{{ msgInfoLink2 }}</a>
       </template>
       <template v-slot:msgSdgLink1>
-        <a :href="messageKeys.links.msgSdgLink1" _target="blank">{{ msgSdgLink1 }}</a>
+        <a :href="messageKeys.links.msgSdgLink1" target="_blank">{{ msgSdgLink1 }}</a>
       </template>
       <template v-slot:msgSdgLink2>
-        <a :href="messageKeys.links.msgSdgLink2" _target="blank">{{ msgSdgLink2 }}</a>
+        <a :href="messageKeys.links.msgSdgLink2" target="_blank">{{ msgSdgLink2 }}</a>
       </template>
       <template v-slot:msgSdgLink3>
-        <a :href="messageKeys.links.msgSdgLink3" _target="blank">{{ msgSdgLink3 }}</a>
+        <a :href="messageKeys.links.msgSdgLink3" target="_blank">{{ msgSdgLink3 }}</a>
       </template>
       <template v-slot:msgSourceData>
-        <a :href="messageKeys.links.msgSourceData" _target="blank">{{ msgSourceData }}</a>
+        <a :href="messageKeys.links.msgSourceData" target="_blank">{{ msgSourceData }}</a>
       </template>
     </i18n>
   </div>

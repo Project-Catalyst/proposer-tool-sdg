@@ -27,9 +27,16 @@
             <div class="subtitle"> <b>{{$t('uhri.HOME_PROCEED_MSG')}}</b> </div>
         </div>
         <div class="column is-12 is-centered">
+          <b-tooltip 
+            label="This selection requires SDG selection"
+            type="is-danger is-light"
+            :active="!hasSdgSelection"
+            position="is-bottom">
             <b-button
-            @click="goUhriFilters"
-            type="is-primary is-medium">Open UHRI selection</b-button>
+              @click="goUhriFilters"
+              :disabled="!hasSdgSelection"
+              type="is-primary is-medium"> {{ buttonMsg }}</b-button>
+          </b-tooltip>
         </div>
       </div>
     </section>
@@ -64,11 +71,25 @@
 
 export default {
   name: 'StepUhriHome',
-  props: ['substepsIndex', 'selectedIndexes'],
+  props: ['substepsIndex', 'selectedIndexes', 'selectedGoals'],
   data() {
     return {
-      stepUhri: 4
+      stepUhri: 4,
+      hasSdgSelection: false,
     }
+  },
+  mounted() {
+    this.hasSdgSelection = (this.selectedGoals.length > 0)
+  },
+  computed: {
+    buttonMsg() {
+      return (this.selectedIndexes.length===0) ? 'Begin UHRI selection' : 'Edit UHRI selection'
+    }
+  },
+  watch: {
+    selectedGoals(newValue) { // watch it
+      this.selection.goals = (newValue.length>0)
+    },
   },
   methods: {
     goUhriFilters() {

@@ -2,7 +2,8 @@ export default {
   general: {
     HOME: "Home",
     ABOUT: "About",
-    START: "Start",
+    START: "Index Selections",
+    SUMMARY: "Summary",
     TITLE: "SDG Proposer Tool",
     SUBTITLE: "Connect your ideas and proposals to UN development goals and measurable outcomes",
     EXPLANATION: "The <b>Sustainable Development Goals SDG Tool</b> is made to help you include SDGs in your proposal development process. \
@@ -22,13 +23,6 @@ export default {
     GOAL_ALREADY_SELECTED: '"{title}" already selected.',
   },
   step: {
-    STEP1_SUBTITLE: "</br><b>What is your proposal about? Connect your proposed project to real world measurable impact.</b></br>Select your SDG Goals or choose from the available <em>tags</em> and the tool will automatically add goals into your draft.",
-    SELECTED_GOALS: "<b>Selected goals</b> (refine them before the next step):",
-    STEP2_SUBTITLE: "</br><b>Choose your sub-goals from the list or type for search specific sub-goals.</b></br>The available SDG sub-goals are based on the following SDG Goals you selected in the previous step.",
-    SELECTED_SUBGOALS: "<b>Selected sub-goals</b> (refine them before the next step):",
-    STEP3_SUBTITLE: "</br><b> Choose the metrics you want to include in your proposal.</b></br>You can find below the measurements metrics related to the <em>SDG sub-goals</em> you selected in the previous step.",
-    STEP4_SUBTITLE2: "</br><b>Choose the UHRI you want to include in your proposal.</b></br>Select between the different criteria to filter the UHRI search",
-    STEP4_SUBTITLE3: "</br><b>Choose the UHRI you want to include in your proposal.</b></br>You can find below the indexes related to the filters you selected.",
     SELECTED_FILTERS: "<b>Selected filters to the UHRI Selection</b>",
     STEP5_SUBTITLE: "</br><b>Review your Selection!</b></br>- You can find below the summary of the Goals and Metrics you've selected. You may <em>copy-paste</em> into <b>IdeaScale</b> for further edition.</br>- We also recommend adding your specific <em>Key Performance Indicator (KPI)</em> for each measurement to increase the audibility of the proposal.",
     SELECTED_SUMMARY: "Summary of all selected Goals and Metrics"
@@ -44,6 +38,16 @@ export default {
               {enter}{enter}\
               For more information: {informationUrl}",
     HOME_PROCEED_MSG: "<b>Proceed the SDG selection process to choose the goals, subgoals and kpi to include in your proposal.</b>",
+    SELECTED_INDEXES: "Your Sustainable Development Goals (SDG) Selection",
+    GOALS_TITLE: "Step 1: Select your SDG Goals",
+    GOALS_SUBTITLE: "</br><b>What is your proposal about? Connect your proposed project to real world measurable impact.</b></br>Select your SDG Goals or choose from the available <em>tags</em> and the tool will automatically add goals into your draft.",
+    GOALS_SELECTED: "<b>Selected goals</b> (refine them before the next step):",
+    SUBGOALS_TITLE: "Step 2: Select your SDG Sub-Goals",
+    SUBGOALS_SUBTITLE: "</br><b>Choose your sub-goals from the list or type for search specific sub-goals.</b></br>The available SDG sub-goals are based on the following SDG Goals you selected in the previous step.",
+    SUBGOALS_SELECTED: "<b>Selected sub-goals</b> (refine them before the next step):",
+    METRICS_TITLE: "Step 3: Select your Key Performance Indicator (KPI)",
+    METRICS_SUBTITLE: "</br><b> Choose the metrics you want to include in your proposal.</b></br>You can find below the measurements metrics related to the <em>SDG sub-goals</em> you selected in the previous step.",
+  
   },
   uhri: {
     HOME_TITLE: "Universal Human Rights Indexes (UHRI) Selection",
@@ -60,6 +64,10 @@ export default {
               For data access: {dataUrl}",
     HOME_PROCEED_MSG: "Open the UHRI selection process to choose and edit the indexes to include in your proposal.",
     SELECTED_INDEXES: "Selected Universal Human Rights Indexes",
+    FILTERS_TITLE: "Step 1: Filter the UHRI indexes",
+    FILTERS_SUBTITLE: "Select between the different criteria to filter the UHRI search",
+    SEARCH_TITLE: "Step 2: Choose the UHRI you want to include in your proposal",
+    SEARCH_SUBTITLE: "You can find below the indexes related to the UHRI filters you selected",
   },
   phdi: {
     HOME_TITLE: "Planetary pressures-adjusted Human Development Index (PHDI) Selection",

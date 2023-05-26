@@ -3,8 +3,8 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 4: Select your Universal Human Rights Indexes (UHRI)"}}</div>
-          <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE2')"></div>
+          <div class="title">{{ $t('uhri.FILTERS_TITLE') }}</div>
+          <div class="subtitle mt-4">{{ $t('uhri.FILTERS_SUBTITLE') }}</div>
         </div>
       </div>
       <div class="columns filters">

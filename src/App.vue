@@ -13,6 +13,9 @@
         <b-navbar-item tag="router-link" :to="{ name: 'step', params: { step: 1 } }">
           {{ $t('general.START') }}
         </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ name: 'step', params: { step: 9 } }">
+          {{ $t('general.SUMMARY') }}
+        </b-navbar-item>
         <b-navbar-item tag="router-link" :to="{ name: 'page', params: {slug: 'about'}}">
           {{ $t('general.ABOUT') }}
         </b-navbar-item>

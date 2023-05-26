@@ -2,12 +2,14 @@
   <div class="step">
     <step-sdg-home
       v-if="step === 1"
+      :selectedGoals="selectedGoals"
+      :selectedSubgoals="selectedSubgoals"
+      :selectedMetrics="selectedMetrics"
       @begin-sdg="goNext"
     />
     <step-sdg-goals
       v-if="step === 2"
       :selectedGoals="selectedGoals"
-      :selectedSubgoals="selectedSubgoals"
       @select-goal="selectGoal"
       @unselect-goal="unselectGoal" 
     />
@@ -29,8 +31,6 @@
       v-if="step === 5"
       :substepsIndex="subSteps.uhriSelection"
       :selectedGoals="selectedGoals"
-      :selectedSubgoals="selectedSubgoals"
-      :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
       @unselect-uhri="unselectIndex" 
     />
@@ -69,30 +69,32 @@
       :selectedPhdi="selectedPhdi"
       :hasPhdiImage="hasPhdiImage"
     />
-    <div class="container buttons mt-4">
+    <div class="container is-flex buttons mt-4">
       <b-button
         @click="goBack"
         v-if="step > 1"
         :disabled="!backAvailable"
-        type="is-primary is-large">Back</b-button>
+        type="is-primary is-large">{{ backButton }}</b-button>
       <b-button
         @click="goNext"
-        v-if="!isHomeSelection && step !== maxSteps"
-        type="is-primary is-large">Next</b-button>
+        v-if="isSdgSubstep"
+        :disabled="!nextAvailable"
+        type="is-primary is-large">{{ nextButton }}</b-button>
       <b-button
         @click="SkipSelection"
-        v-if="isHomeSelection"
+        v-if="isHomeSelection && !isHomePhdi"
         type="is-primary is-large">{{ skipButtonMsg }}</b-button>
-      <b-button style="float: right;"
+      <b-button
         @click="goFinish"
-        v-if="step !== maxSteps"
+        v-if="isHomePhdi"
         type="is-primary is-light is-large" outlined> {{ finishButtonMsg }}</b-button>
     </div>
     <div class="container buttons mt-4">
       <b-button
         @click="reset"
+        class="is-danger is-light"
         v-if="this.selectedGoals.length > 0"
-        type="is-primary">Start from the beginning</b-button>
+        type="is-primary">Reset all selections</b-button>
     </div>
   </div>
 </template>
@@ -137,7 +139,7 @@ export default {
         sdgSelection: {
           goals: 2,
           subgoals: 3,
-          kpi: 4
+          metrics: 4
         },
         uhriSelection: {
           filters: 6,
@@ -229,7 +231,10 @@ export default {
     },
     goNext() {
       if (this.nextAvailable) {
-        if (this.isHomeUhri && (this.selectedFilters.country.length === 0) ){
+        if (this.isSdgMetrics) {
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.sdgStep)} })  
+        }
+        else if (this.isHomeUhri && (this.selectedFilters.country.length === 0) ){
           this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep + 1)} })  
         } else if (this.isHomeUhri && (this.selectedFilters.country.length > 0) ){
           this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep + 2)} })  
@@ -296,23 +301,44 @@ export default {
     isSdgSubstep() {
       return Object.values(this.subSteps.sdgSelection).includes(this.step)
     },
+    isSdgGoals() {
+      return this.step===this.subSteps.sdgSelection.goals
+    },
+    isSdgSubgoals() {
+      return this.step===this.subSteps.sdgSelection.subgoals
+    },
+    isSdgMetrics() {
+      return this.step===this.subSteps.sdgSelection.metrics
+    },
     isHomeUhri() {
       return this.step===this.mainSteps.uhriStep
     },
     isUhriSubstep() {
       return Object.values(this.subSteps.uhriSelection).includes(this.step)
     },
+    isUhriFilter() {
+      return this.step===this.subSteps.uhriSelection.filters
+    },
+    isUhriSearch() {
+      return this.step===this.subSteps.uhriSelection.search
+    },
     isHomePhdi() {
       return this.step===this.mainSteps.phdiStep
     },
     isSummary() {
-      return this.step===this.mainSteps.summary
+      return this.step===this.mainSteps.summaryStep
     },
     backAvailable() {
       return this.step > 1
     },
     nextAvailable() {
       if (this.step === this.maxSteps ) {
+        return false
+      }
+      if(this.isSdgGoals && this.selectedGoals.length===0) {
+        return false
+      } 
+      if(this.isSdgSubgoals && this.selectedSubgoals.length===0) {
         return false
       }
       return true
@@ -324,17 +350,19 @@ export default {
       else if (this.isHomePhdi) {section = "PHDI"}
       return `Skip ${section}`
     },
+    nextButton() {
+      if(this.isSdgMetrics) {
+        return 'Finish selection'
+      }
+      return 'Next'
+    },
+    backButton(){
+      if(this.isSdgGoals || this.isUhriSubstep) { return 'Close selection' }
+      return 'Back'
+    },
     finishButtonMsg() {
-      return (this.isHomePhdi) ? 'Finish process' : 'Go to summary'
+      return 'Finish process'
     }
   },
-  // watch: {
-  //   step(step) {
-  //     this.checkRouteConsistency(step)
-  //   }
-  // },
-  // mounted() {
-  //   this.checkRouteConsistency(this.step)
-  // }
 }
 </script>

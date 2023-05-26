@@ -3,8 +3,8 @@
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 3: Select your Key Performance Indicator (KPI)"}}</div>
-          <div class="subtitle" v-html="$t('step.STEP3_SUBTITLE')"></div>
+          <div class="title">{{$t('sdg.METRICS_TITLE')}}</div>
+          <div class="subtitle" v-html="$t('sdg.METRICS_SUBTITLE')"></div>
         </div>
         <div class="column is-12">
           <b-field label="SELECT YOUR KPI:"></b-field>
