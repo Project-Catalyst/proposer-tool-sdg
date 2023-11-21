@@ -71,7 +71,7 @@ export default {
   },
   phdi: {
     HOME_TITLE: "Planetary pressures-adjusted Human Development Index (PHDI) Selection",
-    INFOGRAPHIC_TITLE: "PHDI Inforgraphic",
+    INFOGRAPHIC_TITLE: "PHDI Infographic",
     USABILITY_TITLE: "Why is the PHDI useful?",
     USABILITY_TEXT: "The PHDI has been developed to signal changes that are needed to navigate the Anthropocene.\
                     This index can help assess and encourage action that both advances human development and eases planetary pressures.\
