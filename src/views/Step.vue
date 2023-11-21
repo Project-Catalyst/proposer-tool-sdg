@@ -344,11 +344,13 @@ export default {
       return true
     },
     skipButtonMsg() {
+      /*
       let section = '';
       if(this.isHomeSdg) {section = "SDG"} 
       else if (this.isHomeUhri) {section = "UHRI"}
       else if (this.isHomePhdi) {section = "PHDI"}
-      return `Skip ${section}`
+      */
+      return `Go to next section`
     },
     nextButton() {
       if(this.isSdgMetrics) {
