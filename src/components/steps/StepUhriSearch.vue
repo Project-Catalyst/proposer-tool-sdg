@@ -1,10 +1,15 @@
 <template>
-  <div class="step-f">
+  <div class="step-uhri-search">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 4: Select your Universal Human Rights Indexes"}}</div>
-          <div class="subtitle" v-html="$t('step.STEP4_SUBTITLE3')"></div>
+          <div class="title">{{ $t('uhri.SEARCH_TITLE') }}</div>
+          <div class="subtitle mt-4">{{ $t('uhri.SEARCH_SUBTITLE') }}</div>
+        </div>
+        <div class="column is-12 content has-text-centered">
+          <b-button
+          @click="goUhriFilters"
+          type="is-primary is-small">Open UHRI filter selection</b-button>
         </div>
         <div class="column is-12">
           <b-field label="SELECT YOUR UHRI:">
@@ -27,13 +32,6 @@
           </b-field>
         </div>
       </div>
-      <div class="content has-text-centered">
-        <div class="column is-12">
-            <b-button
-            @click="goUhriFilter"
-            type="is-primary is-small">Open UHRI filter selection</b-button>
-        </div>
-      </div>
     </section>
   </div>
 </template>
@@ -43,19 +41,18 @@
 import API from '@/api/api.js'
 
 export default {
-  name: 'StepF',
-  props: ['selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
+  name: 'StepUhriSearch',
+  props: ['filterIndex', 'selectedGoals', 'selectedSubgoals', 'selectedFilters' , 'selectedIndexes'],
   data() {
     return {
       checkboxIndexes: [],
       availableIndexes: [],
       count: false,
-      stepUhri: 4
     }
   },
   methods: {
-    goUhriFilter() {
-        this.$router.push({ name: "step", params: { step: this.stepUhri+1} })
+    goUhriFilters() {
+        this.$router.push({ name: "step", params: { step: this.filterIndex} })
     }
   },
   watch: {
@@ -81,7 +78,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-f {
+.step-uhri-search {
   .results {
     .tag {
       height: auto;

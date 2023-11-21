@@ -8,7 +8,9 @@ const getDefaultState = () => ({
     'region': [],
     'theme': []
   },
-  selectedIndexes: []
+  selectedIndexes: [],
+  selectedPhdi: null,
+  hasPhdiImage: false,
 })
 const state = getDefaultState()
 
@@ -87,6 +89,12 @@ const mutations = {
     if (found.length > 0) {
       state.selectedIndexes = state.selectedIndexes.filter(function(el) { return el != found[0]; });
     }
+  },
+  setPhdiIndex(state, index) {
+    state.selectedPhdi = index
+  },
+  setPhdiImage(state, value) {
+    state.hasPhdiImage = value
   },
   resetState (state) {
     Object.assign(state, getDefaultState())

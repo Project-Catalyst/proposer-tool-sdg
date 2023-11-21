@@ -1,10 +1,10 @@
 <template>
-  <div class="step-a">
+  <div class="step-sdg-goals">
     <section class="box">
       <div class="columns is-multiline is-12">
         <div class="column is-12">
-          <div class="title">{{"Step 1: Select your SDG Goals"}}</div>
-          <div class="subtitle" v-html="$t('step.STEP1_SUBTITLE')"></div>
+          <div class="title">{{$t('sdg.GOALS_TITLE')}}</div>
+          <div class="subtitle" v-html="$t('sdg.GOALS_SUBTITLE')"></div>
         </div>
         <div class="column is-12">
           <div class="column is-12"><b-field label="SELECT YOUR SDG's:">
@@ -61,7 +61,7 @@
     <section class="results box">
       <div class="columns is-multiline">
         <div class="column is-12">
-          <div class="subtitle" v-html="$t('step.SELECTED_GOALS')"></div>
+          <div class="subtitle" v-html="$t('sdg.GOALS_SELECTED')"></div>
         </div>
         <div class="column is-12">
           <b-taglist v-if="selectedGoals.length > 0">
@@ -73,7 +73,7 @@
               v-for="goal, index in selectedGoals">{{goal.id}} - {{goal.title}}</b-tag>
           </b-taglist>
           <div class="content" v-if="selectedGoals.length === 0">
-            <em>* SDG Goals selection required</em>
+            <em>No SDG Goals selected</em>
           </div>
         </div>
       </div>
@@ -86,8 +86,8 @@
 import API from '@/api/api.js'
 
 export default {
-  name: 'StepA',
-  props: ['selectedGoals', 'subgoals', 'selectedSubgoals'],
+  name: 'StepSdgGoals',
+  props: ['selectedGoals', 'selectedSubgoals'],
   data() {
     return {
       search: '',
@@ -97,21 +97,7 @@ export default {
       tags: []
     }
   },
-  computed: {
-    selectedSubgoalsIds() {
-      return this.selectedSubgoals.map((sgoal) => {
-        return sgoal.id
-      })
-    }
-    /*
-    selectedTags() {
-      let goalsTags = this.selectedGoals.map((goal) => {
-        return goal.keywords
-      }).flat()
-      return goalsTags
-    }
-    */
-  },
+  computed: { },
   methods: {
     selectTag(tag) {
       var relatedGoals = this.goals.filter((goal) => {
@@ -173,7 +159,7 @@ export default {
 </script>
 
 <style lang="scss">
-.step-a {
+.step-sdg-goals {
   .tags {
     .tag:not(.is-light) {
       cursor: pointer;

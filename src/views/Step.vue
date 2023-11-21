@@ -1,36 +1,42 @@
 <template>
   <div class="step">
-    <step-a
+    <step-sdg-home
       v-if="step === 1"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
+      :selectedMetrics="selectedMetrics"
+      @begin-sdg="goNext"
+    />
+    <step-sdg-goals
+      v-if="step === 2"
+      :selectedGoals="selectedGoals"
       @select-goal="selectGoal"
       @unselect-goal="unselectGoal" 
     />
-    <step-b
-      v-if="step === 2"
+    <step-sdg-subgoals
+      v-if="step === 3"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       @select-subgoal="selectSubgoal"
       @unselect-subgoal="unselectSubgoal" 
     />
-    <step-c
-      v-if="step === 3"
+    <step-sdg-kpi
+      v-if="step === 4"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
       @set-metric="setMetric" 
     />
-    <step-d
-      v-if="step === 4"
+    <step-uhri-home
+      v-if="step === 5"
+      :substepsIndex="subSteps.uhriSelection"
       :selectedGoals="selectedGoals"
-      :selectedSubgoals="selectedSubgoals"
-      :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
       @unselect-uhri="unselectIndex" 
     />
-    <step-e
-      v-if="step === 5"
+    <step-uhri-filters
+      v-if="step === 6"
+      :searchIndex="subSteps.uhriSelection.search"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
@@ -38,42 +44,57 @@
       @select-filter="selectFilter"
       @unselect-filter="unselectFilter" 
     />
-    <step-f
-      v-if="step === 6"
+    <step-uhri-search
+      v-if="step === 7"
+      :filterIndex="subSteps.uhriSelection.filters"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedFilters="selectedFilters"
       :selectedIndexes="selectedIndexes"
       @set-uhri="setIndex"
     />
-    <step-g
-      v-if="step === 7"
+    <step-phdi-home
+      v-if="step === 8"
+      :selectedPhdi="selectedPhdi"
+      :hasPhdiImage="hasPhdiImage"
+      @set-phdi="setPhdi"
+      @set-phdi-image="setPhdiImage"
+    />
+    <selection-summary
+      v-if="step === 9"
       :selectedGoals="selectedGoals"
       :selectedSubgoals="selectedSubgoals"
       :selectedMetrics="selectedMetrics"
       :selectedIndexes="selectedIndexes"
+      :selectedPhdi="selectedPhdi"
+      :hasPhdiImage="hasPhdiImage"
     />
-    <div class="container buttons mt-4">
+    <div class="container is-flex buttons mt-4">
       <b-button
         @click="goBack"
         v-if="step > 1"
         :disabled="!backAvailable"
-        type="is-primary is-large">Back</b-button>
+        type="is-primary is-large">{{ backButton }}</b-button>
       <b-button
         @click="goNext"
+        v-if="isSdgSubstep"
         :disabled="!nextAvailable"
-        v-if="step < stepUhri"
-        type="is-primary is-large">Next</b-button>
-      <b-button style="float: right;"
+        type="is-primary is-large">{{ nextButton }}</b-button>
+      <b-button
+        @click="SkipSelection"
+        v-if="isHomeSelection && !isHomePhdi"
+        type="is-primary is-large">{{ skipButtonMsg }}</b-button>
+      <b-button
         @click="goFinish"
-        v-if="step >= stepUhri && step !== maxSteps"
-        type="is-primary is-light is-large" outlined>Finish selection</b-button>
+        v-if="isHomePhdi"
+        type="is-primary is-light is-large" outlined> {{ finishButtonMsg }}</b-button>
     </div>
     <div class="container buttons mt-4">
       <b-button
         @click="reset"
+        class="is-danger is-light"
         v-if="this.selectedGoals.length > 0"
-        type="is-primary">Start from the beginning</b-button>
+        type="is-primary">Reset all selections</b-button>
     </div>
   </div>
 </template>
@@ -83,29 +104,48 @@
 
 import { mapState } from "vuex";
 
-import StepA from "@/components/steps/StepA"
-import StepB from "@/components/steps/StepB"
-import StepC from "@/components/steps/StepC"
-import StepD from "@/components/steps/StepD"
-import StepE from "@/components/steps/StepE"
-import StepF from "@/components/steps/StepF"
-import StepG from "@/components/steps/StepG"
+import StepSdgHome from "@/components/steps/StepSdgHome"
+import StepSdgGoals from "@/components/steps/StepSdgGoals"
+import StepSdgSubgoals from "@/components/steps/StepSdgSubgoals"
+import StepSdgKpi from "@/components/steps/StepSdgKpi"
+import StepUhriHome from "@/components/steps/StepUhriHome"
+import StepUhriFilters from "@/components/steps/StepUhriFilters"
+import StepUhriSearch from "@/components/steps/StepUhriSearch"
+import StepPhdiHome from "@/components/steps/StepPhdiHome"
+import SelectionSummary from "@/components/steps/SelectionSummary"
 
 export default {
   name: 'Step',
   components: {
-    StepA,
-    StepB,
-    StepC,
-    StepD,
-    StepE,
-    StepF,
-    StepG
+    StepSdgHome,
+    StepSdgGoals,
+    StepSdgSubgoals,
+    StepSdgKpi,
+    StepUhriHome,
+    StepUhriFilters,
+    StepUhriSearch,
+    StepPhdiHome,
+    SelectionSummary
   },
   data() {
     return {
-      maxSteps: 7,
-      stepUhri: 4
+      mainSteps: {
+        sdgStep: 1,
+        uhriStep: 5,
+        phdiStep: 8,
+        summaryStep: 9,
+      },
+      subSteps: {
+        sdgSelection: {
+          goals: 2,
+          subgoals: 3,
+          metrics: 4
+        },
+        uhriSelection: {
+          filters: 6,
+          search: 7
+        },
+      }
     }
   },
   methods: {
@@ -158,6 +198,15 @@ export default {
     unselectIndex(uhri) {
       this.$store.commit('goals/removeIndex', uhri)
     },
+    setPhdi(index) {
+      this.$store.commit('goals/setPhdiIndex', index)
+      if(!index) {
+        this.$store.commit('goals/setPhdiImage', false)
+      }
+    },
+    setPhdiImage(value) {
+      this.$store.commit('goals/setPhdiImage', value)
+    },
     selectFilter(key, value) {
       this.$store.commit('goals/addFilter', [key, value])
     },
@@ -166,22 +215,43 @@ export default {
     },
     goBack() {
       if (this.backAvailable) {
-        if (this.step > this.stepUhri ){
-          this.$router.push({ name: "step", params: { step: (this.stepUhri)} })
-        } else {
+        if (this.isHomeUhri) {
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.sdgStep)} })
+        }
+        else if (this.isUhriSubstep ){
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep)} })
+        }
+        else if (this.isHomePhdi) {
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep)} })
+        } 
+        else {
           this.$router.push({ name: "step", params: { step: (this.step - 1)} })
         }
       }
     },
     goNext() {
       if (this.nextAvailable) {
-        if (this.step===(this.stepUhri) && (this.selectedFilters.country.length === 0) ){
-          this.$router.push({ name: "step", params: { step: (this.stepUhri + 1)} })  
-        } else if (this.step===(this.stepUhri) && (this.selectedFilters.country.length > 0) ){
-          this.$router.push({ name: "step", params: { step: (this.stepUhri + 2)} })  
+        if (this.isSdgMetrics) {
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.sdgStep)} })  
+        }
+        else if (this.isHomeUhri && (this.selectedFilters.country.length === 0) ){
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep + 1)} })  
+        } else if (this.isHomeUhri && (this.selectedFilters.country.length > 0) ){
+          this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep + 2)} })  
         } else {
           this.$router.push({ name: "step", params: { step: (this.step + 1)} })
         }
+      }
+    },
+    SkipSelection() {
+      if(this.isHomeSdg) {
+        this.$router.push({ name: "step", params: { step: (this.mainSteps.uhriStep)} })  
+      }
+      else if (this.isHomeUhri) {
+        this.$router.push({ name: "step", params: { step: (this.mainSteps.phdiStep)} })
+      }
+      else if (this.isHomePhdi) {
+        this.$router.push({ name: "step", params: { step: (this.mainSteps.summaryStep)} })
       }
     },
     goFinish() {
@@ -200,14 +270,6 @@ export default {
         }
       })
     },
-    checkRouteConsistency(step) {
-      if ((step === 2) && (this.selectedGoals.length === 0)) {
-        this.$router.push({ name: "step", params: { step: 1} })
-      }
-      if ((step === 3) && (this.selectedSubgoals.length === 0)) {
-        this.$router.push({ name: "step", params: { step: 2} })
-      }
-    }
   },
   computed: {
     ...mapState({
@@ -215,37 +277,94 @@ export default {
       selectedSubgoals: (state) => state.goals.selectedSubgoals,
       selectedMetrics: (state) => state.goals.selectedMetrics,
       selectedFilters: (state) => state.goals.selectedFilters,
-      selectedIndexes: (state) => state.goals.selectedIndexes
+      selectedIndexes: (state) => state.goals.selectedIndexes,
+      selectedPhdi: (state) => state.goals.selectedPhdi,
+      hasPhdiImage: (state) => state.goals.hasPhdiImage
     }),
+    maxSteps() {
+      return this.mainSteps.summaryStep
+    },
     step() {
       if (this.$route) {
         return parseInt(this.$route.params.step)
       }
       return 1
     },
+    isHomeSelection() {
+      return (this.step===this.mainSteps.sdgStep) || 
+             (this.step===this.mainSteps.uhriStep) || 
+             (this.step===this.mainSteps.phdiStep)
+    },
+    isHomeSdg() {
+      return this.step===this.mainSteps.sdgStep
+    },
+    isSdgSubstep() {
+      return Object.values(this.subSteps.sdgSelection).includes(this.step)
+    },
+    isSdgGoals() {
+      return this.step===this.subSteps.sdgSelection.goals
+    },
+    isSdgSubgoals() {
+      return this.step===this.subSteps.sdgSelection.subgoals
+    },
+    isSdgMetrics() {
+      return this.step===this.subSteps.sdgSelection.metrics
+    },
+    isHomeUhri() {
+      return this.step===this.mainSteps.uhriStep
+    },
+    isUhriSubstep() {
+      return Object.values(this.subSteps.uhriSelection).includes(this.step)
+    },
+    isUhriFilter() {
+      return this.step===this.subSteps.uhriSelection.filters
+    },
+    isUhriSearch() {
+      return this.step===this.subSteps.uhriSelection.search
+    },
+    isHomePhdi() {
+      return this.step===this.mainSteps.phdiStep
+    },
+    isSummary() {
+      return this.step===this.mainSteps.summaryStep
+    },
     backAvailable() {
       return this.step > 1
     },
     nextAvailable() {
-      if (this.step === 1 && this.selectedGoals.length === 0) {
-        return false
-      }
-      if (this.step === 2 && this.selectedSubgoals.length === 0) {
-        return false
-      }
       if (this.step === this.maxSteps ) {
         return false
       }
+      if(this.isSdgGoals && this.selectedGoals.length===0) {
+        return false
+      } 
+      if(this.isSdgSubgoals && this.selectedSubgoals.length===0) {
+        return false
+      }
       return true
+    },
+    skipButtonMsg() {
+      /*
+      let section = '';
+      if(this.isHomeSdg) {section = "SDG"} 
+      else if (this.isHomeUhri) {section = "UHRI"}
+      else if (this.isHomePhdi) {section = "PHDI"}
+      */
+      return `Go to next section`
+    },
+    nextButton() {
+      if(this.isSdgMetrics) {
+        return 'Finish selection'
+      }
+      return 'Next'
+    },
+    backButton(){
+      if(this.isSdgGoals || this.isUhriSubstep) { return 'Close selection' }
+      return 'Back'
+    },
+    finishButtonMsg() {
+      return 'Finish process'
     }
   },
-  watch: {
-    step(step) {
-      this.checkRouteConsistency(step)
-    }
-  },
-  mounted() {
-    this.checkRouteConsistency(this.step)
-  }
 }
 </script>
